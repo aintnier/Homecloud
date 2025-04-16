@@ -1,0 +1,44 @@
+.dashboard-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.deadlines-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.deadline-card {
+  background-color: #f4f4f9; /* Colore di sfondo chiaro */
+  padding: 20px;
+  border-radius: 8px;
+  width: 250px; /* Card più lunga verticalmente */
+  min-height: 200px; /* Altezza fissa */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.deadline-card:hover {
+  transform: translateY(-10px);
+}
+
+.deadline-card:nth-child(odd) {
+  background-color: #e6f7ff; /* Colore pastello per card dispari */
+}
+
+.deadline-card:nth-child(even) {
+  background-color: #e0f7e0; /* Colore pastello per card pari */
+}
+
+.deadline-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.deadline-card p {
+  font-size: 14px;
+  color: #666;
+}
