@@ -18,6 +18,7 @@
   bottom: 0;
   overflow: hidden;
   border-top-right-radius: 50px;
+  z-index: 999;
 }
 
 .sidebar-nav,
@@ -182,6 +183,9 @@ a.user-profile {
   background-color: var(--white);
   border-radius: 10px;
   box-shadow: 0 2px 4px var(--card-shadow);
+  padding: 5px 0;
+  will-change: transform;
+  overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -442,7 +446,7 @@ a.user-profile {
 .deadlines-table-container {
   overflow-x: auto;
   background-color: var(--white);
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -553,7 +557,8 @@ a.user-profile {
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.dots-container:hover .dots-icon::before {
+.dots-container:hover .dots-icon::before,
+.dots-container:focus .dots-icon::before {
   background-color: var(--card-description-color);
   box-shadow: 0 -6px 0 var(--card-description-color),
     0 6px 0 var(--card-description-color);
