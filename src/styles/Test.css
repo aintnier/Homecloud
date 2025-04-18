@@ -63,7 +63,8 @@
   margin-bottom: 0;
 }
 
-.sidebar-nav li:hover {
+.sidebar-nav li:hover,
+.sidebar-nav li:focus-within {
   color: inherit;
 }
 
@@ -184,7 +185,8 @@ a.user-profile {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card:hover {
+.card:hover,
+.card:focus {
   transform: scale(1.01);
   box-shadow: 0 4px 20px var(--hover-shadow);
 }
@@ -335,11 +337,25 @@ a.user-profile {
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  display: inline-block;
-  width: 15px;
-  height: 15px;
   color: currentColor;
   pointer-events: none;
+}
+
+.clear-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-color-light);
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  transition: color 0.1s ease;
+}
+
+.clear-icon:hover,
+.clear-icon:active {
+  color: currentColor;
 }
 
 .custom-select {
@@ -431,7 +447,8 @@ a.user-profile {
 }
 
 .deadlines-table {
-  width: 100%;
+  table-layout: fixed; /* Fissa la larghezza delle colonne */
+  width: 100%; /* La tabella occupa tutta la larghezza disponibile */
   border-collapse: collapse;
 }
 
@@ -440,13 +457,52 @@ a.user-profile {
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid var(--secondary-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 0.9rem;
   color: var(--card-description-color);
 }
 
 .deadlines-table th {
+  background-color: #f4f7f9;
   font-weight: bold;
-  color: var(--card-title-icon-color);
+}
+
+/* Larghezze specifiche per le colonne */
+.deadlines-table th:nth-child(1),
+.deadlines-table td:nth-child(1) {
+  width: 25%;
+}
+
+.deadlines-table th:nth-child(2),
+.deadlines-table td:nth-child(2) {
+  width: 12%;
+}
+
+.deadlines-table th:nth-child(3),
+.deadlines-table td:nth-child(3) {
+  width: 15%;
+}
+
+.deadlines-table th:nth-child(4),
+.deadlines-table td:nth-child(4) {
+  width: 30%;
+}
+
+.deadlines-table th:nth-child(5),
+.deadlines-table td:nth-child(5) {
+  width: 13%;
+}
+
+.deadlines-table th:nth-child(6),
+.deadlines-table td:nth-child(6) {
+  width: 5%;
+}
+
+.deadlines-table thead tr,
+.deadlines-table tbody tr {
+  height: 52px;
 }
 
 .deadlines-table tbody tr:last-child td {
@@ -469,6 +525,11 @@ a.user-profile {
   border-radius: 5px;
 }
 
+.dots-container {
+  display: flex;
+  align-items: center;
+}
+
 .dots-icon {
   display: inline-block;
   width: 20px;
@@ -489,12 +550,20 @@ a.user-profile {
   background-color: var(--text-color-light);
   border-radius: 50%;
   box-shadow: 0 -6px 0 var(--text-color-light), 0 6px 0 var(--text-color-light);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dots-container:hover .dots-icon::before {
+  background-color: var(--card-description-color);
+  box-shadow: 0 -6px 0 var(--card-description-color),
+    0 6px 0 var(--card-description-color);
 }
 
 .no-data {
   padding: 20px;
   text-align: center;
   color: var(--user-icon-placeholder-color);
+  height: 52px;
 }
 
 .notification-status {

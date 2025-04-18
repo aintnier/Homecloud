@@ -64,6 +64,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+*:focus {
+  /* outline: none; */
+}
 
 body {
   font-family: "Poppins", Tahoma, Geneva, Verdana, sans-serif;

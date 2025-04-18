@@ -15,6 +15,7 @@ import {
   faRightFromBracket,
   faSearch,
   faCircleDot,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
@@ -24,6 +25,7 @@ function Test() {
   const [upcomingDeadlines, setUpcomingDeadlines] = useState([]);
   const [otherDeadlines, setOtherDeadlines] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
   const dropdownRef = useRef(null);
 
   const options = [
@@ -32,6 +34,7 @@ function Test() {
     { value: "title_asc", label: "Titolo (A-Z)" },
     { value: "title_desc", label: "Titolo (Z-A)" },
     { value: "type", label: "Categoria" },
+    { value: "notifications_on", label: "Stato Notifica" },
   ];
 
   const typeIcons = {
@@ -102,6 +105,9 @@ function Test() {
       case "type":
         sortedDeadlines.sort((a, b) => a.type.localeCompare(b.type));
         break;
+      case "notifications_on":
+        sortedDeadlines.sort((a, b) => b.notifications_on - a.notifications_on);
+        break;
       default:
         break;
     }
@@ -151,6 +157,20 @@ function Test() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredDeadlines = otherDeadlines.filter((deadline) => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      deadline.title.toLowerCase().includes(searchLower) ||
+      deadline.type.toLowerCase().includes(searchLower) ||
+      formatDate(deadline.due_date).toLowerCase().includes(searchLower) ||
+      deadline.description.toLowerCase().includes(searchLower)
+    );
+  });
 
   if (loading) {
     return (
@@ -293,12 +313,24 @@ function Test() {
             <div className="deadlines-filter">
               <div className="search-input">
                 <FontAwesomeIcon icon={faSearch} className="icon search-icon" />
-                <input type="text" placeholder="Cerca scadenze..." />
+                <input
+                  type="text"
+                  placeholder="Cerca scadenze..."
+                  value={searchTerm} // Colleghiamo lo stato al campo di input
+                  onChange={handleSearchChange} // Gestore per l'input di ricerca
+                />
+                {searchTerm && (
+                  <FontAwesomeIcon
+                    icon={faTimes}
+                    className="icon clear-icon"
+                    onClick={() => setSearchTerm("")}
+                  />
+                )}
               </div>
               <div
                 className={`custom-select ${isDropdownOpen ? "open" : ""}`}
                 ref={dropdownRef}
-                tabIndex={0} // Permette il focus con Tab
+                tabIndex={0}
                 onClick={toggleDropdown}
                 onKeyDown={handleKeyDown}
               >
@@ -319,7 +351,7 @@ function Test() {
                         className="option"
                         onClick={() => handleOptionClick(option.value)}
                         onKeyDown={(event) => handleOptionKeyDown(event, index)}
-                        tabIndex={0} // Permette la selezione con Tab
+                        tabIndex={0}
                       >
                         {option.label}
                       </li>
@@ -344,50 +376,56 @@ function Test() {
                 </tr>
               </thead>
               <tbody>
-                {otherDeadlines.map((deadline) => (
-                  <tr key={deadline.id}>
-                    <td>
-                      <FontAwesomeIcon
-                        icon={typeIcons[deadline.type] || faExclamationTriangle}
-                        className="deadline-icon"
-                      />
-                      <span>{deadline.title}</span>
-                    </td>
-                    <td>
-                      <span
-                        className={`deadline-type ${deadline.type
-                          .toLowerCase()
-                          .replace(" ", "-")}-type`}
-                      >
-                        {deadline.type}
-                      </span>
-                    </td>
-                    <td>{formatDate(deadline.due_date)}</td>
-                    <td>{deadline.description}</td>
-                    <td>
-                      <span
-                        className={`notification-status ${
-                          deadline.notifications_on === 1 ? "true" : "false"
-                        }`}
-                      >
+                {filteredDeadlines.length > 0 ? (
+                  filteredDeadlines.map((deadline) => (
+                    <tr key={deadline.id}>
+                      <td>
                         <FontAwesomeIcon
-                          icon={faCircleDot}
-                          className="notification-icon"
+                          icon={
+                            typeIcons[deadline.type] || faExclamationTriangle
+                          }
+                          className="deadline-icon"
                         />
-                        {deadline.notifications_on === 1 ? "On" : "Off"}
-                      </span>
-                    </td>
-                    <td>
-                      <Link to={`/deadline-details/${deadline.id}`}>
-                        <span className="dots-icon"></span>
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-                {otherDeadlines.length === 0 && (
+                        <span>{deadline.title}</span>
+                      </td>
+                      <td>
+                        <span
+                          className={`deadline-type ${deadline.type
+                            .toLowerCase()
+                            .replace(" ", "-")}-type`}
+                        >
+                          {deadline.type}
+                        </span>
+                      </td>
+                      <td>{formatDate(deadline.due_date)}</td>
+                      <td>{deadline.description}</td>
+                      <td>
+                        <span
+                          className={`notification-status ${
+                            deadline.notifications_on === 1 ? "true" : "false"
+                          }`}
+                        >
+                          <FontAwesomeIcon
+                            icon={faCircleDot}
+                            className="notification-icon"
+                          />
+                          {deadline.notifications_on === 1 ? "On" : "Off"}
+                        </span>
+                      </td>
+                      <td>
+                        <Link
+                          to={`/deadline-details/${deadline.id}`}
+                          className="dots-container"
+                        >
+                          <span className="dots-icon"></span>
+                        </Link>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
                   <tr>
                     <td colSpan="6" className="no-data">
-                      Nessuna altra scadenza registrata.
+                      Nessuna scadenza trovata.
                     </td>
                   </tr>
                 )}
