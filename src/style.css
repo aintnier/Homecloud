@@ -1,3 +1,62 @@
+/* Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* Charm */
+@import url("https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap");
+
+:root {
+  --primary-color: #430862;
+  --accent-color: #a713f6;
+  --secondary-color: #e2e8f0;
+  --background-color: #fdfaff;
+  --white: #fff;
+  --text-color: #333;
+  --text-color-light: #a0aec0;
+  --card-shadow: rgba(0, 0, 0, 0.05);
+  --card-title-icon-color: #5a535e;
+  --card-description-color: #6f6972;
+  --filter-placeholder-text-color: #807075;
+  --select-hover-color: #f7fafc;
+
+  --card-gradient-first: #fbf8cc;
+  --card-gradient-second: #d0f4de;
+  --card-gradient-third: #a9def9;
+
+  /* aside */
+  --aside-background-color: #111111;
+  --link-color: #414141;
+  --user-icon-placeholder-color: #718096;
+  --user-icon-border-color: #585858;
+
+  /* categorie  */
+  --salute-color: rgba(173, 232, 244, 0.5);
+  --salute-text-color: #234e52;
+
+  --garage-color: rgba(230, 183, 162, 0.5);
+  --garage-text-color: #5a3c00;
+
+  --casa-color: rgba(221, 229, 182, 0.5);
+  --casa-text-color: #3e4c22;
+
+  --documenti-color: rgba(255, 240, 244, 0.5);
+  --documenti-text-color: #ff7096;
+
+  --personale-color: rgba(199, 249, 204, 0.5);
+  --personale-text-color: #006400;
+
+  --lavoro-color: rgba(255, 202, 212, 0.5);
+  --lavoro-text-color: #ff0000;
+
+  --altro-color: #fffae5;
+  --altro-text-color: #ff9500;
+
+  /* Colori per notifiche */
+  --notification-on: #17e382;
+  --notification-off: #ff2822;
+
+  /* Altri colori */
+  --hover-shadow: rgba(0, 0, 0, 0.1);
+}
+
 *,
 *::before,
 *::after {
@@ -7,37 +66,33 @@
 }
 
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f7f7f7;
-  color: #333;
-  padding: 20px;
+  font-family: "Poppins", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
+  background-color: var(--background-color);
 }
 
-.card {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin: 10px 0;
+/* Spinner per il caricamento */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Adatta l'altezza */
 }
 
-.card-header {
-  font-weight: bold;
-  font-size: 18px;
-  margin-bottom: 10px;
+.spinner {
+  border: 4px solid var(--secondary-color);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
 }
 
-.card-body {
-  font-size: 14px;
-}
-
-/* Responsive design per dispositivi mobili */
-@media (max-width: 768px) {
-  body {
-    padding: 10px;
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-
-  .card {
-    margin: 10px 0;
+  100% {
+    transform: rotate(360deg);
   }
 }
