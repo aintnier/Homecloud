@@ -7,7 +7,7 @@
 .sidebar {
   background-color: var(--aside-background-color);
   color: var(--secondary-color);
-  width: 250px;
+  width: 300px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -130,7 +130,6 @@ a.user-profile {
   height: 40px;
   background-color: var(--user-icon-placeholder-color);
   border-radius: 50%;
-  margin-right: auto;
   flex-shrink: 0;
 }
 
@@ -159,7 +158,7 @@ a.user-profile {
 .main-content {
   flex-grow: 1;
   padding: 30px;
-  margin-left: 250px;
+  margin-left: 300px;
   overflow-y: auto;
   height: 100vh;
 }

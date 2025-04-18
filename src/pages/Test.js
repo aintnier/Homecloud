@@ -26,6 +26,7 @@ function Test() {
   const [otherDeadlines, setOtherDeadlines] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [user, setUser] = useState(null);
   const dropdownRef = useRef(null);
 
   const options = [
@@ -47,15 +48,35 @@ function Test() {
     Personale: faUser,
   };
 
+  const userId = 1; // ID utente simulato // TEMPORANEO!!!!!!!!!!!!!!!!!!
+
   useEffect(() => {
-    const fetchDeadlines = async () => {
+    const fetchUserAndDeadlines = async () => {
       try {
-        const response = await axios.get(
+        // Recupera tutti gli utenti
+        const usersResponse = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/api/users`
+        );
+
+        // Filtra l'utente con ID 1
+        const currentUser = usersResponse.data.find((user) => user.id === 1);
+        if (!currentUser) {
+          throw new Error("Utente con ID 1 non trovato");
+        }
+        setUser(currentUser);
+
+        // Recupera tutte le scadenze
+        const deadlinesResponse = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/api/deadlines`
         );
 
+        // Filtra le scadenze per l'utente corrente
+        const userDeadlines = deadlinesResponse.data.filter(
+          (deadline) => deadline.user_id === currentUser.id
+        );
+
         // Ordina le scadenze per data
-        const sortedDeadlines = response.data.sort(
+        const sortedDeadlines = userDeadlines.sort(
           (a, b) => new Date(a.due_date) - new Date(b.due_date)
         );
 
@@ -64,12 +85,12 @@ function Test() {
         setOtherDeadlines(sortedDeadlines.slice(3));
         setLoading(false);
       } catch (error) {
-        console.error("Errore durante il recupero delle scadenze:", error);
+        console.error("Errore durante il recupero dei dati:", error);
         setLoading(false);
       }
     };
 
-    fetchDeadlines();
+    fetchUserAndDeadlines();
   }, []);
 
   const formatDate = (dateString) => {
@@ -198,8 +219,8 @@ function Test() {
           <a href="/profile" className="user-profile">
             <div className="avatar"></div>
             <div className="user-info">
-              <div className="name">Itali Bracha</div>
-              <div className="email">italibracha31@gmail.com</div>
+              <div className="name">Nome Utente</div>
+              <div className="email">email@example.com</div>
             </div>
           </a>
           <nav className="sidebar-bottom-nav">
@@ -247,8 +268,8 @@ function Test() {
         <a href="/profile" className="user-profile">
           <div className="avatar"></div>
           <div className="user-info">
-            <div className="name">Itali Bracha</div>
-            <div className="email">italibracha31@gmail.com</div>
+            <div className="name">{user?.full_name || "Nome Utente"}</div>
+            <div className="email">{user?.email || "Email Utente"}</div>
           </div>
         </a>
         <nav className="sidebar-bottom-nav">
