@@ -6,7 +6,7 @@ import AddDeadline from "./pages/AddDeadline";
 import DeadlineDetails from "./pages/DeadlineDetails";
 import UserProfile from "./pages/UserProfile";
 import ErrorPage from "./pages/ErrorPage";
-import Test from "./pages/Test";
+// import Test from "./pages/Test";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
         <Route path="/deadline-details/:id" element={<DeadlineDetails />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="*" element={<ErrorPage />} />
-        <Route path="/test" element={<Test />} />
+        {/* <Route path="/test" element={<Test />} /> */}
       </Routes>
     </Router>
   );
