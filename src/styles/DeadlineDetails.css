@@ -1,0 +1,229 @@
+.deadline-details-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Importa gli stili della sidebar dal tuo Dashboard.css */
+@import "./Dashboard.css";
+
+.main-content {
+  flex-grow: 1;
+  padding: 30px;
+  margin-left: 300px; /* Stessa larghezza della sidebar */
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.details-header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+/* Sposto gli stili dei bottoni in .card-actions */
+.actions button {
+  background-color: var(--accent-color);
+  color: var(--white);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.actions button.edit-button {
+  /* background-color: var(--edit-button-color); */
+  margin-right: 10px;
+}
+
+.actions button.delete-button {
+  /* background-color: var(--delete-button-color); */
+}
+
+.actions button:hover {
+  opacity: 0.9;
+}
+
+.details-card {
+  background-color: var(--white);
+  border-radius: 10px;
+  box-shadow: 0 2px 4px var(--card-shadow);
+  padding: 30px;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative; /* Necessario per posizionare .card-actions */
+}
+
+.card-actions {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.card-actions button {
+  background-color: var(--accent-color);
+  color: var(--white);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.card-actions button.edit-button {
+  background-color: var(--edit-button-color);
+}
+
+.card-actions button.delete-button {
+  background-color: var(--delete-button-color);
+}
+
+.card-actions button:hover {
+  opacity: 0.9;
+}
+
+.details-card h2 {
+  font-size: 1.5rem;
+  color: var(--card-title-icon-color);
+  margin-bottom: 20px;
+  padding-top: 40px; /* Spazio per i bottoni in alto a destra */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.details-card .deadline-icon {
+  font-size: 1.3rem;
+}
+
+.detail-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  align-items: baseline; /* Allinea il testo alla base */
+}
+
+.detail-row .label {
+  font-weight: bold;
+  color: var(--text-color-dark);
+  width: 120px; /* Larghezza fissa per le etichette */
+  flex-shrink: 0; /* Impedisce alle etichette di ridursi */
+}
+
+.detail-row .value {
+  color: var(--card-description-color);
+  flex-grow: 1; /* Permette al valore di occupare lo spazio rimanente */
+}
+
+.detail-row .notification-on {
+  color: var(--notification-on);
+  font-weight: bold;
+}
+
+.detail-row .notification-off {
+  color: var(--notification-off);
+  font-weight: bold;
+}
+
+/* Stili specifici per i diversi tipi (riutilizzati da Dashboard.css) */
+/* Potresti volerli importare o definire qui se non usi l'import */
+.salute-type {
+  color: var(--salute-color);
+}
+
+.garage-type {
+  color: var(--garage-color);
+}
+
+.casa-type {
+  color: var(--casa-color);
+}
+
+.documenti-type {
+  color: var(--documenti-color);
+}
+
+.personale-type {
+  color: var(--personale-color);
+}
+
+.lavoro-type {
+  color: var(--lavoro-color);
+}
+
+.altro-type {
+  color: var(--altro-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: 15px;
+  }
+
+  .details-header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  /* I bottoni ora sono nella card, quindi non li stilizzo qui */
+  /* .details-header .actions {
+    margin-top: 15px;
+  } */
+
+  .details-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .details-card {
+    padding: 20px;
+  }
+
+  .card-actions {
+    top: 15px;
+    right: 15px;
+    gap: 8px;
+  }
+
+  .card-actions button {
+    font-size: 0.7rem;
+    padding: 6px 10px;
+  }
+
+  .details-card h2 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    padding-top: 30px; /* Spazio per i bottoni in alto a destra */
+  }
+
+  .detail-row {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .detail-row .label {
+    width: auto;
+    margin-bottom: 5px;
+  }
+}
