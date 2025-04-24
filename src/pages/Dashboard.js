@@ -3,6 +3,9 @@ import "../styles/Dashboard.css";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faChartLine,
+  faCalendarPlus,
+  faRightFromBracket,
   faCar,
   faHeart,
   faHome,
@@ -10,14 +13,53 @@ import {
   faExclamationTriangle,
   faCalendarCheck,
   faUser,
-  faChartLine,
-  faCalendarPlus,
-  faRightFromBracket,
   faSearch,
   faCircleDot,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+
+function Sidebar({ user }) {
+  return (
+    <aside className="sidebar">
+      <Link to={"/dashboard"} className="logo">
+        <span>Home</span>Cloud
+      </Link>
+      <nav className="sidebar-nav">
+        <ul>
+          <li className="active">
+            <Link to="/dashboard">
+              <FontAwesomeIcon icon={faChartLine} className="icon" />
+              <span>Dashboard</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/add-deadline">
+              <FontAwesomeIcon icon={faCalendarPlus} className="icon" />
+              <span>Aggiungi Scadenza</span>
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <a href="/profile" className="user-profile">
+        <div className="avatar"></div>
+        <div className="user-info">
+          <div className="name">{user?.full_name || "Nome Utente"}</div>
+          <div className="email">{user?.email || "email@example.com"}</div>
+        </div>
+      </a>
+      <nav className="sidebar-bottom-nav">
+        <button className="logout-button" onClick={() => alert("Logout")}>
+          <FontAwesomeIcon
+            icon={faRightFromBracket}
+            className="icon logout-icon"
+          />
+          <span>Logout</span>
+        </button>
+      </nav>
+    </aside>
+  );
+}
 
 function Dashboard() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -58,10 +100,12 @@ function Dashboard() {
           `${process.env.REACT_APP_BACKEND_URL}/api/users`
         );
 
-        // Filtra l'utente con ID 1
-        const currentUser = usersResponse.data.find((user) => user.id === 1);
+        // Filtra l'utente con ID corrispondente a userId
+        const currentUser = usersResponse.data.find(
+          (user) => user.id === userId
+        );
         if (!currentUser) {
-          throw new Error("Utente con ID 1 non trovato");
+          throw new Error(`Utente con ID ${userId} non trovato`);
         }
         setUser(currentUser);
 
@@ -91,7 +135,7 @@ function Dashboard() {
     };
 
     fetchUserAndDeadlines();
-  }, []);
+  }, [userId]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -196,45 +240,8 @@ function Dashboard() {
   if (loading) {
     return (
       <div className="dashboard-container">
-        <aside className="sidebar">
-          <Link to={"/dashboard"} className="logo">
-            <span>Home</span>Cloud
-          </Link>
-          <nav className="sidebar-nav">
-            <ul>
-              <li className="active">
-                <a href="/">
-                  <FontAwesomeIcon icon={faChartLine} className="icon" />
-                  <span>Dashboard</span>
-                </a>
-              </li>
-              <li>
-                <a href="/add-deadline">
-                  <FontAwesomeIcon icon={faCalendarPlus} className="icon" />
-                  <span>Aggiungi Scadenza</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-          <a href="/profile" className="user-profile">
-            <div className="avatar"></div>
-            <div className="user-info">
-              <div className="name">Nome Utente</div>
-              <div className="email">email@example.com</div>
-            </div>
-          </a>
-          <nav className="sidebar-bottom-nav">
-            <button className="logout-button" onClick={() => alert("Logout")}>
-              <FontAwesomeIcon
-                icon={faRightFromBracket}
-                className="icon logout-icon"
-              />
-              <span>Logout</span>
-            </button>
-          </nav>
-        </aside>
-
-        <main className="main-content">
+        <Sidebar user={user} />
+        <main className="main-content loading">
           <div className="loading-spinner">
             <div className="spinner"></div>
           </div>
@@ -245,45 +252,7 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      <aside className="sidebar">
-        <Link to={"/dashboard"} className="logo">
-          <span>Home</span>Cloud
-        </Link>
-        <nav className="sidebar-nav">
-          <ul>
-            <li className="active">
-              <a href="/">
-                <FontAwesomeIcon icon={faChartLine} className="icon" />
-                <span>Dashboard</span>
-              </a>
-            </li>
-            <li>
-              <a href="/add-deadline">
-                <FontAwesomeIcon icon={faCalendarPlus} className="icon" />
-                <span>Aggiungi Scadenza</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <a href="/profile" className="user-profile">
-          <div className="avatar"></div>
-          <div className="user-info">
-            <div className="name">{user?.full_name || "Nome Utente"}</div>
-            <div className="email">{user?.email || "Email Utente"}</div>
-          </div>
-        </a>
-        <nav className="sidebar-bottom-nav">
-          <button className="logout-button" onClick={() => alert("Logout")}>
-            <FontAwesomeIcon
-              icon={faRightFromBracket}
-              className="icon logout-icon"
-            />
-            <span>Logout</span>
-          </button>
-        </nav>
-      </aside>
-
-      {/* Main Content */}
+      <Sidebar user={user} />
       <main className="main-content">
         {/* Upcoming Deadlines Section */}
         <section className="cards-section">

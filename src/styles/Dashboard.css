@@ -157,7 +157,7 @@ a.user-profile {
 /* Main Content Styles */
 .main-content {
   flex-grow: 1;
-  padding: 30px;
+  padding: 50px 40px;
   margin-left: 300px;
   overflow-y: auto;
   height: 100vh;
@@ -516,16 +516,17 @@ a.user-profile {
   background-color: var(--select-hover-color);
 }
 
-.deadlines-table td .deadline-icon {
+.deadline-icon {
   width: 20px;
   height: 20px;
   margin-right: 10px;
 }
 
-.deadlines-table td .deadline-type {
+.deadline-type {
   font-size: 0.7rem;
   padding: 3px 6px;
-  border-radius: 5px;
+  border-radius: 6px;
+  width: fit-content;
 }
 
 .dots-container {

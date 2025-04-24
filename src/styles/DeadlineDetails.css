@@ -8,17 +8,13 @@
 
 .main-content {
   flex-grow: 1;
-  padding: 30px;
-  margin-left: 300px; /* Stessa larghezza della sidebar */
-  overflow-y: auto;
-  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
 
 .details-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
+  grid-row: 1;
+  z-index: 10;
 }
 
 .details-header h1 {
@@ -27,90 +23,124 @@
   color: var(--primary-color);
 }
 
-/* Sposto gli stili dei bottoni in .card-actions */
-.actions button {
-  background-color: var(--accent-color);
-  color: var(--white);
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.actions button.edit-button {
-  /* background-color: var(--edit-button-color); */
-  margin-right: 10px;
-}
-
-.actions button.delete-button {
-  /* background-color: var(--delete-button-color); */
-}
-
-.actions button:hover {
-  opacity: 0.9;
-}
-
 .details-card {
+  grid-row: 2;
+  justify-self: center;
+  align-self: center;
   background-color: var(--white);
   border-radius: 10px;
   box-shadow: 0 2px 4px var(--card-shadow);
   padding: 30px;
-  max-width: 600px;
-  margin: 0 auto;
-  position: relative; /* Necessario per posizionare .card-actions */
+  max-width: 700px;
+  width: 100%; /* Per adattarsi meglio agli schermi più piccoli */
 }
 
-.card-actions {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+.details-card .details-card-header {
   display: flex;
-  gap: 10px;
-}
-
-.card-actions button {
-  background-color: var(--accent-color);
-  color: var(--white);
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  transition: background-color 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.card-actions button.edit-button {
-  background-color: var(--edit-button-color);
-}
-
-.card-actions button.delete-button {
-  background-color: var(--delete-button-color);
-}
-
-.card-actions button:hover {
-  opacity: 0.9;
+  justify-content: space-between;
+  align-items: start;
 }
 
 .details-card h2 {
-  font-size: 1.5rem;
-  color: var(--card-title-icon-color);
-  margin-bottom: 20px;
-  padding-top: 40px; /* Spazio per i bottoni in alto a destra */
+  font-size: 1.8rem;
+  color: var(--text-color);
+  margin-bottom: 40px;
+}
+
+.details-card .details-card-header .actions {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.details-card .deadline-icon {
+.actions button {
+  border: 1px solid;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 110px;
+  letter-spacing: 0.2px;
+  transition: background-color 0.2s ease;
+}
+
+.actions button .icon {
+  height: 0.95em;
+}
+
+.actions button.edit-button {
+  background-color: var(--white);
+  color: var(--text-color);
+  border-color: var(--action-buttons-border-color);
+}
+
+.actions button.delete-button {
+  background-color: var(--notification-off);
+  color: var(--white);
+  border-color: var(--delete-button-border-color);
+}
+
+.actions button.edit-button:hover,
+.actions button.edit-button:focus {
+  background-color: #f7fafc;
+}
+
+.actions button.delete-button:hover,
+.actions button.delete-button:focus {
+  background-color: var(--delete-button-border-color);
+}
+
+.details-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.details-content p:first-child {
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  color: var(--card-title-icon-color);
+}
+
+.details-content .details-container {
+  margin-bottom: 20px;
+}
+
+.details-container .deadline-type {
+  font-size: 1rem;
+  padding: 5px 10px;
+  font-weight: 600;
+}
+
+.details-container .deadline-date,
+.details-container .deadline-description {
   font-size: 1.3rem;
+  color: var(--card-title-icon-color);
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: currentColor;
+}
+
+.details-container .deadline-notification {
+  width: fit-content;
+  padding: 5px 10px;
+  font-weight: 600;
+  background-color: var(--secondary-color-alpha);
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.details-container.description-container,
+.details-container .deadline-description,
+.details-container.notification-container,
+.details-container .deadline-notification {
+  margin-bottom: 0;
 }
 
 .detail-row {
@@ -140,36 +170,6 @@
 .detail-row .notification-off {
   color: var(--notification-off);
   font-weight: bold;
-}
-
-/* Stili specifici per i diversi tipi (riutilizzati da Dashboard.css) */
-/* Potresti volerli importare o definire qui se non usi l'import */
-.salute-type {
-  color: var(--salute-color);
-}
-
-.garage-type {
-  color: var(--garage-color);
-}
-
-.casa-type {
-  color: var(--casa-color);
-}
-
-.documenti-type {
-  color: var(--documenti-color);
-}
-
-.personale-type {
-  color: var(--personale-color);
-}
-
-.lavoro-type {
-  color: var(--lavoro-color);
-}
-
-.altro-type {
-  color: var(--altro-color);
 }
 
 /* Responsive adjustments */

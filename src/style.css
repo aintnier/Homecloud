@@ -7,6 +7,7 @@
   --primary-color: #430862;
   --accent-color: #a713f6;
   --secondary-color: #e2e8f0;
+  --secondary-color-alpha: rgba(226, 232, 240, 0.5);
   --background-color: #fdfaff;
   --white: #fff;
   --text-color: #333;
@@ -16,6 +17,8 @@
   --card-description-color: #6f6972;
   --filter-placeholder-text-color: #807075;
   --select-hover-color: #f7fafc;
+  --action-buttons-border-color: #c6c8ca;
+  --delete-button-border-color: #e6241f;
 
   --card-gradient-first: #fbf8cc;
   --card-gradient-second: #d0f4de;
@@ -75,11 +78,19 @@ body {
 }
 
 /* Spinner per il caricamento */
-.loading-spinner {
+.main-content.loading {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%; /* Adatta l'altezza */
+  padding: 0;
+  overflow: hidden;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center; /* Centra orizzontalmente */
+  align-items: center; /* Centra verticalmente */
+  min-height: 100%;
 }
 
 .spinner {
