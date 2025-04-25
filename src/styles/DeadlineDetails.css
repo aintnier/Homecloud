@@ -3,9 +3,6 @@
   min-height: 100vh;
 }
 
-/* Importa gli stili della sidebar dal tuo Dashboard.css */
-@import "./Dashboard.css";
-
 .main-content {
   flex-grow: 1;
   display: grid;
@@ -17,22 +14,17 @@
   z-index: 10;
 }
 
-.details-header h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  color: var(--primary-color);
-}
-
 .details-card {
   grid-row: 2;
   justify-self: center;
   align-self: center;
   background-color: var(--white);
   border-radius: 10px;
-  box-shadow: 0 2px 4px var(--card-shadow);
-  padding: 30px;
-  max-width: 700px;
-  width: 100%; /* Per adattarsi meglio agli schermi più piccoli */
+  box-shadow: 0 2px 10px var(--card-shadow);
+  padding: 42px;
+  max-width: 900px;
+  /* aggiungere qualcosa in fondo alla card per dare piu altezza e fornire dati ulteriori (grafico?) */
+  width: 100%;
 }
 
 .details-card .details-card-header {
@@ -42,34 +34,34 @@
 }
 
 .details-card h2 {
-  font-size: 1.8rem;
+  font-size: 2.4rem;
   color: var(--text-color);
-  margin-bottom: 40px;
+  margin-bottom: 68px;
 }
 
 .details-card .details-card-header .actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
 }
 
 .actions button {
   border: 1px solid;
-  padding: 10px 15px;
+  padding: 14px 22px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  width: 110px;
+  gap: 9px;
+  width: 130px;
   letter-spacing: 0.2px;
   transition: background-color 0.2s ease;
 }
 
 .actions button .icon {
-  height: 0.95em;
+  height: 1.1em;
 }
 
 .actions button.edit-button {
@@ -97,133 +89,77 @@
 .details-content {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 28px;
 }
 
 .details-content p:first-child {
-  margin-bottom: 10px;
-  font-size: 0.9rem;
+  margin-bottom: 16px;
+  font-size: 1.1rem;
   font-weight: 500;
   letter-spacing: -0.3px;
   color: var(--card-title-icon-color);
 }
 
 .details-content .details-container {
-  margin-bottom: 20px;
+  margin-bottom: 28px;
 }
 
 .details-container .deadline-type {
-  font-size: 1rem;
-  padding: 5px 10px;
+  font-size: 1.2rem;
+  padding: 8px 16px;
   font-weight: 600;
+  letter-spacing: 0.2px;
 }
 
 .details-container .deadline-date,
 .details-container .deadline-description {
-  font-size: 1.3rem;
+  font-size: 1.7rem;
   color: var(--card-title-icon-color);
-  margin-bottom: 10px;
+  margin-bottom: 16px;
   font-weight: 600;
   color: currentColor;
 }
 
 .details-container .deadline-notification {
   width: fit-content;
-  padding: 5px 10px;
+  padding: 8px 16px;
   font-weight: 600;
   background-color: var(--secondary-color-alpha);
-  border-radius: 5px;
-  font-size: 1rem;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  letter-spacing: 0.2px;
 }
 
-.details-container.description-container,
-.details-container .deadline-description,
-.details-container.notification-container,
-.details-container .deadline-notification {
+.details-container.countdown-container {
   margin-bottom: 0;
 }
 
-.detail-row {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
-  align-items: baseline; /* Allinea il testo alla base */
+.details-container.countdown-container {
+  grid-column: span 2;
+  text-align: center;
+  width: 70%;
+  justify-self: center;
 }
 
-.detail-row .label {
-  font-weight: bold;
-  color: var(--text-color-dark);
-  width: 120px; /* Larghezza fissa per le etichette */
-  flex-shrink: 0; /* Impedisce alle etichette di ridursi */
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: var(--secondary-color-alpha);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 10px 0;
 }
 
-.detail-row .value {
-  color: var(--card-description-color);
-  flex-grow: 1; /* Permette al valore di occupare lo spazio rimanente */
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--accent-color);
+  transition: width 0.5s ease;
 }
 
-.detail-row .notification-on {
-  color: var(--notification-on);
-  font-weight: bold;
-}
-
-.detail-row .notification-off {
-  color: var(--notification-off);
-  font-weight: bold;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .main-content {
-    margin-left: 0;
-    padding: 15px;
-  }
-
-  .details-header {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 20px;
-  }
-
-  /* I bottoni ora sono nella card, quindi non li stilizzo qui */
-  /* .details-header .actions {
-    margin-top: 15px;
-  } */
-
-  .details-header h1 {
-    font-size: 1.8rem;
-  }
-
-  .details-card {
-    padding: 20px;
-  }
-
-  .card-actions {
-    top: 15px;
-    right: 15px;
-    gap: 8px;
-  }
-
-  .card-actions button {
-    font-size: 0.7rem;
-    padding: 6px 10px;
-  }
-
-  .details-card h2 {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-    padding-top: 30px; /* Spazio per i bottoni in alto a destra */
-  }
-
-  .detail-row {
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 10px;
-    align-items: flex-start;
-  }
-
-  .detail-row .label {
-    width: auto;
-    margin-bottom: 5px;
-  }
+.deadline-countdown {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: currentColor;
+  margin-top: 10px;
+  letter-spacing: 0.3px;
 }

@@ -63,9 +63,11 @@ function Sidebar({ user }) {
 function DeadlineDetails() {
   const { id } = useParams();
   const [deadline, setDeadline] = useState(null);
-  const [user, setUser] = useState(null); // Stato per l'utente
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [timeLeft, setTimeLeft] = useState("");
+  const [progress, setProgress] = useState(0);
 
   const userId = 1; // ID utente simulato // TEMPORANEO!!!!!!!!!!!!!!!!!!
 
@@ -101,6 +103,7 @@ function DeadlineDetails() {
         }
 
         setDeadline(selectedDeadline);
+
         setLoading(false);
       } catch (err) {
         console.error("Errore durante il recupero dei dati:", err);
@@ -111,6 +114,45 @@ function DeadlineDetails() {
 
     fetchUserAndDeadline();
   }, [id, userId]);
+
+  useEffect(() => {
+    if (deadline) {
+      const calculateTimeLeft = () => {
+        const now = new Date();
+        const dueDate = new Date(deadline.due_date);
+        const creationDate = new Date(deadline.creation_date);
+        const totalDuration = dueDate - creationDate;
+        const timeElapsed = now - creationDate;
+        const difference = dueDate - now;
+
+        if (difference <= 0) {
+          setTimeLeft("Scaduto");
+          setProgress(100);
+          return;
+        }
+
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((difference / (1000 * 60)) % 60);
+        const seconds = Math.floor((difference / 1000) % 60);
+
+        setTimeLeft(
+          `${days} giorni, ${hours} ore, ${minutes} minuti, ${seconds} secondi`
+        );
+
+        const progressPercentage = Math.min(
+          (timeElapsed / totalDuration) * 100,
+          100
+        );
+        setProgress(progressPercentage);
+      };
+
+      calculateTimeLeft(); // Calcola immediatamente il tempo rimanente
+      const timer = setInterval(calculateTimeLeft, 1000); // Aggiorna ogni secondo
+
+      return () => clearInterval(timer); // Pulisce il timer quando il componente viene smontato
+    }
+  }, [deadline]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -147,7 +189,7 @@ function DeadlineDetails() {
       <Sidebar user={user} />
       <main className="main-content">
         <header className="details-header">
-          <h1>Dettagli Scadenza</h1>
+          <h1 className="section-title">Dettagli Scadenza</h1>
         </header>
         <div className="details-card">
           <div className="details-card-header">
@@ -197,6 +239,17 @@ function DeadlineDetails() {
               <p className="deadline-notification">
                 {deadline?.notifications_on ? "On" : "Off"}
               </p>
+            </div>
+
+            <div className="details-container countdown-container">
+              <p>Tempo Rimanente</p>
+              <div className="progress-bar">
+                <div
+                  className="progress-bar-fill"
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+              <p className="deadline-countdown">{timeLeft}</p>
             </div>
           </div>
         </div>
