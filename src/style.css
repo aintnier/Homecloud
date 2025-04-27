@@ -67,6 +67,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 *:focus {
   outline: none;
 }
@@ -75,6 +76,12 @@ body {
   font-family: "Poppins", Tahoma, Geneva, Verdana, sans-serif;
   color: var(--text-color);
   background-color: var(--background-color);
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
 }
 
 /* Spinner per il caricamento */

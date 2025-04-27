@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import DatePicker, { registerLocale } from "react-datepicker";
+import it from "date-fns/locale/it"; // Importa la localizzazione italiana
+import "react-datepicker/dist/react-datepicker.css";
 import { Link, useParams } from "react-router-dom";
 import "../styles/DeadlineDetails.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,8 +12,11 @@ import {
   faRightFromBracket,
   faPen,
   faTrash,
+  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+
+registerLocale("it", it); // Registra la localizzazione italiana
 
 function Sidebar({ user }) {
   return (
@@ -68,6 +74,12 @@ function DeadlineDetails() {
   const [error, setError] = useState(null);
   const [timeLeft, setTimeLeft] = useState("");
   const [progress, setProgress] = useState(0);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false); // Stato per il caricamento durante l'aggiornamento
+  const [message, setMessage] = useState(null);
+  const [isNotificationOn, setIsNotificationOn] = useState(false); // Stato locale per il checkbox
 
   const userId = 1; // ID utente simulato // TEMPORANEO!!!!!!!!!!!!!!!!!!
 
@@ -147,10 +159,17 @@ function DeadlineDetails() {
         setProgress(progressPercentage);
       };
 
-      calculateTimeLeft(); // Calcola immediatamente il tempo rimanente
-      const timer = setInterval(calculateTimeLeft, 1000); // Aggiorna ogni secondo
+      calculateTimeLeft();
+      const timer = setInterval(calculateTimeLeft, 1000);
 
-      return () => clearInterval(timer); // Pulisce il timer quando il componente viene smontato
+      return () => clearInterval(timer);
+    }
+  }, [deadline]);
+
+  useEffect(() => {
+    if (deadline) {
+      setSelectedDate(new Date(deadline.due_date));
+      setIsNotificationOn(deadline.notifications_on); // Inizializza lo stato locale
     }
   }, [deadline]);
 
@@ -184,6 +203,57 @@ function DeadlineDetails() {
     );
   }
 
+  const handleEditClick = () => {
+    setIsNotificationOn(deadline.notifications_on); // Reimposta lo stato del checkbox con il valore effettivo della scadenza
+    setIsEditModalOpen(true); // Mostra il modal
+  };
+
+  const handleCloseModal = () => {
+    setIsEditModalOpen(false); // Nasconde il modal
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    try {
+      const updatedDeadline = {
+        title: e.target[0].value,
+        description: e.target[1].value,
+        due_date: selectedDate.toISOString(),
+        notifications_on: isNotificationOn, // Usa lo stato locale
+        user_id: deadline.user_id,
+        type: deadline.type,
+      };
+
+      setIsUpdating(true);
+
+      await axios.put(
+        `${process.env.REACT_APP_BACKEND_URL}/api/deadlines/${deadline.id}`,
+        updatedDeadline
+      );
+
+      // Aggiorna lo stato globale solo dopo il salvataggio
+      setDeadline((prev) => ({
+        ...prev,
+        ...updatedDeadline,
+      }));
+
+      setMessage({
+        type: "success",
+        text: "Scadenza aggiornata con successo!",
+      });
+      setIsUpdating(false);
+      handleCloseModal(); // Chiudi il modal
+    } catch (error) {
+      console.error("Errore durante l'aggiornamento della scadenza:", error);
+      setMessage({
+        type: "error",
+        text: "Si è verificato un errore durante l'aggiornamento.",
+      });
+      setIsUpdating(false);
+    }
+  };
+
   return (
     <div className="deadline-details-container">
       <Sidebar user={user} />
@@ -196,7 +266,7 @@ function DeadlineDetails() {
             <h2>{deadline?.title}</h2>
 
             <div className="actions">
-              <button onClick={() => alert("Modifica")} className="edit-button">
+              <button onClick={handleEditClick} className="edit-button">
                 <FontAwesomeIcon icon={faPen} className="icon" />
                 Modifica
               </button>
@@ -214,11 +284,13 @@ function DeadlineDetails() {
             <div className="details-container type-container">
               <p>Categoria</p>
               <p
-                className={`deadline-type ${deadline.type
-                  .toLowerCase()
-                  .replace(" ", "-")}-type`}
+                className={`deadline-type ${
+                  deadline?.type
+                    ? deadline.type.toLowerCase().replace(" ", "-")
+                    : ""
+                }-type`}
               >
-                {deadline?.type}
+                {deadline?.type || "N/A"}
               </p>
             </div>
 
@@ -254,6 +326,98 @@ function DeadlineDetails() {
           </div>
         </div>
       </main>
+      {isEditModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h2>Modifica Scadenza</h2>
+            <form onSubmit={handleUpdate}>
+              <label className="title-input-container">
+                <p>Titolo:</p>
+                <input type="text" defaultValue={deadline?.title} required />
+              </label>
+
+              <label className="description-input-container">
+                <p>Descrizione:</p>
+                <textarea
+                  defaultValue={deadline?.description}
+                  re
+                  q
+                  uired
+                ></textarea>
+              </label>
+
+              <label className="date-input-container">
+                <p>Data di Scadenza:</p>
+                <div className="custom-date-input">
+                  <DatePicker
+                    selected={selectedDate}
+                    onChange={(date) => {
+                      setSelectedDate(date);
+                      setIsCalendarOpen(false);
+                    }}
+                    dateFormat="dd-MM-yyyy"
+                    locale="it"
+                    className="custom-date-picker"
+                    calendarStartDay={1}
+                    minDate={new Date()}
+                    open={isCalendarOpen}
+                    onClickOutside={() => setIsCalendarOpen(false)}
+                    dayClassName={(date) =>
+                      date.toDateString() === selectedDate?.toDateString()
+                        ? "custom-selected-day"
+                        : undefined
+                    }
+                  />
+                  <FontAwesomeIcon
+                    icon={faCalendarDay}
+                    className="calendar-icon"
+                    onClick={() => setIsCalendarOpen((prev) => !prev)}
+                  />
+                </div>
+              </label>
+
+              <label className="notifications-input-container">
+                <p>Notifica:</p>
+              </label>
+              <div className="notification-toggle">
+                <div className="custom-checkbox">
+                  <input
+                    type="checkbox"
+                    id="notification-checkbox"
+                    checked={isNotificationOn} // Usa lo stato locale
+                    onChange={(e) => setIsNotificationOn(e.target.checked)} // Aggiorna lo stato locale
+                  />
+                  {isNotificationOn && (
+                    <FontAwesomeIcon icon={faCheck} className="check-icon" />
+                  )}
+                </div>
+                <span>{isNotificationOn ? "Attiva" : "Disattiva"}</span>
+              </div>
+
+              <div className="modal-actions">
+                <button
+                  type="submit"
+                  className="save-button"
+                  disabled={isUpdating}
+                >
+                  {isUpdating ? "Salvando..." : "Salva"}
+                </button>
+                <button
+                  type="button"
+                  className="cancel-button"
+                  onClick={handleCloseModal}
+                  disabled={isUpdating}
+                >
+                  Annulla
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      {message && (
+        <div className={`message ${message.type}`}>{message.text}</div>
+      )}
     </div>
   );
 }

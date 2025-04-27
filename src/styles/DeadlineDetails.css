@@ -22,8 +22,7 @@
   border-radius: 10px;
   box-shadow: 0 2px 10px var(--card-shadow);
   padding: 42px;
-  max-width: 900px;
-  /* aggiungere qualcosa in fondo alla card per dare piu altezza e fornire dati ulteriori (grafico?) */
+  max-width: 1000px;
   width: 100%;
 }
 
@@ -162,4 +161,295 @@
   color: currentColor;
   margin-top: 10px;
   letter-spacing: 0.3px;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: var(--white);
+  padding: 28px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  width: 500px;
+  max-width: 90%;
+}
+
+.modal h2 {
+  margin-bottom: 28px;
+  font-size: 2rem;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.modal form label {
+  display: block;
+  margin-bottom: 32px;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.modal form label.notifications-input-container {
+  margin-bottom: 0;
+}
+
+.modal form label p {
+  font-size: 1.2rem;
+  color: var(--card-title-icon-color);
+  margin-bottom: 8px;
+}
+
+.modal form input,
+.modal form textarea {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--secondary-color);
+  color: currentColor;
+  border-radius: 6px;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+}
+
+.modal form textarea {
+  resize: none;
+  height: 100px;
+}
+
+.notification-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.custom-checkbox {
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: var(--white);
+  border: 1px solid var(--secondary-color);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.custom-checkbox input[type="checkbox"]:checked {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.custom-checkbox .check-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--white);
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.notification-toggle span {
+  font-size: 1.1rem;
+  color: currentColor;
+  letter-spacing: 0.2px;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+}
+
+.modal-actions button {
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  padding: 12px 24px;
+  border-radius: 6px;
+  border: none;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.modal-actions .save-button {
+  background-color: var(--accent-color);
+  color: var(--white);
+}
+
+.modal-actions .cancel-button {
+  background-color: var(--secondary-color);
+  color: currentColor;
+}
+
+.modal-actions .save-button:hover,
+.modal-actions .save-button:focus,
+.modal-actions .cancel-button:hover,
+.modal-actions .cancel-button:focus {
+  opacity: 0.9;
+}
+
+/* Rimuovere l'icona standard del calendario */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+/* Contenitore per l'input personalizzato */
+.deadline-details-container .custom-date-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.deadline-details-container .custom-date-input .calendar-icon {
+  position: absolute;
+  right: 18px;
+  color: var(--text-color-light);
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.deadline-details-container .custom-date-input .calendar-icon:hover {
+  color: currentColor;
+}
+
+.deadline-details-container .custom-date-picker {
+  width: 100%;
+  padding: 12px;
+  padding-right: 40px; /* Spazio per l'icona */
+  border: 1px solid var(--secondary-color);
+  border-radius: 6px;
+  font-size: 1rem;
+  color: var(--text-color);
+  background-color: var(--white);
+  transition: border-color 0.2s ease;
+}
+
+/* Stile per il calendario di react-datepicker */
+.deadline-details-container .react-datepicker {
+  font-family: inherit;
+  font-size: 1rem;
+  border: 1px solid var(--secondary-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 20px var(--hover-shadow);
+  background-color: var(--white);
+  overflow: hidden;
+}
+
+.deadline-details-container .react-datepicker__header {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: 0;
+  padding: 12px;
+  text-align: center;
+}
+
+.deadline-details-container .react-datepicker__current-month {
+  font-size: 1.4rem;
+  margin-bottom: 0;
+  margin-block: 12px;
+  font-weight: 700;
+  color: var(--white);
+  text-transform: capitalize;
+}
+
+.deadline-details-container .react-datepicker__day-name {
+  font-size: 1rem;
+  color: var(--white);
+  text-transform: uppercase;
+  text-align: center;
+  width: 2.9rem; /* Allinea con i giorni del calendario */
+  margin: 0;
+  line-height: 2.5rem;
+  font-weight: 600;
+}
+
+.react-datepicker__month {
+  margin: 0;
+}
+
+.deadline-details-container .react-datepicker__day {
+  font-size: 1rem;
+  color: currentColor;
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  text-align: center;
+  margin: 0.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.deadline-details-container .react-datepicker__day:hover {
+  background-color: var(--secondary-color-alpha);
+  color: currentColor;
+}
+
+.deadline-details-container .react-datepicker__day--outside-month {
+  color: var(--text-color-light);
+}
+
+.deadline-details-container .react-datepicker__day--selected,
+.deadline-details-container .react-datepicker__day--keyboard-selected {
+  background-color: inherit;
+  color: inherit;
+}
+
+.deadline-details-container .custom-selected-day {
+  background-color: var(--accent-color) !important;
+  color: var(--white) !important;
+}
+
+.deadline-details-container .react-datepicker__navigation {
+  top: 10px;
+  line-height: 1.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.deadline-details-container .react-datepicker__navigation-icon::before {
+  border-color: var(--white);
+}
+
+.deadline-details-container .react-datepicker__navigation--previous {
+  left: 10px;
+  top: 25px;
+}
+
+.deadline-details-container .react-datepicker__navigation--next {
+  right: 10px;
+  top: 25px;
+}
+
+.deadline-details-container .react-datepicker__day--disabled {
+  color: var(--text-color-light);
+  background-color: var(--secondary-color-alpha);
+  pointer-events: none;
+  opacity: 0.6;
 }
