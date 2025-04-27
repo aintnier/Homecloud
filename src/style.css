@@ -285,3 +285,39 @@ a.user-profile {
   color: var(--primary-color);
   margin-bottom: 28px;
 }
+
+/* Messaggi di fallimento/conferma */
+.message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--white);
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeOut 3.5s forwards;
+}
+
+.message.success {
+  background-color: var(--notification-on);
+}
+
+.message.error {
+  background-color: var(--notification-off);
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

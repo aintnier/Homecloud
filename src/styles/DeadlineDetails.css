@@ -193,6 +193,13 @@
   text-align: center;
 }
 
+.modal p.confirmation-message {
+  font-size: 1.1rem;
+  color: var(--text-color);
+  margin-bottom: 28px;
+  text-align: center;
+}
+
 .modal form label {
   display: block;
   margin-bottom: 32px;
@@ -279,6 +286,10 @@
   gap: 14px;
 }
 
+.modal-actions#delete-modal-actions {
+  justify-content: center;
+}
+
 .modal-actions button {
   font-size: 1rem;
   font-weight: 500;
@@ -301,11 +312,18 @@
   color: currentColor;
 }
 
+.modal-actions .delete-button {
+  background-color: var(--notification-off);
+  color: var(--white);
+}
+
 .modal-actions .save-button:hover,
 .modal-actions .save-button:focus,
+.modal-actions .delete-button:hover,
+.modal-actions .delete-button:focus,
 .modal-actions .cancel-button:hover,
 .modal-actions .cancel-button:focus {
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 /* Rimuovere l'icona standard del calendario */
@@ -421,8 +439,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .deadline-details-container .custom-selected-day {
-  background-color: var(--accent-color) !important;
-  color: var(--white) !important;
+  background-color: var(--accent-color);
+  color: var(--white);
 }
 
 .deadline-details-container .react-datepicker__navigation {
@@ -453,3 +471,5 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   pointer-events: none;
   opacity: 0.6;
 }
+
+/*  */

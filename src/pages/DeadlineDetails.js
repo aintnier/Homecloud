@@ -75,6 +75,7 @@ function DeadlineDetails() {
   const [timeLeft, setTimeLeft] = useState("");
   const [progress, setProgress] = useState(0);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false); // Stato per il caricamento durante l'aggiornamento
@@ -254,6 +255,41 @@ function DeadlineDetails() {
     }
   };
 
+  const handleDeleteClick = () => {
+    setIsDeleteModalOpen(true); // Mostra il modal di conferma
+  };
+
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false); // Nasconde il modal di conferma
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_BACKEND_URL}/api/deadlines/${deadline.id}`
+      );
+
+      setMessage({
+        type: "success",
+        text: "Scadenza eliminata con successo!",
+      });
+
+      setIsDeleteModalOpen(false); // Chiudi il modal di conferma
+
+      // Mostra il messaggio per 3 secondi, poi reindirizza alla dashboard
+      setTimeout(() => {
+        setMessage(null);
+        window.location.href = "/dashboard";
+      }, 3000);
+    } catch (error) {
+      console.error("Errore durante l'eliminazione della scadenza:", error);
+      setMessage({
+        type: "error",
+        text: "Si è verificato un errore durante l'eliminazione.",
+      });
+    }
+  };
+
   return (
     <div className="deadline-details-container">
       <Sidebar user={user} />
@@ -270,10 +306,7 @@ function DeadlineDetails() {
                 <FontAwesomeIcon icon={faPen} className="icon" />
                 Modifica
               </button>
-              <button
-                onClick={() => alert("Elimina")}
-                className="delete-button"
-              >
+              <button onClick={handleDeleteClick} className="delete-button">
                 <FontAwesomeIcon icon={faTrash} className="icon" />
                 Elimina
               </button>
@@ -412,6 +445,31 @@ function DeadlineDetails() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+      {isDeleteModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <p className="confirmation-message">
+              Sei sicuro di voler eliminare questa scadenza?
+            </p>
+            <div className="modal-actions" id="delete-modal-actions">
+              <button
+                type="button"
+                className="delete-button"
+                onClick={handleDelete}
+              >
+                Elimina
+              </button>
+              <button
+                type="button"
+                className="cancel-button"
+                onClick={handleCloseDeleteModal}
+              >
+                Annulla
+              </button>
+            </div>
           </div>
         </div>
       )}
