@@ -16,6 +16,9 @@ import {
   faSearch,
   faCircleDot,
   faTimes,
+  faPlusSquare,
+  faChevronLeft,
+  faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
@@ -69,6 +72,9 @@ function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [user, setUser] = useState(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+  const cardsGridRef = useRef(null);
   const dropdownRef = useRef(null);
 
   const options = [
@@ -124,9 +130,9 @@ function Dashboard() {
           (a, b) => new Date(a.due_date) - new Date(b.due_date)
         );
 
-        // Imposta le prossime 3 scadenze e le altre
-        setUpcomingDeadlines(sortedDeadlines.slice(0, 3));
-        setOtherDeadlines(sortedDeadlines.slice(3));
+        // Imposta le prossime 4 scadenze e le altre
+        setUpcomingDeadlines(sortedDeadlines.slice(0, 4));
+        setOtherDeadlines(sortedDeadlines.slice(4));
         setLoading(false);
       } catch (error) {
         console.error("Errore durante il recupero dei dati:", error);
@@ -136,6 +142,42 @@ function Dashboard() {
 
     fetchUserAndDeadlines();
   }, [userId]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const grid = cardsGridRef.current;
+      if (!grid) return;
+
+      setShowLeftArrow(grid.scrollLeft > 0);
+      setShowRightArrow(grid.scrollLeft + grid.clientWidth < grid.scrollWidth);
+    };
+
+    const grid = cardsGridRef.current;
+    if (grid) {
+      handleScroll();
+      grid.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (grid) {
+        grid.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [upcomingDeadlines]);
+
+  const scrollLeft = () => {
+    cardsGridRef.current.scrollBy({
+      left: -400,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollRight = () => {
+    cardsGridRef.current.scrollBy({
+      left: 400,
+      behavior: "smooth",
+    });
+  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -257,43 +299,77 @@ function Dashboard() {
         {/* Upcoming Deadlines Section */}
         <section className="cards-section">
           <h2 className="section-title">Prossime Scadenze</h2>
-          <div className="cards-grid">
-            {upcomingDeadlines.map((deadline, index) => (
-              <Link
-                to={`/deadline-details/${deadline.id}`}
-                key={deadline.id}
-                className={`card upcoming-deadline-card card-gradient-${
-                  index + 1
-                }`}
-              >
-                <div className="card-content">
-                  <div className="card-header">
-                    <div className="card-title">
-                      <FontAwesomeIcon
-                        icon={typeIcons[deadline.type] || faExclamationTriangle}
-                        className="deadline-icon"
-                      />
-                      {deadline.title}
+          <div className="carousel-container">
+            {/* Freccia sinistra */}
+            {showLeftArrow && (
+              <button className="carousel-arrow left" onClick={scrollLeft}>
+                <FontAwesomeIcon icon={faChevronLeft} />
+              </button>
+            )}
+
+            {/* Griglia scrollabile */}
+            <div className="cards-grid" ref={cardsGridRef}>
+              {upcomingDeadlines.map((deadline, index) => (
+                <Link
+                  to={`/deadline-details/${deadline.id}`}
+                  key={deadline.id}
+                  className={`card upcoming-deadline-card card-gradient-${
+                    index + 1
+                  }`}
+                >
+                  <div className="card-content">
+                    <div className="card-header">
+                      <div className="card-title">
+                        <FontAwesomeIcon
+                          icon={
+                            typeIcons[deadline.type] || faExclamationTriangle
+                          }
+                          className="deadline-icon"
+                        />
+                        {deadline.title}
+                      </div>
+                      <div
+                        className={`card-type ${deadline.type
+                          .toLowerCase()
+                          .replace(" ", "-")}-type`}
+                      >
+                        {deadline.type}
+                      </div>
                     </div>
-                    <div
-                      className={`card-type ${deadline.type
-                        .toLowerCase()
-                        .replace(" ", "-")}-type`}
-                    >
-                      {deadline.type}
+                    <div className="card-body">
+                      <div className="due-date">
+                        Scade il: {formatDate(deadline.due_date)}
+                      </div>
+                      <div className="description">
+                        <strong>Descrizione</strong>: {deadline.description}
+                      </div>
                     </div>
                   </div>
-                  <div className="card-body">
-                    <div className="due-date">
-                      Scade il: {formatDate(deadline.due_date)}
+                </Link>
+              ))}
+              {/* Placeholder per riempire fino a 4 posti */}
+              {Array.from({ length: 4 - upcomingDeadlines.length }).map(
+                (_, index) => (
+                  <Link
+                    to="/add-deadline"
+                    key={`placeholder-${index}`}
+                    className="card placeholder-card"
+                  >
+                    <div className="placeholder-content">
+                      <FontAwesomeIcon icon={faPlusSquare} className="icon" />
+                      <p className="add-deadline-text">Aggiungi Scadenza</p>
                     </div>
-                    <div className="description">
-                      <strong>Descrizione</strong>: {deadline.description}
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
+                  </Link>
+                )
+              )}
+            </div>
+
+            {/* Freccia destra */}
+            {showRightArrow && (
+              <button className="carousel-arrow right" onClick={scrollRight}>
+                <FontAwesomeIcon icon={faChevronRight} />
+              </button>
+            )}
           </div>
         </section>
 

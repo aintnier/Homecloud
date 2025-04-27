@@ -174,6 +174,21 @@ function DeadlineDetails() {
     }
   }, [deadline]);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setIsEditModalOpen(false);
+        setIsDeleteModalOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -420,9 +435,9 @@ function DeadlineDetails() {
                     checked={isNotificationOn} // Usa lo stato locale
                     onChange={(e) => setIsNotificationOn(e.target.checked)} // Aggiorna lo stato locale
                   />
-                  {isNotificationOn && (
+                  {isNotificationOn ? (
                     <FontAwesomeIcon icon={faCheck} className="check-icon" />
-                  )}
+                  ) : null}
                 </div>
                 <span>{isNotificationOn ? "Attiva" : "Disattiva"}</span>
               </div>

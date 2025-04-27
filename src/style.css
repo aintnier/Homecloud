@@ -23,6 +23,7 @@
   --card-gradient-first: #fbf8cc;
   --card-gradient-second: #d0f4de;
   --card-gradient-third: #a9def9;
+  --card-gradient-fourth: #cdb4db;
 
   /* aside */
   --aside-background-color: #111111;
@@ -132,7 +133,7 @@ select {
   left: 0;
   bottom: 0;
   overflow: hidden;
-  border-top-right-radius: 80px;
+  border-top-right-radius: 60px;
   z-index: 999;
 }
 
