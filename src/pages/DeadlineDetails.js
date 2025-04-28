@@ -47,7 +47,17 @@ function Sidebar({ user }) {
         </ul>
       </nav>
       <a href="/profile" className="user-profile">
-        <div className="avatar"></div>
+        <div className="avatar">
+          {user?.profileImageUrl ? (
+            <img
+              src={user.profileImageUrl}
+              alt="Avatar"
+              className="avatar-image"
+            />
+          ) : (
+            <div className="avatar-placeholder"></div>
+          )}
+        </div>
         <div className="user-info">
           <div className="name">{user?.full_name || "Nome Utente"}</div>
           <div className="email">{user?.email || "email@example.com"}</div>
