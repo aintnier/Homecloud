@@ -517,3 +517,16 @@ section.cards-section {
   color: var(--user-icon-placeholder-color);
   height: 64px;
 }
+
+.expired-deadlines-section {
+  margin-top: 40px;
+}
+
+.expired-deadline-card {
+  background-color: var(--expired-card-bg, #f8d7da);
+  border-left: 6px solid var(--expired-card-border, #dc3545);
+}
+
+.expired-deadline-card .due-date {
+  color: var(--expired-card-text, #dc3545);
+}

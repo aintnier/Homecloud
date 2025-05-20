@@ -1,0 +1,441 @@
+{
+  "function": {
+    "createDeadline": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "homecloudSharedUtils"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "createUsers": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "homecloudSharedUtils"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "deleteUser": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "homecloudSharedUtils"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "homecloudSharedUtils": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
+    },
+    "readUsers": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "homecloudSharedUtils"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "updateUser": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "homecloudSharedUtils"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_createDeadline_dbHost": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createDeadline"
+        }
+      ]
+    },
+    "AMPLIFY_function_createDeadline_dbName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createDeadline"
+        }
+      ]
+    },
+    "AMPLIFY_function_createDeadline_dbPassword": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createDeadline"
+        }
+      ]
+    },
+    "AMPLIFY_function_createDeadline_dbUser": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createDeadline"
+        }
+      ]
+    },
+    "AMPLIFY_function_createDeadline_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createDeadline"
+        }
+      ]
+    },
+    "AMPLIFY_function_createDeadline_region": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createDeadline"
+        }
+      ]
+    },
+    "AMPLIFY_function_createDeadline_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createDeadline"
+        }
+      ]
+    },
+    "AMPLIFY_function_createUsers_dbHost": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_createUsers_dbName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_createUsers_dbPassword": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_createUsers_dbUser": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_createUsers_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_createUsers_region": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_createUsers_s3BucketFolder": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_createUsers_s3BucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_createUsers_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteUser_dbHost": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteUser_dbName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteUser_dbPassword": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteUser_dbUser": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteUser_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteUser_region": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteUser_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_homecloudSharedUtils_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "homecloudSharedUtils"
+        }
+      ]
+    },
+    "AMPLIFY_function_homecloudSharedUtils_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "homecloudSharedUtils"
+        }
+      ]
+    },
+    "AMPLIFY_function_homecloudsharedUtils _deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "homecloudsharedUtils "
+        }
+      ]
+    },
+    "AMPLIFY_function_homecloudsharedUtils _s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "homecloudsharedUtils "
+        }
+      ]
+    },
+    "AMPLIFY_function_readUsers_dbHost": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_readUsers_dbName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_readUsers_dbPassword": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_readUsers_dbUser": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_readUsers_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_readUsers_region": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_readUsers_s3BucketFolder": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_readUsers_s3BucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_readUsers_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateUser_dbHost": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateUser_dbName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateUser_dbPassword": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateUser_dbUser": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateUser_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateUser_region": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateUser_s3BucketFolder": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateUser_s3BucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateUser_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateUser"
+        }
+      ]
+    }
+  }
+}

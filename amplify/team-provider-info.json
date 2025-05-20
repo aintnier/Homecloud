@@ -1,0 +1,78 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-homecloud-dev-c8587-authRole",
+      "UnauthRoleArn": "arn:aws:iam::274756574788:role/amplify-homecloud-dev-c8587-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::274756574788:role/amplify-homecloud-dev-c8587-authRole",
+      "Region": "eu-north-1",
+      "DeploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
+      "UnauthRoleName": "amplify-homecloud-dev-c8587-unauthRole",
+      "StackName": "amplify-homecloud-dev-c8587",
+      "StackId": "arn:aws:cloudformation:eu-north-1:274756574788:stack/amplify-homecloud-dev-c8587/ed49c890-2fe4-11f0-a414-0e9b2d2a211b",
+      "AmplifyAppId": "dkfwple8yju2k"
+    },
+    "categories": {
+      "function": {
+        "homecloudsharedUtils ": {
+          "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
+          "s3Key": "amplify-builds/homecloudsharedUtils -LambdaLayerVersionba9af031-build.zip"
+        },
+        "homecloudSharedUtils": {
+          "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
+          "s3Key": "amplify-builds/homecloudSharedUtils-LambdaLayerVersion7b5090fb-build.zip"
+        },
+        "readUsers": {
+          "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
+          "s3Key": "amplify-builds/readUsers-6664396c457242697a79-build.zip",
+          "region": "eu-north-1",
+          "dbHost": "db-homecloud.cd0giowo63w0.eu-north-1.rds.amazonaws.com",
+          "dbUser": "admin",
+          "dbPassword": "rubbing-departure-kitchen",
+          "dbName": "homecloud",
+          "s3BucketName": "home-cloud-user-images",
+          "s3BucketFolder": "avatars"
+        },
+        "createUsers": {
+          "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
+          "s3Key": "amplify-builds/createUsers-41465649706a5935352b-build.zip",
+          "region": "eu-north-1",
+          "dbHost": "db-homecloud.cd0giowo63w0.eu-north-1.rds.amazonaws.com",
+          "dbUser": "admin",
+          "dbPassword": "rubbing-departure-kitchen",
+          "dbName": "homecloud",
+          "s3BucketName": "home-cloud-user-images",
+          "s3BucketFolder": "avatars"
+        },
+        "updateUser": {
+          "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
+          "s3Key": "amplify-builds/updateUser-626b4d76356d70613775-build.zip",
+          "region": "eu-north-1",
+          "dbHost": "db-homecloud.cd0giowo63w0.eu-north-1.rds.amazonaws.com",
+          "dbUser": "admin",
+          "dbPassword": "rubbing-departure-kitchen",
+          "dbName": "homecloud",
+          "s3BucketName": "home-cloud-user-images",
+          "s3BucketFolder": "avatars"
+        },
+        "deleteUser": {
+          "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
+          "s3Key": "amplify-builds/deleteUser-4965314d4f4b4246756c-build.zip",
+          "region": "eu-north-1",
+          "dbHost": "db-homecloud.cd0giowo63w0.eu-north-1.rds.amazonaws.com",
+          "dbUser": "admin",
+          "dbPassword": "rubbing-departure-kitchen",
+          "dbName": "homecloud"
+        },
+        "createDeadline": {
+          "region": "eu-north-1",
+          "dbHost": "db-homecloud.cd0giowo63w0.eu-north-1.rds.amazonaws.com",
+          "dbUser": "admin",
+          "dbPassword": "rubbing-departure-kitchen",
+          "dbName": "homecloud",
+          "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
+          "s3Key": "amplify-builds/createDeadline-44326f3334435a644251-build.zip"
+        }
+      }
+    }
+  }
+}

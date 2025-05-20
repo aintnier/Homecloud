@@ -79,6 +79,7 @@ function Dashboard() {
   const [selectedOption, setSelectedOption] = useState("");
   const [upcomingDeadlines, setUpcomingDeadlines] = useState([]);
   const [otherDeadlines, setOtherDeadlines] = useState([]);
+  const [expiredDeadlines, setExpiredDeadlines] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [user, setUser] = useState(null);
@@ -143,6 +144,11 @@ function Dashboard() {
         // Imposta le prossime 4 scadenze e le altre
         setUpcomingDeadlines(sortedDeadlines.slice(0, 4));
         setOtherDeadlines(sortedDeadlines.slice(4));
+        setExpiredDeadlines(
+          sortedDeadlines.filter(
+            (deadline) => new Date(deadline.due_date) < new Date()
+          )
+        );
         setLoading(false);
       } catch (error) {
         console.error("Errore durante il recupero dei dati:", error);
@@ -379,6 +385,53 @@ function Dashboard() {
               <button className="carousel-arrow right" onClick={scrollRight}>
                 <FontAwesomeIcon icon={faChevronRight} />
               </button>
+            )}
+          </div>
+        </section>
+
+        {/* Scadenze Scadute */}
+        <section className="expired-deadlines-section">
+          <h2 className="section-title">Scadenze Scadute</h2>
+          <div className="cards-grid">
+            {expiredDeadlines.length > 0 ? (
+              expiredDeadlines.map((deadline, index) => (
+                <Link
+                  to={`/deadline-details/${deadline.id}`}
+                  key={deadline.id}
+                  className="card expired-deadline-card"
+                >
+                  <div className="card-content">
+                    <div className="card-header">
+                      <div className="card-title">
+                        <FontAwesomeIcon
+                          icon={
+                            typeIcons[deadline.type] || faExclamationTriangle
+                          }
+                          className="deadline-icon"
+                        />
+                        {deadline.title}
+                      </div>
+                      <div
+                        className={`card-type ${deadline.type
+                          .toLowerCase()
+                          .replace(" ", "-")}-type`}
+                      >
+                        {deadline.type}
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <div className="due-date">
+                        Scaduto il: {formatDate(deadline.due_date)}
+                      </div>
+                      <div className="description">
+                        <strong>Descrizione</strong>: {deadline.description}
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <p className="no-data">Nessuna scadenza scaduta.</p>
             )}
           </div>
         </section>
