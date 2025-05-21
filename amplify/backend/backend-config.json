@@ -28,6 +28,20 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "deleteDeadlines": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "homecloudSharedUtils"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "deleteUser": {
       "build": true,
       "dependsOn": [
@@ -47,7 +61,35 @@
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
     },
+    "readDeadlines": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "homecloudSharedUtils"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "readUsers": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "homecloudSharedUtils"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "updateDeadlines": {
       "build": true,
       "dependsOn": [
         {
@@ -205,6 +247,62 @@
         }
       ]
     },
+    "AMPLIFY_function_deleteDeadlines_dbHost": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteDeadlines_dbName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteDeadlines_dbPassword": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteDeadlines_dbUser": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteDeadlines_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteDeadlines_region": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteDeadlines_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteDeadlines"
+        }
+      ]
+    },
     "AMPLIFY_function_deleteUser_dbHost": {
       "usedBy": [
         {
@@ -277,19 +375,59 @@
         }
       ]
     },
-    "AMPLIFY_function_homecloudsharedUtils _deploymentBucketName": {
+    "AMPLIFY_function_readDeadlines_dbHost": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "homecloudsharedUtils "
+          "resourceName": "readDeadlines"
         }
       ]
     },
-    "AMPLIFY_function_homecloudsharedUtils _s3Key": {
+    "AMPLIFY_function_readDeadlines_dbName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "homecloudsharedUtils "
+          "resourceName": "readDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_readDeadlines_dbPassword": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_readDeadlines_dbUser": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_readDeadlines_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_readDeadlines_region": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_readDeadlines_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readDeadlines"
         }
       ]
     },
@@ -362,6 +500,62 @@
         {
           "category": "function",
           "resourceName": "readUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateDeadlines_dbHost": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateDeadlines_dbName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateDeadlines_dbPassword": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateDeadlines_dbUser": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateDeadlines_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateDeadlines_region": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateDeadlines"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateDeadlines_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateDeadlines"
         }
       ]
     },

@@ -1,0 +1,52 @@
+const { createDbConnection } = require("/opt/nodejs/dbConnection");
+
+exports.handler = async (event) => {
+  let connection;
+
+  try {
+    const body = event.body ? JSON.parse(event.body) : {};
+    const { id } = body;
+
+    if (!id) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: "ID obbligatorio." }),
+      };
+    }
+
+    connection = await createDbConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+    });
+
+    const [result] = await connection.execute(
+      "DELETE FROM deadlines WHERE id = ?",
+      [id]
+    );
+
+    if (result.affectedRows === 0) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({ message: "Scadenza non trovata" }),
+      };
+    }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: "Scadenza eliminata con successo" }),
+    };
+  } catch (err) {
+    console.error("❌ Errore in deleteDeadlines:", err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "Errore del server. Impossibile eliminare la scadenza.",
+        error: err.message,
+      }),
+    };
+  } finally {
+    if (connection) await connection.end();
+  }
+};

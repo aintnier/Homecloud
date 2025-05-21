@@ -28,6 +28,26 @@
     {
       "cloudFormationParameterName": "dbName",
       "environmentVariableName": "DB_NAME"
+    },
+    {
+      "cloudFormationParameterName": "dbHost",
+      "environmentVariableName": "DB_HOST"
+    },
+    {
+      "cloudFormationParameterName": "dbName",
+      "environmentVariableName": "DB_NAME"
+    },
+    {
+      "cloudFormationParameterName": "dbPassword",
+      "environmentVariableName": "DB_PASSWORD"
+    },
+    {
+      "cloudFormationParameterName": "dbUser",
+      "environmentVariableName": "DB_USER"
+    },
+    {
+      "cloudFormationParameterName": "region",
+      "environmentVariableName": "REGION"
     }
   ]
 }

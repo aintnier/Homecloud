@@ -36,6 +36,34 @@
     {
       "cloudFormationParameterName": "s3BucketFolder",
       "environmentVariableName": "S3_BUCKET_FOLDER"
+    },
+    {
+      "cloudFormationParameterName": "region",
+      "environmentVariableName": "REGION"
+    },
+    {
+      "cloudFormationParameterName": "dbHost",
+      "environmentVariableName": "DB_HOST"
+    },
+    {
+      "cloudFormationParameterName": "dbUser",
+      "environmentVariableName": "DB_USER"
+    },
+    {
+      "cloudFormationParameterName": "dbPassword",
+      "environmentVariableName": "DB_PASSWORD"
+    },
+    {
+      "cloudFormationParameterName": "dbName",
+      "environmentVariableName": "DB_NAME"
+    },
+    {
+      "cloudFormationParameterName": "s3BucketName",
+      "environmentVariableName": "S3_BUCKET_NAME"
+    },
+    {
+      "cloudFormationParameterName": "s3BucketFolder",
+      "environmentVariableName": "S3_BUCKET_FOLDER"
     }
   ]
 }
