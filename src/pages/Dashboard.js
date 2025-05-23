@@ -114,7 +114,7 @@ function Dashboard() {
       try {
         // Recupera tutti gli utenti
         const usersResponse = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/users`
+          `${process.env.REACT_APP_BACKEND_URL}/users`
         );
 
         // Filtra l'utente con ID corrispondente a userId
@@ -128,7 +128,7 @@ function Dashboard() {
 
         // Recupera tutte le scadenze
         const deadlinesResponse = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/deadlines`
+          `${process.env.REACT_APP_BACKEND_URL}/deadlines`
         );
 
         // Filtra le scadenze per l'utente corrente

@@ -30,12 +30,20 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+      },
       body: JSON.stringify(usersWithProfileImage),
     };
   } catch (err) {
     console.error("❌ Errore in readUsers:", err);
     return {
       statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+      },
       body: JSON.stringify({
         message: "Errore del server durante la lettura degli utenti.",
         error: err,

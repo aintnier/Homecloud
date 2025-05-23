@@ -10,6 +10,11 @@ exports.handler = async (event) => {
     if (!id) {
       return {
         statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ message: "ID obbligatorio." }),
       };
     }
@@ -29,18 +34,33 @@ exports.handler = async (event) => {
     if (result.affectedRows === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ message: "Scadenza non trovata" }),
       };
     }
 
     return {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ message: "Scadenza eliminata con successo" }),
     };
   } catch (err) {
     console.error("❌ Errore in deleteDeadlines:", err);
     return {
       statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         message: "Errore del server. Impossibile eliminare la scadenza.",
         error: err.message,

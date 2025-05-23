@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
-import it from "date-fns/locale/it"; // Importa la localizzazione italiana
+import it from "date-fns/locale/it";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link, useParams } from "react-router-dom";
 import "../styles/DeadlineDetails.css";
@@ -16,7 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
-registerLocale("it", it); // Registra la localizzazione italiana
+registerLocale("it", it);
 
 function Sidebar({ user }) {
   return (
@@ -99,7 +99,7 @@ function DeadlineDetails() {
       try {
         // Recupera tutti gli utenti
         const usersResponse = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/users`
+          `${process.env.REACT_APP_BACKEND_URL}/users`
         );
 
         // Filtra l'utente con ID corrispondente a userId
@@ -113,7 +113,7 @@ function DeadlineDetails() {
 
         // Recupera tutte le scadenze
         const deadlinesResponse = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/deadlines`
+          `${process.env.REACT_APP_BACKEND_URL}/deadlines`
         );
 
         // Trova la scadenza selezionata
@@ -243,22 +243,23 @@ function DeadlineDetails() {
 
     try {
       const updatedDeadline = {
+        id: deadline.id,
         title: e.target[0].value,
         description: e.target[1].value,
         due_date: selectedDate.toISOString(),
-        notifications_on: isNotificationOn, // Usa lo stato locale
+        notifications_on: isNotificationOn,
         user_id: deadline.user_id,
         type: deadline.type,
       };
 
       setIsUpdating(true);
 
-      await axios.put(
-        `${process.env.REACT_APP_BACKEND_URL}/api/deadlines/${deadline.id}`,
+      const response = await axios.put(
+        `${process.env.REACT_APP_BACKEND_URL}/deadlines/${deadline.id}`,
         updatedDeadline
       );
+      console.log("Risposta update:", response.data);
 
-      // Aggiorna lo stato globale solo dopo il salvataggio
       setDeadline((prev) => ({
         ...prev,
         ...updatedDeadline,
@@ -269,7 +270,7 @@ function DeadlineDetails() {
         text: "Scadenza aggiornata con successo!",
       });
       setIsUpdating(false);
-      handleCloseModal(); // Chiudi il modal
+      handleCloseModal();
     } catch (error) {
       console.error("Errore durante l'aggiornamento della scadenza:", error);
       setMessage({
@@ -291,7 +292,7 @@ function DeadlineDetails() {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `${process.env.REACT_APP_BACKEND_URL}/api/deadlines/${deadline.id}`
+        `${process.env.REACT_APP_BACKEND_URL}/deadlines/${deadline.id}`
       );
 
       setMessage({
@@ -299,7 +300,7 @@ function DeadlineDetails() {
         text: "Scadenza eliminata con successo!",
       });
 
-      setIsDeleteModalOpen(false); // Chiudi il modal di conferma
+      setIsDeleteModalOpen(false);
 
       // Mostra il messaggio per 3 secondi, poi reindirizza alla dashboard
       setTimeout(() => {

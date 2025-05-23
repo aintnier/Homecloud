@@ -15,22 +15,26 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify(results),
       headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(results),
     };
   } catch (err) {
     console.error("❌ Errore in readDeadlines:", err);
     return {
       statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         message: "Errore del server. Impossibile ottenere le scadenze.",
         error: err.message,
       }),
-      headers: {
-        "Content-Type": "application/json",
-      },
     };
   } finally {
     if (connection) await connection.end();

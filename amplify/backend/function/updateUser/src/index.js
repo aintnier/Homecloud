@@ -41,12 +41,22 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(updatedUser),
     };
   } catch (err) {
     console.error("❌ Errore in updateUser:", err);
     return {
       statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         message: "Errore del server durante l'aggiornamento dell'utente.",
         error: err,

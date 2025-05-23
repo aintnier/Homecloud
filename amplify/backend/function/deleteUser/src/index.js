@@ -21,6 +21,11 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         message: `Utente con id ${id} eliminato con successo.`,
       }),
@@ -29,6 +34,11 @@ exports.handler = async (event) => {
     console.error("❌ Errore in deleteUser:", err);
     return {
       statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         message: "Errore del server durante l'eliminazione dell'utente.",
         error: err,

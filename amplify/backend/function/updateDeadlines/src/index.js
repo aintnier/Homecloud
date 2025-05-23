@@ -5,6 +5,18 @@ exports.handler = async (event) => {
   let connection;
 
   try {
+    if (!event.body) {
+      return {
+        statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: "Richiesta senza body." }),
+      };
+    }
+
     const body = JSON.parse(event.body);
     const {
       id,
@@ -28,6 +40,11 @@ exports.handler = async (event) => {
     ) {
       return {
         statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ message: "Tutti i campi sono obbligatori." }),
       };
     }
@@ -43,6 +60,11 @@ exports.handler = async (event) => {
     if (error) {
       return {
         statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ message: error.details[0].message }),
       };
     }
@@ -63,18 +85,33 @@ exports.handler = async (event) => {
     if (result.affectedRows === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ message: "Scadenza non trovata" }),
       };
     }
 
     return {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ message: "Scadenza aggiornata con successo" }),
     };
   } catch (err) {
     console.error("❌ Errore in updateDeadlines:", err);
     return {
       statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         message: "Errore del server. Impossibile aggiornare la scadenza.",
         error: err.message,

@@ -20,6 +20,11 @@ exports.handler = async (event) => {
     if (error) {
       return {
         statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ message: error.details[0].message }),
       };
     }
@@ -36,6 +41,11 @@ exports.handler = async (event) => {
     if (user.length === 0) {
       return {
         statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ message: "Utente non trovato." }),
       };
     }
@@ -48,6 +58,11 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 201,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         message: "Scadenza creata con successo",
         id: result.insertId,
@@ -57,6 +72,11 @@ exports.handler = async (event) => {
     console.error("❌ Errore in createDeadline:", err);
     return {
       statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         message: "Errore durante la creazione della deadline.",
         error: err,
