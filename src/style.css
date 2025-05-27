@@ -19,11 +19,14 @@
   --select-hover-color: #f7fafc;
   --action-buttons-border-color: #c6c8ca;
   --delete-button-border-color: #e6241f;
+  --expired-card-background-color: rgba(240, 128, 128, 0.05);
+  --expired-card-text-color: #570e0c;
 
   --card-gradient-first: #fbf8cc;
   --card-gradient-second: #d0f4de;
   --card-gradient-third: #a9def9;
   --card-gradient-fourth: #cdb4db;
+  --expired-card-border-color: #e6241f;
 
   /* aside */
   --aside-background-color: #111111;

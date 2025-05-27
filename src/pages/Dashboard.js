@@ -141,12 +141,18 @@ function Dashboard() {
           (a, b) => new Date(a.due_date) - new Date(b.due_date)
         );
 
-        // Imposta le prossime 4 scadenze e le altre
-        setUpcomingDeadlines(sortedDeadlines.slice(0, 4));
-        setOtherDeadlines(sortedDeadlines.slice(4));
+        // Filtra le scadenze future (non scadute)
+        const now = new Date();
+        const futureDeadlines = sortedDeadlines.filter(
+          (deadline) => new Date(deadline.due_date) >= now
+        );
+
+        // Imposta le prossime 4 scadenze (solo future) e le altre
+        setUpcomingDeadlines(futureDeadlines.slice(0, 4));
+        setOtherDeadlines(futureDeadlines.slice(4));
         setExpiredDeadlines(
           sortedDeadlines.filter(
-            (deadline) => new Date(deadline.due_date) < new Date()
+            (deadline) => new Date(deadline.due_date) < now
           )
         );
         setLoading(false);
