@@ -18,15 +18,15 @@ exports.handler = async (event) => {
     }
 
     const body = JSON.parse(event.body);
-    const {
-      id,
-      title,
-      description,
-      due_date,
-      notifications_on,
-      user_id,
-      type,
-    } = body;
+    const id =
+      event.pathParameters && event.pathParameters.id
+        ? parseInt(event.pathParameters.id, 10)
+        : body.id;
+
+    console.log("ID ricevuto per update:", id, "Body:", body);
+
+    const { title, description, due_date, notifications_on, user_id, type } =
+      body;
 
     // Validazione
     if (
@@ -101,7 +101,9 @@ exports.handler = async (event) => {
         "Access-Control-Allow-Headers": "*",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: "Scadenza aggiornata con successo" }),
+      body: JSON.stringify({
+        message: "Scadenza aggiornata con successo",
+      }),
     };
   } catch (err) {
     console.error("❌ Errore in updateDeadlines:", err);

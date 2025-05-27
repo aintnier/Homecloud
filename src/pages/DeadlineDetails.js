@@ -246,24 +246,26 @@ function DeadlineDetails() {
         id: deadline.id,
         title: e.target[0].value,
         description: e.target[1].value,
-        due_date: selectedDate.toISOString(),
-        notifications_on: isNotificationOn,
+        due_date: selectedDate.toISOString().slice(0, 13),
+        notifications_on: !!isNotificationOn,
         user_id: deadline.user_id,
         type: deadline.type,
       };
 
       setIsUpdating(true);
 
-      const response = await axios.put(
-        `${process.env.REACT_APP_BACKEND_URL}/deadlines/${deadline.id}`,
+      console.log("Body inviato:", updatedDeadline);
+      await axios.put(
+        `${process.env.REACT_APP_BACKEND_URL}/deadlines`,
         updatedDeadline
       );
-      console.log("Risposta update:", response.data);
 
-      setDeadline((prev) => ({
-        ...prev,
-        ...updatedDeadline,
-      }));
+      // Dopo la risposta positiva dell'update, ricarica tutti i dati dal backend
+      const refreshed = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/deadlines`
+      );
+      const updated = refreshed.data.find((d) => d.id === deadline.id);
+      setDeadline(updated);
 
       setMessage({
         type: "success",
@@ -399,9 +401,7 @@ function DeadlineDetails() {
                 <p>Descrizione:</p>
                 <textarea
                   defaultValue={deadline?.description}
-                  re
-                  q
-                  uired
+                  required
                 ></textarea>
               </label>
 
