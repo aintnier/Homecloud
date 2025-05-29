@@ -95,7 +95,7 @@ function DeadlineDetails() {
   const userId = 1; // ID utente simulato // TEMPORANEO!!!!!!!!!!!!!!!!!!
 
   useEffect(() => {
-    const fetchUserAndDeadline = async () => {
+    const fetchUserAndDeadlines = async () => {
       try {
         // Recupera tutti gli utenti
         const usersResponse = await axios.get(
@@ -135,7 +135,7 @@ function DeadlineDetails() {
       }
     };
 
-    fetchUserAndDeadline();
+    fetchUserAndDeadlines();
   }, [id, userId]);
 
   useEffect(() => {
@@ -293,9 +293,9 @@ function DeadlineDetails() {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(
-        `${process.env.REACT_APP_BACKEND_URL}/deadlines/${deadline.id}`
-      );
+      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/deadlines`, {
+        data: { id: deadline.id },
+      });
 
       setMessage({
         type: "success",
@@ -304,11 +304,10 @@ function DeadlineDetails() {
 
       setIsDeleteModalOpen(false);
 
-      // Mostra il messaggio per 3 secondi, poi reindirizza alla dashboard
       setTimeout(() => {
         setMessage(null);
         window.location.href = "/dashboard";
-      }, 3000);
+      }, 1000);
     } catch (error) {
       console.error("Errore durante l'eliminazione della scadenza:", error);
       setMessage({

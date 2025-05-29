@@ -4,8 +4,16 @@ exports.handler = async (event) => {
   let connection;
 
   try {
-    const body = event.body ? JSON.parse(event.body) : {};
-    const { id } = body;
+    let body = {};
+    if (event.body) {
+      body = JSON.parse(event.body);
+    }
+    const id =
+      event.pathParameters && event.pathParameters.id
+        ? parseInt(event.pathParameters.id, 10)
+        : body.id;
+
+    console.log("ID ricevuto per delete:", id, "Body:", body);
 
     if (!id) {
       return {

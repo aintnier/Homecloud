@@ -94,7 +94,7 @@
           "dbPassword": "rubbing-departure-kitchen",
           "dbName": "homecloud",
           "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
-          "s3Key": "amplify-builds/deleteDeadlines-4b4b505965466f764c66-build.zip"
+          "s3Key": "amplify-builds/deleteDeadlines-2f61392b5543442b4b48-build.zip"
         }
       },
       "auth": {
