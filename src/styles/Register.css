@@ -7,7 +7,7 @@
   background: none;
 }
 
-.section-title {
+.auth-section-title {
   font-size: 2.2rem;
   color: var(--primary-color);
   margin-bottom: 32px;
@@ -68,6 +68,39 @@
 .register-button:hover,
 .register-button:focus {
   background-color: var(--primary-color);
+}
+
+.login-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 18px;
+  gap: 8px;
+}
+
+.login-label {
+  font-size: 1rem;
+  color: var(--card-title-icon-color);
+  margin-bottom: 2px;
+}
+
+.login-link-button {
+  background-color: var(--white);
+  color: var(--accent-color);
+  border: 1.5px solid var(--accent-color);
+  border-radius: 8px;
+  padding: 14px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.login-link-button:hover,
+.login-link-button:focus {
+  background-color: var(--accent-color);
+  color: var(--white);
 }
 
 .message {

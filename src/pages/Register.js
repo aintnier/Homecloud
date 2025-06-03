@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { signUp, confirmSignUp, resendSignUpCode } from "aws-amplify/auth";
+import { cognitoErrorToItalian } from "../helpers/cognitoErrorHelper";
 import axios from "axios";
 import "../styles/Register.css";
 
@@ -48,11 +49,11 @@ const Register = () => {
       });
 
       setSuccess(
-        "Registrazione avvenuta! Controlla la tua email per confermare."
+        "Registrazione avvenuta! Controlla la tua email per confermare"
       );
       setShowConfirm(true);
     } catch (err) {
-      setError(err.message || "Errore durante la registrazione.");
+      setError(cognitoErrorToItalian(err.message || err));
     } finally {
       setIsSubmitting(false);
     }
@@ -64,14 +65,16 @@ const Register = () => {
     setSuccess("");
     try {
       await confirmSignUp({ username: email, confirmationCode });
-      setSuccess("Account confermato! Ora puoi effettuare il login.");
+      setSuccess("Account confermato! Ora puoi effettuare il login");
+      // Reindirizza alla pagina di login dopo la conferma
+      window.location.href = "/login";
       setShowConfirm(false);
       setFullName("");
       setEmail("");
       setPassword("");
       setConfirmationCode("");
     } catch (err) {
-      setError(err.message || "Codice non valido.");
+      setError(cognitoErrorToItalian(err.message || err));
     }
   };
 
@@ -82,13 +85,13 @@ const Register = () => {
       await resendSignUpCode({ username: email });
       setSuccess("Codice di conferma inviato di nuovo!");
     } catch (err) {
-      setError("Errore nell'invio del codice.");
+      setError(cognitoErrorToItalian(err.message || err));
     }
   };
 
   return (
     <div className="register-container">
-      <h1 className="section-title">Registrazione</h1>
+      <h1 className="auth-section-title">Registrazione</h1>
       {!showConfirm ? (
         <form className="register-form" onSubmit={handleRegister}>
           <label>
@@ -134,13 +137,24 @@ const Register = () => {
           >
             {isSubmitting ? "Registrando..." : "Registrati"}
           </button>
+          <div className="login-section">
+            <p className="login-label">Hai già un account?</p>
+            <button
+              type="button"
+              className="login-link-button"
+              onClick={() => (window.location.href = "/login")}
+              disabled={isSubmitting}
+            >
+              Accedi
+            </button>
+          </div>
           {error && <div className="message error">{error}</div>}
           {success && <div className="message success">{success}</div>}
         </form>
       ) : (
         <form className="register-form" onSubmit={handleConfirm}>
           <label>
-            <p>Codice di conferma (inviato via email):</p>
+            <p>Codice di conferma:</p>
             <input
               type="text"
               value={confirmationCode}

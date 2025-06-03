@@ -1,0 +1,117 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: none;
+}
+
+.auth-section-title {
+  font-size: 2.2rem;
+  color: var(--primary-color);
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.login-form {
+  background: var(--white);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px var(--card-shadow);
+  padding: 42px;
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.login-form label {
+  font-weight: bold;
+  color: var(--card-title-icon-color);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-form label p {
+  font-size: 1.1rem;
+  color: var(--card-title-icon-color);
+  margin-bottom: 4px;
+}
+
+.login-form input[type="email"],
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--secondary-color);
+  color: currentColor;
+  border-radius: 6px;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+}
+
+.login-button {
+  background-color: var(--accent-color);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background 0.2s;
+}
+
+.login-button:hover,
+.login-button:focus {
+  background-color: var(--primary-color);
+}
+
+.message {
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.message.error {
+  background: #ffeaea;
+  color: #c00;
+}
+
+.register-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 18px;
+  gap: 8px;
+}
+
+.register-label {
+  font-size: 1rem;
+  color: var(--card-title-icon-color);
+  margin-bottom: 2px;
+}
+
+.register-link-button {
+  background-color: var(--white);
+  color: var(--accent-color);
+  border: 1.5px solid var(--accent-color);
+  border-radius: 8px;
+  padding: 14px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.register-link-button:hover,
+.register-link-button:focus {
+  background-color: var(--accent-color);
+  color: var(--white);
+}
