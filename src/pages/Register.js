@@ -26,6 +26,12 @@ const Register = () => {
     setSuccess("");
     setIsSubmitting(true);
 
+    if (!fullName.trim().includes(" ")) {
+      setError("Inserire nome intero");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const profileImageId = getRandomAvatarId();
       // 1. Registrazione Cognito

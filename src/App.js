@@ -6,18 +6,54 @@ import AddDeadline from "./pages/AddDeadline";
 import DeadlineDetails from "./pages/DeadlineDetails";
 import UserProfile from "./pages/UserProfile";
 import ErrorPage from "./pages/ErrorPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/add-deadline" element={<AddDeadline />} />
-        <Route path="/deadline-details/:id" element={<DeadlineDetails />} />
-        <Route path="/profile" element={<UserProfile />} />
+        <Route
+          path="/add-deadline"
+          element={
+            <ProtectedRoute>
+              <AddDeadline />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/deadline-details/:id"
+          element={
+            <ProtectedRoute>
+              <DeadlineDetails />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <UserProfile />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Router>

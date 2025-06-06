@@ -13,8 +13,10 @@ import {
   faPen,
   faTrash,
   faCheck,
+  faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { getLoggedUser, logoutAndRedirect } from "../helpers/authHelper";
 
 registerLocale("it", it);
 
@@ -64,7 +66,7 @@ function Sidebar({ user }) {
         </div>
       </a>
       <nav className="sidebar-bottom-nav">
-        <button className="logout-button" onClick={() => alert("Logout")}>
+        <button className="logout-button" onClick={logoutAndRedirect}>
           <FontAwesomeIcon
             icon={faRightFromBracket}
             className="icon logout-icon"
@@ -88,27 +90,41 @@ function DeadlineDetails() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false); // Stato per il caricamento durante l'aggiornamento
+  const [isUpdating, setIsUpdating] = useState(false);
   const [message, setMessage] = useState(null);
-  const [isNotificationOn, setIsNotificationOn] = useState(false); // Stato locale per il checkbox
+  const [isNotificationOn, setIsNotificationOn] = useState(false);
+  const [typeDropdownOpen, setTypeDropdownOpen] = useState(false);
+  const [selectedType, setSelectedType] = useState(deadline?.type || "");
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
 
-  const userId = 1; // ID utente simulato // TEMPORANEO!!!!!!!!!!!!!!!!!!
+  const typeOptions = [
+    "Casa",
+    "Lavoro",
+    "Salute",
+    "Garage",
+    "Documenti",
+    "Personale",
+    "Altro",
+  ];
 
+  // --- TUTTI GLI useEffect PRIMA DI QUALSIASI RETURN ---
   useEffect(() => {
     const fetchUserAndDeadlines = async () => {
       try {
-        // Recupera tutti gli utenti
+        // 1. Ottieni l'utente loggato da Cognito
+        const cognitoUser = await getLoggedUser();
+        if (!cognitoUser) throw new Error("Utente non autenticato");
+
+        // 2. Recupera tutti gli utenti dal backend
         const usersResponse = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/users`
         );
-
-        // Filtra l'utente con ID corrispondente a userId
+        // 3. Trova l'utente nel backend tramite email
         const currentUser = usersResponse.data.find(
-          (user) => user.id === userId
+          (u) => u.email === cognitoUser.username
         );
-        if (!currentUser) {
-          throw new Error(`Utente con ID ${userId} non trovato`);
-        }
+        if (!currentUser) throw new Error("Utente non trovato nel backend");
         setUser(currentUser);
 
         // Recupera tutte le scadenze
@@ -116,9 +132,11 @@ function DeadlineDetails() {
           `${process.env.REACT_APP_BACKEND_URL}/deadlines`
         );
 
-        // Trova la scadenza selezionata
+        // Trova la scadenza selezionata SOLO se appartiene all'utente loggato
         const selectedDeadline = deadlinesResponse.data.find(
-          (deadline) => deadline.id === parseInt(id, 10)
+          (deadline) =>
+            deadline.id === parseInt(id, 10) &&
+            deadline.user_id === currentUser.id
         );
 
         if (!selectedDeadline) {
@@ -136,7 +154,7 @@ function DeadlineDetails() {
     };
 
     fetchUserAndDeadlines();
-  }, [id, userId]);
+  }, [id]);
 
   useEffect(() => {
     if (deadline) {
@@ -199,12 +217,21 @@ function DeadlineDetails() {
     };
   }, []);
 
+  // Aggiorna i valori quando si apre il modal
+  useEffect(() => {
+    if (isEditModalOpen && deadline) {
+      setEditTitle(deadline.title || "");
+      setEditDescription(deadline.description || "");
+    }
+  }, [isEditModalOpen, deadline]);
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = { year: "numeric", month: "long", day: "numeric" };
     return date.toLocaleDateString("it-IT", options);
   };
 
+  // --- SOLO DOPO GLI HOOK, i return condizionali ---
   if (loading) {
     return (
       <div className="deadline-details-container">
@@ -230,8 +257,9 @@ function DeadlineDetails() {
   }
 
   const handleEditClick = () => {
-    setIsNotificationOn(deadline.notifications_on); // Reimposta lo stato del checkbox con il valore effettivo della scadenza
-    setIsEditModalOpen(true); // Mostra il modal
+    setIsNotificationOn(deadline.notifications_on);
+    setSelectedType(deadline.type || "");
+    setIsEditModalOpen(true);
   };
 
   const handleCloseModal = () => {
@@ -244,17 +272,16 @@ function DeadlineDetails() {
     try {
       const updatedDeadline = {
         id: deadline.id,
-        title: e.target[0].value,
-        description: e.target[1].value,
+        title: editTitle,
+        description: editDescription,
+        type: selectedType,
         due_date: selectedDate.toISOString().slice(0, 13),
         notifications_on: !!isNotificationOn,
         user_id: deadline.user_id,
-        type: deadline.type,
       };
 
       setIsUpdating(true);
 
-      console.log("Body inviato:", updatedDeadline);
       await axios.put(
         `${process.env.REACT_APP_BACKEND_URL}/deadlines`,
         updatedDeadline
@@ -274,7 +301,6 @@ function DeadlineDetails() {
       setIsUpdating(false);
       handleCloseModal();
     } catch (error) {
-      console.error("Errore durante l'aggiornamento della scadenza:", error);
       setMessage({
         type: "error",
         text: "Si è verificato un errore durante l'aggiornamento.",
@@ -315,6 +341,11 @@ function DeadlineDetails() {
         text: "Si è verificato un errore durante l'eliminazione.",
       });
     }
+  };
+
+  const handleTypeSelect = (type) => {
+    setSelectedType(type);
+    setTypeDropdownOpen(false);
   };
 
   return (
@@ -393,16 +424,79 @@ function DeadlineDetails() {
             <form onSubmit={handleUpdate}>
               <label className="title-input-container">
                 <p>Titolo:</p>
-                <input type="text" defaultValue={deadline?.title} required />
+                <input
+                  type="text"
+                  value={editTitle}
+                  onChange={(e) => setEditTitle(e.target.value)}
+                  required
+                />
               </label>
 
               <label className="description-input-container">
                 <p>Descrizione:</p>
                 <textarea
-                  defaultValue={deadline?.description}
+                  value={editDescription}
+                  onChange={(e) => setEditDescription(e.target.value)}
                   required
                 ></textarea>
               </label>
+
+              <label className="type-input-container">
+                <p>Categoria:</p>
+                <div
+                  className={`custom-type-dropdown${
+                    typeDropdownOpen ? " open" : ""
+                  }`}
+                  tabIndex={0}
+                  onBlur={() =>
+                    setTimeout(() => setTypeDropdownOpen(false), 100)
+                  }
+                >
+                  <div
+                    className={`dropdown-selected${
+                      typeDropdownOpen ? " open" : ""
+                    }`}
+                    onClick={() => setTypeDropdownOpen((open) => !open)}
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ")
+                        setTypeDropdownOpen((open) => !open);
+                      if (e.key === "Escape") setTypeDropdownOpen(false);
+                    }}
+                  >
+                    <p className="type-selected-placeholder">
+                      {selectedType || "Seleziona una categoria"}
+                    </p>
+                    <FontAwesomeIcon
+                      icon={faChevronDown}
+                      className="dropdown-arrow"
+                    />
+                  </div>
+                  {typeDropdownOpen && (
+                    <div className="dropdown-options" role="listbox">
+                      {typeOptions.map((option) => (
+                        <div
+                          key={option}
+                          className={`dropdown-option${
+                            selectedType === option ? " selected" : ""
+                          }`}
+                          onClick={() => handleTypeSelect(option)}
+                          tabIndex={0}
+                          role="option"
+                          aria-selected={selectedType === option}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ")
+                              handleTypeSelect(option);
+                          }}
+                        >
+                          {option}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </label>
+              {/* --- FINE CAMPO TIPOLOGIA --- */}
 
               <label className="date-input-container">
                 <p>Data di Scadenza:</p>
@@ -442,8 +536,8 @@ function DeadlineDetails() {
                   <input
                     type="checkbox"
                     id="notification-checkbox"
-                    checked={isNotificationOn} // Usa lo stato locale
-                    onChange={(e) => setIsNotificationOn(e.target.checked)} // Aggiorna lo stato locale
+                    checked={isNotificationOn}
+                    onChange={(e) => setIsNotificationOn(e.target.checked)}
                   />
                   {isNotificationOn ? (
                     <FontAwesomeIcon icon={faCheck} className="check-icon" />

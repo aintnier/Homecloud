@@ -56,7 +56,7 @@
   gap: 9px;
   width: 130px;
   letter-spacing: 0.2px;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.3s ease;
 }
 
 .actions button .icon {
@@ -254,7 +254,7 @@
   border-radius: 6px;
   background-color: var(--white);
   border: 1px solid var(--secondary-color);
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .custom-checkbox input[type="checkbox"]:checked {
@@ -299,7 +299,7 @@
   border: none;
   letter-spacing: 0.3px;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.3s ease;
 }
 
 .modal-actions .save-button {
@@ -348,7 +348,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: var(--text-color-light);
   font-size: 1.4rem;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease;
 }
 
 .deadline-details-container .custom-date-input .calendar-icon:hover {
@@ -364,7 +364,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-size: 1rem;
   color: var(--text-color);
   background-color: var(--white);
-  transition: border-color 0.2s ease;
+  transition: border-color 0.3s ease;
 }
 
 /* Stile per il calendario di react-datepicker */
@@ -420,7 +420,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin: 0.2rem;
   border-radius: 6px;
   font-weight: 600;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .deadline-details-container .react-datepicker__day:hover {
@@ -472,4 +472,127 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0.6;
 }
 
-/*  */
+/* Campo select categoria nel modal modifica scadenza */
+.modal form label.type-input-container {
+  margin-bottom: 32px;
+}
+
+.modal form label.type-input-container p {
+  font-size: 1.2rem;
+  color: var(--card-title-icon-color);
+  margin-bottom: 8px;
+}
+
+.modal form select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--secondary-color);
+  color: currentColor;
+  border-radius: 6px;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  background-color: var(--white);
+  transition: border-color 0.3s ease;
+  margin-top: 2px;
+}
+
+.modal form select:focus {
+  border-color: currentColor;
+}
+
+/* Opzionale: stile per le opzioni */
+.modal form select option {
+  color: var(--text-color);
+  font-size: 1rem;
+  background: var(--white);
+  padding: 10px;
+}
+
+.custom-type-dropdown {
+  position: relative;
+  width: 100%;
+  margin-bottom: 32px;
+  font-family: inherit;
+}
+
+.custom-type-dropdown .dropdown-selected {
+  padding: 14px;
+  border: 1.5px solid var(--secondary-color);
+  border-radius: 6px;
+  background: var(--white);
+  color: var(--text-color);
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: border-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.custom-type-dropdown .dropdown-arrow {
+  margin-left: 12px;
+  font-size: 1.1rem;
+  color: var(--text-color-light);
+  transition: all 0.3s ease;
+}
+
+.custom-type-dropdown .dropdown-arrow:hover {
+  color: currentColor;
+}
+
+.custom-type-dropdown .dropdown-selected p.type-selected-placeholder {
+  color: currentColor;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.custom-type-dropdown .dropdown-options {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: var(--white);
+  border: 1.5px solid var(--secondary-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px var(--hover-shadow);
+  z-index: 20;
+  max-height: 260px;
+  overflow-y: auto;
+  animation: fadeInDropdown 0.18s;
+}
+
+@keyframes fadeInDropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.custom-type-dropdown .dropdown-option {
+  padding: 14px 18px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  border-radius: 6px;
+  margin: 2px 6px;
+}
+
+.custom-type-dropdown .dropdown-option:hover,
+.custom-type-dropdown .dropdown-option.selected {
+  background: var(--select-hover-color);
+  color: var(--accent-color);
+}
+
+.custom-type-dropdown .dropdown-selected.open .dropdown-arrow,
+.custom-type-dropdown .dropdown-selected:focus .dropdown-arrow {
+  color: currentColor;
+  transform: rotate(180deg);
+}

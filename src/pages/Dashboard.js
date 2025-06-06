@@ -21,6 +21,7 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { getLoggedUser, logoutAndRedirect } from "../helpers/authHelper";
 
 function Sidebar({ user }) {
   return (
@@ -62,7 +63,7 @@ function Sidebar({ user }) {
         </div>
       </a>
       <nav className="sidebar-bottom-nav">
-        <button className="logout-button" onClick={() => alert("Logout")}>
+        <button className="logout-button" onClick={logoutAndRedirect}>
           <FontAwesomeIcon
             icon={faRightFromBracket}
             className="icon logout-icon"
@@ -107,23 +108,22 @@ function Dashboard() {
     Personale: faUser,
   };
 
-  const userId = 1; // ID utente simulato // TEMPORANEO!!!!!!!!!!!!!!!!!!
-
   useEffect(() => {
     const fetchUserAndDeadlines = async () => {
       try {
-        // Recupera tutti gli utenti
+        // 1. Ottieni l'utente loggato da Cognito
+        const cognitoUser = await getLoggedUser();
+        if (!cognitoUser) throw new Error("Utente non autenticato");
+
+        // 2. Recupera tutti gli utenti dal backend
         const usersResponse = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/users`
         );
-
-        // Filtra l'utente con ID corrispondente a userId
+        // 3. Trova l'utente nel backend tramite email
         const currentUser = usersResponse.data.find(
-          (user) => user.id === userId
+          (user) => user.email === cognitoUser.username
         );
-        if (!currentUser) {
-          throw new Error(`Utente con ID ${userId} non trovato`);
-        }
+        if (!currentUser) throw new Error("Utente non trovato nel backend");
         setUser(currentUser);
 
         // Recupera tutte le scadenze
@@ -163,7 +163,7 @@ function Dashboard() {
     };
 
     fetchUserAndDeadlines();
-  }, [userId]);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

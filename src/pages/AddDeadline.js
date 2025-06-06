@@ -12,6 +12,7 @@ import axios from "axios";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import it from "date-fns/locale/it";
+import { getLoggedUser, logoutAndRedirect } from "../helpers/authHelper";
 registerLocale("it", it);
 
 // Componente custom per l'input della data
@@ -19,7 +20,7 @@ const CustomDateInput = React.forwardRef(({ value }, ref) => (
   <input
     ref={ref}
     value={value || ""}
-    readOnly // l'input è in sola lettura per impedire scrittura e clic diretti
+    readOnly
     className="custom-date-picker"
     placeholder="GG-MM-AAAA"
   />
@@ -65,7 +66,7 @@ function Sidebar({ user }) {
         </div>
       </a>
       <nav className="sidebar-bottom-nav">
-        <button className="logout-button" onClick={() => alert("Logout")}>
+        <button className="logout-button" onClick={logoutAndRedirect}>
           <FontAwesomeIcon
             icon={faRightFromBracket}
             className="icon logout-icon"
@@ -98,22 +99,22 @@ const AddDeadline = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState(null);
 
-  const userId = 1; // ID utente simulato // TEMPORANEO!!!!!!!!!!!!!!!!!!
-
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        // Recupera tutti gli utenti
+        // 1. Ottieni l'utente loggato da Cognito
+        const cognitoUser = await getLoggedUser();
+        if (!cognitoUser) throw new Error("Utente non autenticato");
+
+        // 2. Recupera tutti gli utenti dal backend
         const usersResponse = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/users`
         );
-        // Filtra l'utente con ID corrispondente a userId
+        // 3. Trova l'utente nel backend tramite email
         const currentUser = usersResponse.data.find(
-          (user) => user.id === userId
+          (u) => u.email === cognitoUser.username
         );
-        if (!currentUser) {
-          throw new Error(`Utente con ID ${userId} non trovato`);
-        }
+        if (!currentUser) throw new Error("Utente non trovato nel backend");
         setUser(currentUser);
       } catch (error) {
         setUser({
@@ -123,7 +124,7 @@ const AddDeadline = () => {
       }
     };
     fetchUser();
-  }, [userId]);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -162,7 +163,7 @@ const AddDeadline = () => {
       const deadlineData = {
         ...form,
         due_date: dueDateFormatted,
-        user_id: userId,
+        user_id: user.id, // usa id reale
       };
 
       await axios.post(
