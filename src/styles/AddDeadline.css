@@ -233,11 +233,8 @@
 }
 
 /* Checkbox custom */
-.notification-toggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 32px;
+label.add-deadline-notifications-input-container .notification-toggle {
+  margin-bottom: 0;
 }
 
 .custom-checkbox {

@@ -511,7 +511,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .custom-type-dropdown {
   position: relative;
   width: 100%;
-  margin-bottom: 32px;
   font-family: inherit;
 }
 

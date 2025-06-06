@@ -5,9 +5,11 @@ import {
   faCalendarPlus,
   faChartLine,
   faRightFromBracket,
-  faCalendar,
+  faCalendarDay,
+  faChevronDown,
+  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -79,6 +81,8 @@ function Sidebar({ user }) {
 }
 
 const AddDeadline = () => {
+  const navigate = useNavigate(); // aggiungi questa riga
+
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -98,6 +102,20 @@ const AddDeadline = () => {
   // Stato per messaggi e caricamento
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState(null);
+
+  const typeOptions = [
+    "Casa",
+    "Lavoro",
+    "Salute",
+    "Garage",
+    "Documenti",
+    "Personale",
+    "Altro",
+  ];
+
+  const [typeDropdownOpen, setTypeDropdownOpen] = useState(false);
+  const [selectedType, setSelectedType] = useState("");
+  const [isNotificationOn, setIsNotificationOn] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -144,10 +162,34 @@ const AddDeadline = () => {
     }
   }, [selectedDate]);
 
+  const handleTypeSelect = (type) => {
+    setSelectedType(type);
+    setTypeDropdownOpen(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setMessage(null);
+
+    // Rimuovi spazi inizio/fine
+    const trimmedTitle = form.title.trim();
+    const trimmedDescription = form.description.trim();
+
+    // Validazione frontend
+    if (
+      !trimmedTitle ||
+      !trimmedDescription ||
+      !selectedType ||
+      !selectedDate
+    ) {
+      setMessage({
+        type: "error",
+        text: "Compila tutti i campi obbligatori.",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
       // Format due_date as YYYY-MM-DDTHH
@@ -161,9 +203,12 @@ const AddDeadline = () => {
       }
 
       const deadlineData = {
-        ...form,
+        title: trimmedTitle,
+        description: trimmedDescription,
         due_date: dueDateFormatted,
-        user_id: user.id, // usa id reale
+        type: selectedType,
+        notifications_on: !!isNotificationOn,
+        user_id: user.id,
       };
 
       await axios.post(
@@ -184,11 +229,12 @@ const AddDeadline = () => {
         notifications_on: false,
       });
       setSelectedDate(null);
+      setSelectedType("");
+      setIsNotificationOn(false);
 
-      // Mostra il messaggio per 1 secondo, poi reindirizza
       setTimeout(() => {
         setMessage(null);
-        window.location.href = "/dashboard";
+        navigate("/dashboard");
       }, 1000);
     } catch (error) {
       setMessage({
@@ -215,7 +261,9 @@ const AddDeadline = () => {
                 type="text"
                 name="title"
                 value={form.title}
-                onChange={handleChange}
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, title: e.target.value }))
+                }
                 required
                 maxLength={255}
                 placeholder="Titolo della scadenza"
@@ -227,16 +275,77 @@ const AddDeadline = () => {
               <textarea
                 name="description"
                 value={form.description}
-                onChange={handleChange}
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, description: e.target.value }))
+                }
                 required
                 maxLength={255}
                 placeholder="Descrizione dettagliata"
                 disabled={isSubmitting}
               />
             </label>
+            <label className="type-input-container">
+              <p>Categoria:</p>
+              <div
+                className={`custom-type-dropdown${
+                  typeDropdownOpen ? " open" : ""
+                }`}
+                tabIndex={0}
+                onBlur={() => setTimeout(() => setTypeDropdownOpen(false), 100)}
+              >
+                <div
+                  className={`dropdown-selected${
+                    typeDropdownOpen ? " open" : ""
+                  }`}
+                  onClick={() => setTypeDropdownOpen((open) => !open)}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ")
+                      setTypeDropdownOpen((open) => !open);
+                    if (e.key === "Escape") setTypeDropdownOpen(false);
+                  }}
+                >
+                  <p className="type-selected-placeholder">
+                    {selectedType || "Seleziona una categoria"}
+                  </p>
+                  <FontAwesomeIcon
+                    icon={faChevronDown}
+                    className="dropdown-arrow"
+                  />
+                </div>
+                {typeDropdownOpen && (
+                  <div className="dropdown-options" role="listbox">
+                    {typeOptions.map((option) => (
+                      <div
+                        key={option}
+                        className={`dropdown-option${
+                          selectedType === option ? " selected" : ""
+                        }`}
+                        onClick={() => handleTypeSelect(option)}
+                        tabIndex={0}
+                        role="option"
+                        aria-selected={selectedType === option}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ")
+                            handleTypeSelect(option);
+                        }}
+                      >
+                        {option}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </label>
             <label className="date-input-container">
               <p>Data di Scadenza:</p>
-              <div className="custom-date-input">
+              <div
+                className="custom-date-input"
+                tabIndex={-1}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") setIsCalendarOpen(false);
+                }}
+              >
                 <DatePicker
                   selected={selectedDate}
                   onChange={(date) => {
@@ -245,54 +354,45 @@ const AddDeadline = () => {
                   }}
                   dateFormat="dd-MM-yyyy"
                   locale="it"
+                  className="custom-date-picker"
                   calendarStartDay={1}
                   minDate={new Date()}
                   open={isCalendarOpen}
                   onClickOutside={() => setIsCalendarOpen(false)}
-                  customInput={<CustomDateInput />}
                   dayClassName={(date) =>
                     date.toDateString() === selectedDate?.toDateString()
                       ? "custom-selected-day"
                       : undefined
                   }
+                  customInput={<CustomDateInput />}
                   disabled={isSubmitting}
                 />
                 <FontAwesomeIcon
-                  icon={faCalendar}
+                  icon={faCalendarDay}
                   className="calendar-icon"
                   onClick={() => setIsCalendarOpen((prev) => !prev)}
                 />
               </div>
             </label>
-            <label>
-              <p>Categoria:</p>
-              <select
-                name="type"
-                value={form.type}
-                onChange={handleChange}
-                required
-                disabled={isSubmitting}
-              >
-                <option value="">Seleziona una categoria</option>
-                <option value="Casa">Casa</option>
-                <option value="Lavoro">Lavoro</option>
-                <option value="Salute">Salute</option>
-                <option value="Garage">Garage</option>
-                <option value="Documenti">Documenti</option>
-                <option value="Personale">Personale</option>
-                <option value="Altro">Altro</option>
-              </select>
+            <label className="add-deadline-notifications-input-container">
+              <p>Notifica:</p>
+              <div className="notification-toggle">
+                <div className="custom-checkbox">
+                  <input
+                    type="checkbox"
+                    id="notification-checkbox"
+                    checked={isNotificationOn}
+                    onChange={(e) => setIsNotificationOn(e.target.checked)}
+                    disabled={isSubmitting}
+                  />
+                  {isNotificationOn ? (
+                    <FontAwesomeIcon icon={faCheck} className="check-icon" />
+                  ) : null}
+                </div>
+                <span>{isNotificationOn ? "Attiva" : "Disattiva"}</span>
+              </div>
             </label>
-            <label className="notifications-checkbox">
-              <input
-                type="checkbox"
-                name="notifications_on"
-                checked={form.notifications_on}
-                onChange={handleChange}
-                disabled={isSubmitting}
-              />
-              Attiva notifica
-            </label>
+
             <button
               type="submit"
               className="save-button"
@@ -300,10 +400,10 @@ const AddDeadline = () => {
             >
               {isSubmitting ? "Aggiungendo..." : "Aggiungi Scadenza"}
             </button>
+            {message && (
+              <div className={`message ${message.type}`}>{message.text}</div>
+            )}
           </form>
-          {message && (
-            <div className={`message ${message.type}`}>{message.text}</div>
-          )}
         </section>
       </main>
     </div>

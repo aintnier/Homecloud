@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import it from "date-fns/locale/it";
 import "react-datepicker/dist/react-datepicker.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import "../styles/DeadlineDetails.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,6 +19,17 @@ import axios from "axios";
 import { getLoggedUser, logoutAndRedirect } from "../helpers/authHelper";
 
 registerLocale("it", it);
+
+const CustomDateInput = React.forwardRef(({ value }, ref) => (
+  <input
+    ref={ref}
+    value={value || ""}
+    readOnly
+    className="custom-date-picker"
+    placeholder="GG-MM-AAAA"
+    tabIndex={-1}
+  />
+));
 
 function Sidebar({ user }) {
   return (
@@ -80,6 +91,7 @@ function Sidebar({ user }) {
 
 function DeadlineDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [deadline, setDeadline] = useState(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -269,18 +281,28 @@ function DeadlineDetails() {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
+    // Rimuovi spazi inizio/fine
+    const trimmedTitle = editTitle.trim();
+    const trimmedDescription = editDescription.trim();
+
+    // Validazione frontend
+    if (!trimmedTitle || !selectedType || !selectedDate) {
+      setMessage({ type: "error", text: "Compila tutti i campi obbligatori." });
+      return;
+    }
+
     try {
+      setIsUpdating(true);
+
       const updatedDeadline = {
         id: deadline.id,
-        title: editTitle,
-        description: editDescription,
+        title: trimmedTitle,
+        description: trimmedDescription,
         type: selectedType,
         due_date: selectedDate.toISOString().slice(0, 13),
         notifications_on: !!isNotificationOn,
         user_id: deadline.user_id,
       };
-
-      setIsUpdating(true);
 
       await axios.put(
         `${process.env.REACT_APP_BACKEND_URL}/deadlines`,
@@ -332,7 +354,7 @@ function DeadlineDetails() {
 
       setTimeout(() => {
         setMessage(null);
-        window.location.href = "/dashboard";
+        navigate("/dashboard");
       }, 1000);
     } catch (error) {
       console.error("Errore durante l'eliminazione della scadenza:", error);
@@ -500,7 +522,13 @@ function DeadlineDetails() {
 
               <label className="date-input-container">
                 <p>Data di Scadenza:</p>
-                <div className="custom-date-input">
+                <div
+                  className="custom-date-input"
+                  tabIndex={-1}
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") setIsCalendarOpen(false);
+                  }}
+                >
                   <DatePicker
                     selected={selectedDate}
                     onChange={(date) => {
@@ -519,32 +547,34 @@ function DeadlineDetails() {
                         ? "custom-selected-day"
                         : undefined
                     }
+                    customInput={<CustomDateInput />}
+                    disabled={isUpdating /* o isSubmitting in AddDeadline */}
                   />
                   <FontAwesomeIcon
-                    icon={faCalendarDay}
+                    icon={faCalendarDay /* o faCalendar in AddDeadline */}
                     className="calendar-icon"
                     onClick={() => setIsCalendarOpen((prev) => !prev)}
                   />
                 </div>
               </label>
 
-              <label className="notifications-input-container">
+              <label className="deadlines-details-notifications-input-container">
                 <p>Notifica:</p>
-              </label>
-              <div className="notification-toggle">
-                <div className="custom-checkbox">
-                  <input
-                    type="checkbox"
-                    id="notification-checkbox"
-                    checked={isNotificationOn}
-                    onChange={(e) => setIsNotificationOn(e.target.checked)}
-                  />
-                  {isNotificationOn ? (
-                    <FontAwesomeIcon icon={faCheck} className="check-icon" />
-                  ) : null}
+                <div className="notification-toggle">
+                  <div className="custom-checkbox">
+                    <input
+                      type="checkbox"
+                      id="notification-checkbox"
+                      checked={isNotificationOn}
+                      onChange={(e) => setIsNotificationOn(e.target.checked)}
+                    />
+                    {isNotificationOn ? (
+                      <FontAwesomeIcon icon={faCheck} className="check-icon" />
+                    ) : null}
+                  </div>
+                  <span>{isNotificationOn ? "Attiva" : "Disattiva"}</span>
                 </div>
-                <span>{isNotificationOn ? "Attiva" : "Disattiva"}</span>
-              </div>
+              </label>
 
               <div className="modal-actions">
                 <button
