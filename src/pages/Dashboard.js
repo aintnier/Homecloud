@@ -23,7 +23,7 @@ import {
 import { Link } from "react-router-dom";
 import { getLoggedUser, logoutAndRedirect } from "../helpers/authHelper";
 
-function Sidebar({ user }) {
+function Sidebar({ user, loadingUser }) {
   return (
     <aside className="sidebar">
       <Link to={"/dashboard"} className="logo">
@@ -47,7 +47,9 @@ function Sidebar({ user }) {
       </nav>
       <a href="/profile" className="user-profile">
         <div className="avatar">
-          {user?.profileImageUrl ? (
+          {loadingUser ? (
+            <div className="skeleton skeleton-avatar"></div>
+          ) : user?.profileImageUrl ? (
             <img
               src={user.profileImageUrl}
               alt="Avatar"
@@ -58,8 +60,17 @@ function Sidebar({ user }) {
           )}
         </div>
         <div className="user-info">
-          <div className="name">{user?.full_name || "Nome Utente"}</div>
-          <div className="email">{user?.email || "email@example.com"}</div>
+          {loadingUser ? (
+            <>
+              <div className="skeleton skeleton-name"></div>
+              <div className="skeleton skeleton-email"></div>
+            </>
+          ) : (
+            <>
+              <div className="name">{user?.full_name || "Nome Utente"}</div>
+              <div className="email">{user?.email || "email@example.com"}</div>
+            </>
+          )}
         </div>
       </a>
       <nav className="sidebar-bottom-nav">
@@ -86,6 +97,7 @@ function Dashboard() {
   const [user, setUser] = useState(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
+  const [loadingUser, setLoadingUser] = useState(true);
   const cardsGridRef = useRef(null);
   const dropdownRef = useRef(null);
 
@@ -159,6 +171,8 @@ function Dashboard() {
       } catch (error) {
         console.error("Errore durante il recupero dei dati:", error);
         setLoading(false);
+      } finally {
+        setLoadingUser(false);
       }
     };
 
@@ -304,7 +318,7 @@ function Dashboard() {
   if (loading) {
     return (
       <div className="dashboard-container">
-        <Sidebar user={user} />
+        <Sidebar user={user} loadingUser={loadingUser} />
         <main className="main-content loading">
           <div className="loading-spinner">
             <div className="spinner"></div>
@@ -316,7 +330,7 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      <Sidebar user={user} />
+      <Sidebar user={user} loadingUser={loadingUser} />
       <main className="main-content">
         {/* Upcoming Deadlines Section */}
         <section className="cards-section">

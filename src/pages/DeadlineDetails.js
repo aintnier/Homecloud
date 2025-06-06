@@ -31,7 +31,8 @@ const CustomDateInput = React.forwardRef(({ value }, ref) => (
   />
 ));
 
-function Sidebar({ user }) {
+// Sidebar aggiornata con skeleton loader
+function Sidebar({ user, userLoading }) {
   return (
     <aside className="sidebar">
       <Link to={"/dashboard"} className="logo">
@@ -51,17 +52,13 @@ function Sidebar({ user }) {
               <span>Dashboard</span>
             </Link>
           </li>
-          <li>
-            <Link to="/add-deadline">
-              <FontAwesomeIcon icon={faCalendarPlus} className="icon" />
-              <span>Aggiungi Scadenza</span>
-            </Link>
-          </li>
         </ul>
       </nav>
       <a href="/profile" className="user-profile">
         <div className="avatar">
-          {user?.profileImageUrl ? (
+          {userLoading ? (
+            <div className="skeleton skeleton-avatar"></div>
+          ) : user?.profileImageUrl ? (
             <img
               src={user.profileImageUrl}
               alt="Avatar"
@@ -72,8 +69,17 @@ function Sidebar({ user }) {
           )}
         </div>
         <div className="user-info">
-          <div className="name">{user?.full_name || "Nome Utente"}</div>
-          <div className="email">{user?.email || "email@example.com"}</div>
+          {userLoading ? (
+            <>
+              <div className="skeleton skeleton-name"></div>
+              <div className="skeleton skeleton-email"></div>
+            </>
+          ) : (
+            <>
+              <div className="name">{user?.full_name || "Nome Utente"}</div>
+              <div className="email">{user?.email || "email@example.com"}</div>
+            </>
+          )}
         </div>
       </a>
       <nav className="sidebar-bottom-nav">
@@ -95,6 +101,7 @@ function DeadlineDetails() {
   const [deadline, setDeadline] = useState(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userLoading, setUserLoading] = useState(true);
   const [error, setError] = useState(null);
   const [timeLeft, setTimeLeft] = useState("");
   const [progress, setProgress] = useState(0);
@@ -120,48 +127,39 @@ function DeadlineDetails() {
     "Altro",
   ];
 
-  // --- TUTTI GLI useEffect PRIMA DI QUALSIASI RETURN ---
   useEffect(() => {
     const fetchUserAndDeadlines = async () => {
       try {
-        // 1. Ottieni l'utente loggato da Cognito
         const cognitoUser = await getLoggedUser();
         if (!cognitoUser) throw new Error("Utente non autenticato");
 
-        // 2. Recupera tutti gli utenti dal backend
         const usersResponse = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/users`
         );
-        // 3. Trova l'utente nel backend tramite email
         const currentUser = usersResponse.data.find(
           (u) => u.email === cognitoUser.username
         );
         if (!currentUser) throw new Error("Utente non trovato nel backend");
         setUser(currentUser);
 
-        // Recupera tutte le scadenze
         const deadlinesResponse = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/deadlines`
         );
-
-        // Trova la scadenza selezionata SOLO se appartiene all'utente loggato
         const selectedDeadline = deadlinesResponse.data.find(
           (deadline) =>
             deadline.id === parseInt(id, 10) &&
             deadline.user_id === currentUser.id
         );
-
         if (!selectedDeadline) {
           throw new Error("Scadenza non trovata");
         }
-
         setDeadline(selectedDeadline);
-
         setLoading(false);
       } catch (err) {
-        console.error("Errore durante il recupero dei dati:", err);
         setError("Impossibile caricare i dettagli della scadenza.");
         setLoading(false);
+      } finally {
+        setUserLoading(false);
       }
     };
 
@@ -210,7 +208,7 @@ function DeadlineDetails() {
   useEffect(() => {
     if (deadline) {
       setSelectedDate(new Date(deadline.due_date));
-      setIsNotificationOn(deadline.notifications_on); // Inizializza lo stato locale
+      setIsNotificationOn(deadline.notifications_on);
     }
   }, [deadline]);
 
@@ -229,7 +227,6 @@ function DeadlineDetails() {
     };
   }, []);
 
-  // Aggiorna i valori quando si apre il modal
   useEffect(() => {
     if (isEditModalOpen && deadline) {
       setEditTitle(deadline.title || "");
@@ -243,11 +240,10 @@ function DeadlineDetails() {
     return date.toLocaleDateString("it-IT", options);
   };
 
-  // --- SOLO DOPO GLI HOOK, i return condizionali ---
   if (loading) {
     return (
       <div className="deadline-details-container">
-        <Sidebar user={user} />
+        <Sidebar user={user} userLoading={userLoading} />
         <main className="main-content loading">
           <div className="loading-spinner">
             <div className="spinner"></div>
@@ -260,7 +256,7 @@ function DeadlineDetails() {
   if (error) {
     return (
       <div className="deadline-details-container">
-        <Sidebar user={user} />
+        <Sidebar user={user} userLoading={userLoading} />
         <main className="main-content">
           <div className="error-message">{error}</div>
         </main>
@@ -275,17 +271,15 @@ function DeadlineDetails() {
   };
 
   const handleCloseModal = () => {
-    setIsEditModalOpen(false); // Nasconde il modal
+    setIsEditModalOpen(false);
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    // Rimuovi spazi inizio/fine
     const trimmedTitle = editTitle.trim();
     const trimmedDescription = editDescription.trim();
 
-    // Validazione frontend
     if (!trimmedTitle || !selectedType || !selectedDate) {
       setMessage({ type: "error", text: "Compila tutti i campi obbligatori." });
       return;
@@ -309,7 +303,6 @@ function DeadlineDetails() {
         updatedDeadline
       );
 
-      // Dopo la risposta positiva dell'update, ricarica tutti i dati dal backend
       const refreshed = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/deadlines`
       );
@@ -332,11 +325,11 @@ function DeadlineDetails() {
   };
 
   const handleDeleteClick = () => {
-    setIsDeleteModalOpen(true); // Mostra il modal di conferma
+    setIsDeleteModalOpen(true);
   };
 
   const handleCloseDeleteModal = () => {
-    setIsDeleteModalOpen(false); // Nasconde il modal di conferma
+    setIsDeleteModalOpen(false);
   };
 
   const handleDelete = async () => {
@@ -357,7 +350,6 @@ function DeadlineDetails() {
         navigate("/dashboard");
       }, 1000);
     } catch (error) {
-      console.error("Errore durante l'eliminazione della scadenza:", error);
       setMessage({
         type: "error",
         text: "Si è verificato un errore durante l'eliminazione.",
@@ -372,7 +364,7 @@ function DeadlineDetails() {
 
   return (
     <div className="deadline-details-container">
-      <Sidebar user={user} />
+      <Sidebar user={user} userLoading={userLoading} />
       <main className="main-content">
         <header className="details-header">
           <h1 className="section-title">Dettagli Scadenza</h1>

@@ -28,7 +28,7 @@ const CustomDateInput = React.forwardRef(({ value }, ref) => (
   />
 ));
 
-function Sidebar({ user }) {
+function Sidebar({ user, userLoading }) {
   return (
     <aside className="sidebar">
       <Link to={"/dashboard"} className="logo">
@@ -52,7 +52,9 @@ function Sidebar({ user }) {
       </nav>
       <a href="/profile" className="user-profile">
         <div className="avatar">
-          {user?.profileImageUrl ? (
+          {userLoading ? (
+            <div className="skeleton skeleton-avatar"></div>
+          ) : user?.profileImageUrl ? (
             <img
               src={user.profileImageUrl}
               alt="Avatar"
@@ -63,8 +65,17 @@ function Sidebar({ user }) {
           )}
         </div>
         <div className="user-info">
-          <div className="name">{user?.full_name || "Nome Utente"}</div>
-          <div className="email">{user?.email || "email@example.com"}</div>
+          {userLoading ? (
+            <>
+              <div className="skeleton skeleton-name"></div>
+              <div className="skeleton skeleton-email"></div>
+            </>
+          ) : (
+            <>
+              <div className="name">{user?.full_name || "Nome Utente"}</div>
+              <div className="email">{user?.email || "email@example.com"}</div>
+            </>
+          )}
         </div>
       </a>
       <nav className="sidebar-bottom-nav">
@@ -81,7 +92,7 @@ function Sidebar({ user }) {
 }
 
 const AddDeadline = () => {
-  const navigate = useNavigate(); // aggiungi questa riga
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     title: "",
@@ -98,6 +109,7 @@ const AddDeadline = () => {
     full_name: "Nome Utente",
     email: "email@example.com",
   });
+  const [userLoading, setUserLoading] = useState(true);
 
   // Stato per messaggi e caricamento
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -120,15 +132,12 @@ const AddDeadline = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        // 1. Ottieni l'utente loggato da Cognito
         const cognitoUser = await getLoggedUser();
         if (!cognitoUser) throw new Error("Utente non autenticato");
 
-        // 2. Recupera tutti gli utenti dal backend
         const usersResponse = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/users`
         );
-        // 3. Trova l'utente nel backend tramite email
         const currentUser = usersResponse.data.find(
           (u) => u.email === cognitoUser.username
         );
@@ -139,6 +148,8 @@ const AddDeadline = () => {
           full_name: "Nome Utente",
           email: "email@example.com",
         });
+      } finally {
+        setUserLoading(false);
       }
     };
     fetchUser();
@@ -250,7 +261,7 @@ const AddDeadline = () => {
 
   return (
     <div className="dashboard-container deadline-details-container">
-      <Sidebar user={user} />
+      <Sidebar user={user} userLoading={userLoading} />
       <main className="adddeadline main-content">
         <section>
           <h1 className="section-title">Aggiungi Scadenza</h1>

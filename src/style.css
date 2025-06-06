@@ -31,7 +31,7 @@
   /* aside */
   --aside-background-color: #111111;
   --link-color: #414141;
-  --user-icon-placeholder-color: #718096;
+  --user-icon-placeholder-color: rgba(100, 100, 100, 0.5);
   --user-icon-border-color: #585858;
 
   /* categorie  */
@@ -250,7 +250,6 @@ a.user-profile {
   height: 50px;
   border-radius: 50%;
   overflow: hidden;
-  background-color: var(--user-icon-placeholder-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -267,6 +266,59 @@ a.user-profile {
   height: 100%;
   background-color: var(--user-icon-placeholder-color);
   border-radius: 50%;
+}
+
+/* Skeleton Loading */
+.skeleton,
+.skeleton-name,
+.skeleton-email {
+  background: linear-gradient(
+    90deg,
+    var(--user-icon-placeholder-color) 25%,
+    rgba(220, 220, 220, 0.7) 50%,
+    var(--user-icon-placeholder-color) 75%
+  );
+  border-radius: 6px;
+  opacity: 0.7;
+  background-size: 200% 100%;
+  animation: skeleton-loading 2.4s infinite linear;
+}
+
+.skeleton-name {
+  width: 90px;
+  height: 14px;
+  margin-top: 8px;
+  margin-bottom: 14px;
+}
+
+.skeleton-email {
+  width: 140px;
+  height: 12px;
+  margin-bottom: 6px;
+}
+
+.skeleton-avatar {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--user-icon-placeholder-color) 25%,
+    rgba(220, 220, 220, 0.7) 50%,
+    var(--user-icon-placeholder-color) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 2.4s infinite linear;
+  opacity: 0.7;
+  display: block;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .user-info {
