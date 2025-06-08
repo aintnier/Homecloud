@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartLine,
   faCalendarDay,
-  faCalendarPlus,
   faRightFromBracket,
   faPen,
   faTrash,

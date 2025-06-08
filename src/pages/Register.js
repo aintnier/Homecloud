@@ -20,6 +20,14 @@ const Register = () => {
     return `avatar${n}`;
   };
 
+  // Capitalizza la prima lettera di ogni parola
+  const capitalizeWords = (str) =>
+    str
+      .split(" ")
+      .filter(Boolean)
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+      .join(" ");
+
   const handleRegister = async (e) => {
     e.preventDefault();
     setError("");
@@ -34,6 +42,7 @@ const Register = () => {
 
     try {
       const profileImageId = getRandomAvatarId();
+      const capitalizedFullName = capitalizeWords(fullName.trim());
       // 1. Registrazione Cognito
       await signUp({
         username: email,
@@ -41,7 +50,7 @@ const Register = () => {
         options: {
           userAttributes: {
             email,
-            name: fullName,
+            name: capitalizedFullName,
             "custom:profileImageId": profileImageId,
           },
         },
@@ -49,7 +58,7 @@ const Register = () => {
 
       // 2. Chiamata alla funzione Lambda per inserire l'utente nel DB
       await axios.post(`${process.env.REACT_APP_BACKEND_URL}/users`, {
-        full_name: fullName,
+        full_name: capitalizedFullName,
         email,
         profileImageId,
       });
