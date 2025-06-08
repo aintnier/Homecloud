@@ -514,6 +514,8 @@ section {
   text-align: center;
   color: var(--user-icon-placeholder-color);
   height: 64px;
+  font-size: 1.2rem;
+  letter-spacing: 0.2px;
 }
 
 .expired-deadline-card {

@@ -7,6 +7,7 @@
   --primary-color: #430862;
   --accent-color: #a713f6;
   --secondary-color: #e2e8f0;
+  --secondary-color-dark: #dae0e6;
   --secondary-color-alpha: rgba(226, 232, 240, 0.5);
   --background-color: #fdfaff;
   --white: #fff;
@@ -62,6 +63,7 @@
 
   /* Altri colori */
   --hover-shadow: rgba(0, 0, 0, 0.1);
+  --delete-hover-shadow: rgba(255, 41, 34, 0.2);
 }
 
 *,

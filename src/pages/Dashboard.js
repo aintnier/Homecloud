@@ -451,7 +451,7 @@ function Dashboard() {
                 </Link>
               ))
             ) : (
-              <p className="no-data">Nessuna scadenza scaduta.</p>
+              <p className="no-data">Nessuna scadenza.</p>
             )}
           </div>
         </section>
@@ -574,7 +574,7 @@ function Dashboard() {
                 ) : (
                   <tr>
                     <td colSpan="6" className="no-data">
-                      Nessuna scadenza trovata.
+                      Nessuna scadenza.
                     </td>
                   </tr>
                 )}
