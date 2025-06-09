@@ -287,14 +287,14 @@ a.user-profile {
 }
 
 .skeleton-name {
-  width: 90px;
+  width: 100px;
   height: 14px;
   margin-top: 8px;
   margin-bottom: 14px;
 }
 
 .skeleton-email {
-  width: 140px;
+  width: 200px;
   height: 12px;
   margin-bottom: 6px;
 }

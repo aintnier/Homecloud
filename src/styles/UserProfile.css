@@ -86,6 +86,20 @@
   padding-left: 2px;
 }
 
+.skeleton-name.skeleton-profile-page {
+  margin-top: 10px;
+  height: 16px;
+  margin-bottom: 7px;
+  width: 100px;
+}
+
+.skeleton-email.skeleton-profile-page {
+  margin-top: 10px;
+  height: 16px;
+  margin-bottom: 7px;
+  width: 320px;
+}
+
 /* Colonna destra: conta scadenze */
 .profile-right {
   display: flex;

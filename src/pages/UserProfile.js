@@ -156,13 +156,21 @@ const UserProfile = () => {
                 <div className="profile-field">
                   <span className="profile-label">Nome completo:</span>
                   <span className="profile-value">
-                    {user?.full_name || "Nome Utente"}
+                    {loadingUser ? (
+                      <div className="skeleton skeleton-name skeleton-profile-page"></div>
+                    ) : (
+                      user?.full_name || "Nome Utente"
+                    )}
                   </span>
                 </div>
                 <div className="profile-field">
                   <span className="profile-label">Email:</span>
                   <span className="profile-value">
-                    {user?.email || "email@example.com"}
+                    {loadingUser ? (
+                      <div className="skeleton skeleton-email skeleton-profile-page"></div>
+                    ) : (
+                      user?.email || "email@example.com"
+                    )}
                   </span>
                 </div>
               </div>
