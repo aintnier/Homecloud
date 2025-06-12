@@ -9,6 +9,7 @@ import {
   faRightFromBracket,
   faUser,
   faCircleUser,
+  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import CountUp from "../components/CountUp/CountUp.jsx";
@@ -90,10 +91,18 @@ function Sidebar({ user, loadingUser }) {
   );
 }
 
+const notificationOptions = [
+  { value: "1-day-before", label: "1 giorno prima" },
+  { value: "1-week-before", label: "1 settimana prima" },
+  { value: "2-weeks-before", label: "2 settimane prima" },
+];
+
 const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
   const [deadlinesCount, setDeadlinesCount] = useState(0);
+  const [selectedFrequency, setSelectedFrequency] = useState("1-week-before");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -128,6 +137,21 @@ const UserProfile = () => {
     };
     fetchUser();
   }, []);
+
+  // Gestione click fuori dal dropdown
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest(".custom-select-notifiche")) {
+        setDropdownOpen(false);
+      }
+    };
+    if (dropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownOpen]);
 
   return (
     <div className="dashboard-container">
@@ -288,18 +312,90 @@ const UserProfile = () => {
 
           <hr className="profile-divider" />
 
-          <div className="profile-settings">
+          <div className="profile-settings card-notifiche">
             <h2 className="section-subtitle">
               Impostazioni Preferenze Notifiche
             </h2>
             <div className="setting-row">
-              <label className="setting-label">Email di promemoria</label>
-              <input
-                type="checkbox"
-                checked
-                readOnly
-                className="setting-toggle"
-              />
+              <p className="setting-label notification-label">
+                Email di promemoria
+              </p>
+              <div className="custom-checkbox">
+                <input
+                  type="checkbox"
+                  id="notification-checkbox"
+                  checked
+                  readOnly
+                  tabIndex={0}
+                />
+                <FontAwesomeIcon icon={faCheck} className="check-icon" />
+              </div>
+            </div>
+            <div className="setting-row">
+              <label
+                htmlFor="notification-frequency"
+                className="setting-label notification-label"
+              >
+                Frequenza delle notifiche
+              </label>
+              <div
+                className={`custom-select custom-select-notifiche${
+                  dropdownOpen ? " open" : ""
+                }`}
+                tabIndex={0}
+                onClick={() => setDropdownOpen((open) => !open)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ")
+                    setDropdownOpen((open) => !open);
+                  if (e.key === "Escape") setDropdownOpen(false);
+                }}
+              >
+                <div
+                  className={`selected-option${
+                    selectedFrequency === "" ? " placeholder" : ""
+                  }`}
+                >
+                  {notificationOptions.find(
+                    (opt) => opt.value === selectedFrequency
+                  )?.label || "Seleziona frequenza"}
+                </div>
+                {dropdownOpen && (
+                  <ul className="options">
+                    {notificationOptions.map((option, index) => (
+                      <li
+                        key={option.value}
+                        className={`option${
+                          selectedFrequency === option.value ? " selected" : ""
+                        }`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedFrequency(option.value);
+                          setDropdownOpen(false);
+                        }}
+                        tabIndex={0}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter" || event.key === " ") {
+                            setSelectedFrequency(option.value);
+                            setDropdownOpen(false);
+                          } else if (event.key === "Tab") {
+                            event.preventDefault();
+                            // Trova tutte le opzioni visibili
+                            const optionsEls = Array.from(
+                              event.currentTarget.parentNode.querySelectorAll(
+                                ".option"
+                              )
+                            );
+                            const nextIndex = (index + 1) % optionsEls.length;
+                            optionsEls[nextIndex].focus();
+                          }
+                        }}
+                      >
+                        {option.label}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
           </div>
         </section>

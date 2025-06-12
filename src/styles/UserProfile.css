@@ -111,6 +111,15 @@
   width: 100%;
   margin-left: 0;
   padding: 18px 38px 18px 0;
+  position: relative;
+}
+
+.profile-dots {
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  z-index: 2;
+  cursor: pointer;
 }
 
 .activity-summary {
@@ -185,4 +194,11 @@
 .setting-toggle {
   transform: scale(1.2);
   accent-color: var(--primary-color);
+}
+
+.notification-label {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin: 0;
+  color: currentColor;
 }
