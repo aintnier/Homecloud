@@ -143,25 +143,21 @@ const AddDeadline = () => {
         );
         if (!currentUser) throw new Error("Utente non trovato nel backend");
         setUser(currentUser);
+
+        // Imposta lo stato della notifica di default in base a default_reminder_email
+        setIsNotificationOn(!!currentUser.default_reminder_email);
       } catch (error) {
         setUser({
           full_name: "Nome Utente",
           email: "email@example.com",
         });
+        setIsNotificationOn(false);
       } finally {
         setUserLoading(false);
       }
     };
     fetchUser();
   }, []);
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
 
   // Aggiorna la data nel form quando selectedDate cambia
   useEffect(() => {
