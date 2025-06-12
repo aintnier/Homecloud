@@ -103,6 +103,9 @@ const UserProfile = () => {
   const [deadlinesCount, setDeadlinesCount] = useState(0);
   const [selectedFrequency, setSelectedFrequency] = useState("1-week-before");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [reminderChecked, setReminderChecked] = useState(false);
+  const [updatingReminder, setUpdatingReminder] = useState(false);
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -118,6 +121,9 @@ const UserProfile = () => {
         );
         setUser(currentUser);
 
+        // Imposta lo stato del checkbox in base al valore nel DB
+        setReminderChecked(!!currentUser?.default_reminder_email);
+
         // Recupera tutte le scadenze dell'utente
         if (currentUser) {
           const deadlinesResponse = await axios.get(
@@ -131,6 +137,7 @@ const UserProfile = () => {
       } catch (err) {
         setUser(null);
         setDeadlinesCount(0);
+        setReminderChecked(false);
       } finally {
         setLoadingUser(false);
       }
@@ -139,7 +146,7 @@ const UserProfile = () => {
   }, []);
 
   // Gestione click fuori dal dropdown
-  React.useEffect(() => {
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest(".custom-select-notifiche")) {
         setDropdownOpen(false);
@@ -152,6 +159,41 @@ const UserProfile = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownOpen]);
+
+  // Funzione per aggiornare il valore del checkbox nel DB
+  const handleReminderCheckboxChange = async (e) => {
+    const checked = e.target.checked;
+    setReminderChecked(checked);
+    setUpdatingReminder(true);
+    try {
+      await axios.put(`${process.env.REACT_APP_BACKEND_URL}/users`, {
+        id: user.id,
+        full_name: user.full_name,
+        email: user.email,
+        profileImageId: user.profileImageId,
+        default_reminder_email: checked,
+      });
+      setUser((prev) => ({
+        ...prev,
+        default_reminder_email: checked,
+      }));
+      setMessage({
+        type: "success",
+        text: checked
+          ? "Promemoria email attivato con successo!"
+          : "Promemoria email disattivato.",
+      });
+    } catch (err) {
+      setReminderChecked(!checked);
+      setMessage({
+        type: "error",
+        text: "Errore durante il salvataggio della preferenza.",
+      });
+    } finally {
+      setUpdatingReminder(false);
+      setTimeout(() => setMessage(null), 3500);
+    }
+  };
 
   return (
     <div className="dashboard-container">
@@ -324,11 +366,14 @@ const UserProfile = () => {
                 <input
                   type="checkbox"
                   id="notification-checkbox"
-                  checked
-                  readOnly
+                  checked={reminderChecked}
+                  onChange={handleReminderCheckboxChange}
+                  disabled={loadingUser || updatingReminder}
                   tabIndex={0}
                 />
-                <FontAwesomeIcon icon={faCheck} className="check-icon" />
+                {reminderChecked && (
+                  <FontAwesomeIcon icon={faCheck} className="check-icon" />
+                )}
               </div>
             </div>
             <div className="setting-row">
@@ -398,6 +443,9 @@ const UserProfile = () => {
               </div>
             </div>
           </div>
+          {message && (
+            <div className={`message ${message.type}`}>{message.text}</div>
+          )}
         </section>
       </main>
     </div>
