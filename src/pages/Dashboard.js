@@ -22,69 +22,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { getLoggedUser, logoutAndRedirect } from "../helpers/authHelper";
+import Sidebar from "../components/Sidebar"; // importa il nuovo componente
 
-function Sidebar({ user, loadingUser }) {
-  return (
-    <aside className="sidebar">
-      <Link to={"/dashboard"} className="logo">
-        <span>Home</span>Cloud
-      </Link>
-      <nav className="sidebar-nav">
-        <ul>
-          <li className="active">
-            <Link to="/dashboard">
-              <FontAwesomeIcon icon={faChartLine} className="icon" />
-              <span>Dashboard</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/add-deadline">
-              <FontAwesomeIcon icon={faCalendarPlus} className="icon" />
-              <span>Aggiungi Scadenza</span>
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <a href="/profile" className="user-profile">
-        <div className="avatar">
-          {loadingUser ? (
-            <div className="skeleton skeleton-avatar"></div>
-          ) : user?.profileImageUrl ? (
-            <img
-              src={user.profileImageUrl}
-              alt="Avatar"
-              className="avatar-image"
-            />
-          ) : (
-            <div className="avatar-placeholder"></div>
-          )}
-        </div>
-        <div className="user-info">
-          {loadingUser ? (
-            <>
-              <div className="skeleton skeleton-name"></div>
-              <div className="skeleton skeleton-email"></div>
-            </>
-          ) : (
-            <>
-              <div className="name">{user?.full_name || "Nome Utente"}</div>
-              <div className="email">{user?.email || "email@example.com"}</div>
-            </>
-          )}
-        </div>
-      </a>
-      <nav className="sidebar-bottom-nav">
-        <button className="logout-button" onClick={logoutAndRedirect}>
-          <FontAwesomeIcon
-            icon={faRightFromBracket}
-            className="icon logout-icon"
-          />
-          <span>Logout</span>
-        </button>
-      </nav>
-    </aside>
-  );
-}
+// Definisci le voci di menu per la dashboard
+const menuItems = [
+  { label: "Dashboard", path: "/dashboard", icon: faChartLine },
+  { label: "Aggiungi Scadenza", path: "/add-deadline", icon: faCalendarPlus },
+];
 
 function Dashboard() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -318,7 +262,21 @@ function Dashboard() {
   if (loading) {
     return (
       <div className="dashboard-container">
-        <Sidebar user={user} loadingUser={loadingUser} />
+        <Sidebar
+          menuItems={menuItems}
+          user={user}
+          loadingUser={loadingUser}
+          activePath="/dashboard"
+          bottomNav={
+            <button className="logout-button" onClick={logoutAndRedirect}>
+              <FontAwesomeIcon
+                icon={faRightFromBracket}
+                className="icon logout-icon"
+              />
+              <span>Logout</span>
+            </button>
+          }
+        />
         <main className="main-content loading">
           <div className="loading-spinner">
             <div className="spinner"></div>
@@ -330,7 +288,21 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      <Sidebar user={user} loadingUser={loadingUser} />
+      <Sidebar
+        menuItems={menuItems}
+        user={user}
+        loadingUser={loadingUser}
+        activePath="/dashboard"
+        bottomNav={
+          <button className="logout-button" onClick={logoutAndRedirect}>
+            <FontAwesomeIcon
+              icon={faRightFromBracket}
+              className="icon logout-icon"
+            />
+            <span>Logout</span>
+          </button>
+        }
+      />
       <main className="main-content">
         {/* Upcoming Deadlines Section */}
         <section className="cards-section">

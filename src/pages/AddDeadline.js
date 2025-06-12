@@ -15,6 +15,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import it from "date-fns/locale/it";
 import { getLoggedUser, logoutAndRedirect } from "../helpers/authHelper";
+import Sidebar from "../components/Sidebar";
 registerLocale("it", it);
 
 // Componente custom per l'input della data
@@ -28,68 +29,11 @@ const CustomDateInput = React.forwardRef(({ value }, ref) => (
   />
 ));
 
-function Sidebar({ user, userLoading }) {
-  return (
-    <aside className="sidebar">
-      <Link to={"/dashboard"} className="logo">
-        <span>Home</span>Cloud
-      </Link>
-      <nav className="sidebar-nav">
-        <ul>
-          <li className="active">
-            <Link to="/add-deadline">
-              <FontAwesomeIcon icon={faCalendarPlus} className="icon" />
-              <span>Aggiungi Scadenza</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/dashboard">
-              <FontAwesomeIcon icon={faChartLine} className="icon" />
-              <span>Dashboard</span>
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <a href="/profile" className="user-profile">
-        <div className="avatar">
-          {userLoading ? (
-            <div className="skeleton skeleton-avatar"></div>
-          ) : user?.profileImageUrl ? (
-            <img
-              src={user.profileImageUrl}
-              alt="Avatar"
-              className="avatar-image"
-            />
-          ) : (
-            <div className="avatar-placeholder"></div>
-          )}
-        </div>
-        <div className="user-info">
-          {userLoading ? (
-            <>
-              <div className="skeleton skeleton-name"></div>
-              <div className="skeleton skeleton-email"></div>
-            </>
-          ) : (
-            <>
-              <div className="name">{user?.full_name || "Nome Utente"}</div>
-              <div className="email">{user?.email || "email@example.com"}</div>
-            </>
-          )}
-        </div>
-      </a>
-      <nav className="sidebar-bottom-nav">
-        <button className="logout-button" onClick={logoutAndRedirect}>
-          <FontAwesomeIcon
-            icon={faRightFromBracket}
-            className="icon logout-icon"
-          />
-          <span>Logout</span>
-        </button>
-      </nav>
-    </aside>
-  );
-}
+// Definisci le voci di menu per AddDeadline
+const menuItems = [
+  { label: "Aggiungi Scadenza", path: "/add-deadline", icon: faCalendarPlus },
+  { label: "Dashboard", path: "/dashboard", icon: faChartLine },
+];
 
 const AddDeadline = () => {
   const navigate = useNavigate();
@@ -257,7 +201,21 @@ const AddDeadline = () => {
 
   return (
     <div className="dashboard-container deadline-details-container">
-      <Sidebar user={user} userLoading={userLoading} />
+      <Sidebar
+        menuItems={menuItems}
+        user={user}
+        loadingUser={userLoading}
+        activePath="/add-deadline"
+        bottomNav={
+          <button className="logout-button" onClick={logoutAndRedirect}>
+            <FontAwesomeIcon
+              icon={faRightFromBracket}
+              className="icon logout-icon"
+            />
+            <span>Logout</span>
+          </button>
+        }
+      />
       <main className="adddeadline main-content">
         <section>
           <h1 className="section-title">Aggiungi Scadenza</h1>

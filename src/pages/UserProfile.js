@@ -15,86 +15,22 @@ import { Link } from "react-router-dom";
 import CountUp from "../components/CountUp/CountUp.jsx";
 import GradientText from "../components/GradientText/GradientText.jsx";
 import SplitText from "../components/SplitText/SplitText.jsx";
+import Sidebar from "../components/Sidebar";
 
 const handleAnimationComplete = () => {
   console.log("All letters have animated!");
 };
 
-function Sidebar({ user, loadingUser }) {
-  return (
-    <aside className="sidebar">
-      <Link to={"/dashboard"} className="logo">
-        <span>Home</span>Cloud
-      </Link>
-      <nav className="sidebar-nav">
-        <ul>
-          <li className="active">
-            <Link to={`/profile`}>
-              <FontAwesomeIcon icon={faCircleUser} className="icon" />
-              <span>Profilo Utente</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/dashboard">
-              <FontAwesomeIcon icon={faChartLine} className="icon" />
-              <span>Dashboard</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/add-deadline">
-              <FontAwesomeIcon icon={faCalendarPlus} className="icon" />
-              <span>Aggiungi Scadenza</span>
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <a href="/profile" className="user-profile">
-        <div className="avatar">
-          {loadingUser ? (
-            <div className="skeleton skeleton-avatar"></div>
-          ) : user?.profileImageUrl ? (
-            <img
-              src={user.profileImageUrl}
-              alt="Avatar"
-              className="avatar-image"
-            />
-          ) : (
-            <div className="avatar-placeholder">
-              <FontAwesomeIcon icon={faUser} />
-            </div>
-          )}
-        </div>
-        <div className="user-info">
-          {loadingUser ? (
-            <>
-              <div className="skeleton skeleton-name"></div>
-              <div className="skeleton skeleton-email"></div>
-            </>
-          ) : (
-            <>
-              <div className="name">{user?.full_name || "Nome Utente"}</div>
-              <div className="email">{user?.email || "email@example.com"}</div>
-            </>
-          )}
-        </div>
-      </a>
-      <nav className="sidebar-bottom-nav">
-        <button className="logout-button" onClick={logoutAndRedirect}>
-          <FontAwesomeIcon
-            icon={faRightFromBracket}
-            className="icon logout-icon"
-          />
-          <span>Logout</span>
-        </button>
-      </nav>
-    </aside>
-  );
-}
-
 const notificationOptions = [
   { value: "1-day-before", label: "1 giorno prima" },
   { value: "1-week-before", label: "1 settimana prima" },
   { value: "2-weeks-before", label: "2 settimane prima" },
+];
+
+const menuItems = [
+  { label: "Profilo Utente", path: "/profile", icon: faCircleUser },
+  { label: "Dashboard", path: "/dashboard", icon: faChartLine },
+  { label: "Aggiungi Scadenza", path: "/add-deadline", icon: faCalendarPlus },
 ];
 
 const UserProfile = () => {
@@ -197,7 +133,21 @@ const UserProfile = () => {
 
   return (
     <div className="dashboard-container">
-      <Sidebar user={user} loadingUser={loadingUser} />
+      <Sidebar
+        menuItems={menuItems}
+        user={user}
+        loadingUser={loadingUser}
+        activePath="/profile"
+        bottomNav={
+          <button className="logout-button" onClick={logoutAndRedirect}>
+            <FontAwesomeIcon
+              icon={faRightFromBracket}
+              className="icon logout-icon"
+            />
+            <span>Logout</span>
+          </button>
+        }
+      />
       <main className="main-content">
         <section>
           <h1 className="section-title">Profilo Utente</h1>

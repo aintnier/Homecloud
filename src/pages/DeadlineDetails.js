@@ -7,6 +7,7 @@ import "../styles/DeadlineDetails.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartLine,
+  faCalendarPlus,
   faCalendarDay,
   faRightFromBracket,
   faPen,
@@ -16,6 +17,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { getLoggedUser, logoutAndRedirect } from "../helpers/authHelper";
+import Sidebar from "../components/Sidebar";
 
 registerLocale("it", it);
 
@@ -29,70 +31,6 @@ const CustomDateInput = React.forwardRef(({ value }, ref) => (
     tabIndex={-1}
   />
 ));
-
-// Sidebar aggiornata con skeleton loader
-function Sidebar({ user, userLoading }) {
-  return (
-    <aside className="sidebar">
-      <Link to={"/dashboard"} className="logo">
-        <span>Home</span>Cloud
-      </Link>
-      <nav className="sidebar-nav">
-        <ul>
-          <li className="active">
-            <Link to={`/deadline-details/${user?.id || 1}`}>
-              <FontAwesomeIcon icon={faCalendarDay} className="icon" />
-              <span>Dettagli Scadenza</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/dashboard">
-              <FontAwesomeIcon icon={faChartLine} className="icon" />
-              <span>Dashboard</span>
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <a href="/profile" className="user-profile">
-        <div className="avatar">
-          {userLoading ? (
-            <div className="skeleton skeleton-avatar"></div>
-          ) : user?.profileImageUrl ? (
-            <img
-              src={user.profileImageUrl}
-              alt="Avatar"
-              className="avatar-image"
-            />
-          ) : (
-            <div className="avatar-placeholder"></div>
-          )}
-        </div>
-        <div className="user-info">
-          {userLoading ? (
-            <>
-              <div className="skeleton skeleton-name"></div>
-              <div className="skeleton skeleton-email"></div>
-            </>
-          ) : (
-            <>
-              <div className="name">{user?.full_name || "Nome Utente"}</div>
-              <div className="email">{user?.email || "email@example.com"}</div>
-            </>
-          )}
-        </div>
-      </a>
-      <nav className="sidebar-bottom-nav">
-        <button className="logout-button" onClick={logoutAndRedirect}>
-          <FontAwesomeIcon
-            icon={faRightFromBracket}
-            className="icon logout-icon"
-          />
-          <span>Logout</span>
-        </button>
-      </nav>
-    </aside>
-  );
-}
 
 function DeadlineDetails() {
   const { id } = useParams();
@@ -239,10 +177,17 @@ function DeadlineDetails() {
     return date.toLocaleDateString("it-IT", options);
   };
 
+  const bottomNav = (
+    <button className="logout-button" onClick={logoutAndRedirect}>
+      <FontAwesomeIcon icon={faRightFromBracket} className="icon logout-icon" />
+      <span>Logout</span>
+    </button>
+  );
+
   if (loading) {
     return (
       <div className="deadline-details-container">
-        <Sidebar user={user} userLoading={userLoading} />
+        <Sidebar user={user} loadingUser={userLoading} bottomNav={bottomNav} />
         <main className="main-content loading">
           <div className="loading-spinner">
             <div className="spinner"></div>
@@ -255,7 +200,7 @@ function DeadlineDetails() {
   if (error) {
     return (
       <div className="deadline-details-container">
-        <Sidebar user={user} userLoading={userLoading} />
+        <Sidebar user={user} loadingUser={userLoading} bottomNav={bottomNav} />
         <main className="main-content">
           <div className="error-message">{error}</div>
         </main>
@@ -361,9 +306,25 @@ function DeadlineDetails() {
     setTypeDropdownOpen(false);
   };
 
+  const menuItems = [
+    {
+      label: "Dettagli Scadenza",
+      path: `/deadline-details/${id}`,
+      icon: faCalendarDay,
+    },
+    { label: "Dashboard", path: "/dashboard", icon: faChartLine },
+    { label: "Aggiungi Scadenza", path: "/add-deadline", icon: faCalendarPlus },
+  ];
+
   return (
     <div className="deadline-details-container">
-      <Sidebar user={user} userLoading={userLoading} />
+      <Sidebar
+        menuItems={menuItems}
+        user={user}
+        loadingUser={userLoading}
+        activePath={`/deadline-details/${id}`}
+        bottomNav={bottomNav}
+      />
       <main className="main-content">
         <header className="details-header">
           <h1 className="section-title">Dettagli Scadenza</h1>
