@@ -199,6 +199,7 @@ button {
   display: inline-block;
   width: 26px;
   height: 26px;
+  transition: color 0.2s ease;
 }
 
 .sidebar-nav li svg,
@@ -236,7 +237,13 @@ button {
   width: auto;
   cursor: pointer;
   font-size: 1.2rem;
-  transition: background-color 0.2s ease;
+  transition: color 0.2s ease;
+}
+
+.sidebar-bottom-nav .logout-button:hover,
+.sidebar-bottom-nav .logout-button:active,
+.sidebar-bottom-nav .logout-button:hover svg {
+  color: #fff;
 }
 
 a.user-profile {
