@@ -283,7 +283,7 @@ const UserProfile = () => {
                   className="activity-summary"
                 >
                   <SplitText
-                    text="Contiua così!"
+                    text="Continua così!"
                     className="text-2xl font-semibold text-center activity-summary-important-text"
                     delay={100}
                     duration={0.6}

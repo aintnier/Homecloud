@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import it from "date-fns/locale/it";
 import "react-datepicker/dist/react-datepicker.css";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "../styles/DeadlineDetails.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

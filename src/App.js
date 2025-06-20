@@ -6,12 +6,14 @@ import AddDeadline from "./pages/AddDeadline";
 import DeadlineDetails from "./pages/DeadlineDetails";
 import UserProfile from "./pages/UserProfile";
 import ErrorPage from "./pages/ErrorPage";
+import LandingPage from "./pages/LandingPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/landing" element={<LandingPage />} />
         <Route
           path="/"
           element={

@@ -9,8 +9,7 @@
       "UnauthRoleName": "amplify-homecloud-dev-c8587-unauthRole",
       "StackName": "amplify-homecloud-dev-c8587",
       "StackId": "arn:aws:cloudformation:eu-north-1:274756574788:stack/amplify-homecloud-dev-c8587/ed49c890-2fe4-11f0-a414-0e9b2d2a211b",
-      "AmplifyAppId": "dkfwple8yju2k",
-      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-homecloud-dev-c8587-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+      "AmplifyAppId": "dkfwple8yju2k"
     },
     "categories": {
       "function": {
