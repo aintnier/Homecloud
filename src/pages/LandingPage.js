@@ -1,5 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "../styles/LandingPage.css";
+import Silk from "../components/Silk/Silk.jsx";
+import TextPressure from "../components/TextPressure/TextPressure.jsx";
+import SplitText from "../components/SplitText/SplitText.jsx";
+
+import rocket from "openmoji/color/svg/1F680.svg";
+import calendar from "openmoji/color/svg/1F4C5.svg";
+import hospital from "openmoji/color/svg/1F3E5.svg";
+import loveLetter from "openmoji/color/svg/1F48C.svg";
+import checkMark from "openmoji/color/svg/2714.svg";
+import email from "openmoji/color/svg/1F4E7.svg";
+import family from "openmoji/color/svg/1F46A.svg";
+import shield from "openmoji/color/svg/1F6E1.svg";
+import mobilePhone from "openmoji/color/svg/1F4F1.svg";
+import lightning from "openmoji/color/svg/26A1.svg";
+
+// Function to handle animation completion
+const handleAnimationComplete = () => {
+  console.log("All letters have animated!");
+};
 
 const LandingPage = () => {
   const [formData, setFormData] = useState({
@@ -97,37 +116,60 @@ const LandingPage = () => {
 
       {/* Hero Section */}
       <section id="hero" className="hero-section">
-        <div className="hero-background">
-          <div className="hero-particles">
-            <div className="particle particle-1"></div>
-            <div className="particle particle-2"></div>
-            <div className="particle particle-3"></div>
-            <div className="particle particle-4"></div>
-            <div className="particle particle-5"></div>
-            <div className="particle particle-6"></div>
-          </div>
-          <div className="hero-gradient"></div>
+        {/* Silk Background Component */}
+        <div className="hero-silk-background">
+          <Silk
+            speed={3}
+            scale={1}
+            color="#7B7481"
+            noiseIntensity={1.2}
+            rotation={0}
+          />
         </div>
-        
+
         <div className="container">
           <div className="hero-grid">
             <div className="hero-content">
               <div className="hero-badge">
-                <span className="badge-icon">🚀</span>
-                <span>Nuovo • Completamente Gratuito</span>
+                <img
+                  src={rocket}
+                  alt="Razzo"
+                  width="30"
+                  height="30"
+                  className="badge-icon"
+                  draggable="false"
+                />
+                <span style={{ letterSpacing: "0.5px" }}>
+                  Nuovo • Completamente Gratuito
+                </span>
               </div>
-              
+
               <h1 className="hero-title">
-                <span className="title-main">HomeCloud</span>
+                <div style={{ position: "relative" }}>
+                  <TextPressure
+                    text="HomeCloud!"
+                    flex={true}
+                    alpha={false}
+                    stroke={false}
+                    width={false}
+                    weight={true}
+                    italic={true}
+                    textColor="#ffffff"
+                    strokeColor="#ff0000"
+                    minFontSize={36}
+                  />
+                </div>
                 <span className="title-accent">per la tua famiglia</span>
               </h1>
-              
+
               <p className="hero-description">
-                Trasforma il caos quotidiano in <span className="text-highlight">organizzazione perfetta</span>. 
-                Gestisci scadenze, documenti e appuntamenti familiari con un sistema 
-                intelligente che <span className="text-highlight">non dimentica mai</span> nulla.
+                Trasforma il caos quotidiano in{" "}
+                <span className="text-highlight">organizzazione perfetta</span>.
+                Gestisci scadenze, documenti e appuntamenti familiari con un
+                sistema intelligente che{" "}
+                <span className="text-highlight">non dimentica mai</span> nulla.
               </p>
-              
+
               <div className="hero-stats">
                 <div className="stat-item">
                   <div className="stat-number">0€</div>
@@ -144,7 +186,7 @@ const LandingPage = () => {
                   <div className="stat-label">Membri famiglia</div>
                 </div>
               </div>
-              
+
               <div className="hero-buttons">
                 <button
                   onClick={handleRegisterClick}
@@ -161,48 +203,99 @@ const LandingPage = () => {
                   <span>Guarda come funziona</span>
                 </button>
               </div>
-              
+
               <div className="hero-trust">
-                <span>✅ Nessuna carta di credito • ✅ Privacy garantita • ✅ Hosting AWS sicuro</span>
+                <span
+                  style={{ display: "flex", alignItems: "center", gap: "5px" }}
+                >
+                  <img
+                    src={checkMark}
+                    alt="Check Mark"
+                    width="20"
+                    height="20"
+                    draggable="false"
+                  />{" "}
+                  Nessuna carta di credito{" "}
+                  <img
+                    src={checkMark}
+                    alt="Check Mark"
+                    width="20"
+                    height="20"
+                    draggable="false"
+                  />{" "}
+                  Privacy garantita{" "}
+                  <img
+                    src={checkMark}
+                    alt="Check Mark"
+                    width="20"
+                    height="20"
+                    draggable="false"
+                  />{" "}
+                  Hosting AWS sicuro
+                </span>
               </div>
             </div>
-            
+
             <div className="hero-visual">
               <div className="floating-card card-1">
-                <div className="card-icon">📅</div>
+                <div className="card-icon">
+                  <img
+                    src={calendar}
+                    alt="Calendario"
+                    width="40"
+                    height="40"
+                    draggable="false"
+                  />
+                </div>
                 <div className="card-content">
                   <div className="card-title">Prossima Scadenza</div>
                   <div className="card-desc">Bolletta Enel • 3 giorni</div>
                 </div>
                 <div className="card-status status-warning"></div>
               </div>
-              
+
               <div className="floating-card card-2">
-                <div className="card-icon">👨‍⚕️</div>
+                <div className="card-icon">
+                  <img
+                    src={hospital}
+                    alt="Ospedale"
+                    width="40"
+                    height="40"
+                    draggable="false"
+                  />
+                </div>
                 <div className="card-content">
                   <div className="card-title">Visita Marco</div>
                   <div className="card-desc">Controllo pediatrico</div>
                 </div>
                 <div className="card-status status-success"></div>
               </div>
-              
+
               <div className="floating-card card-3">
-                <div className="card-icon">📧</div>
+                <div className="card-icon">
+                  <img
+                    src={loveLetter}
+                    alt="Lettera d'Amore"
+                    width="40"
+                    height="40"
+                    draggable="false"
+                  />
+                </div>
                 <div className="card-content">
                   <div className="card-title">Email inviata</div>
                   <div className="card-desc">Promemoria attivato</div>
                 </div>
                 <div className="card-status status-info"></div>
               </div>
-              
-              <div className="hero-logo-container">
+
+              {/* <div className="hero-logo-container">
                 <img
                   src="imgs/Logo.png"
                   alt="HomeCloud Logo"
                   className="hero-logo-img"
                 />
                 <div className="logo-glow"></div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -212,7 +305,21 @@ const LandingPage = () => {
       <section id="features" className="features-section">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Perché scegliere HomeCloud?</h2>
+            <SplitText
+              text="Perché scegliere HomeCloud?"
+              className="text-2xl font-semibold text-center activity-summary-important-text section-title"
+              delay={50}
+              duration={0.6}
+              ease="power3.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.1}
+              rootMargin="-100px"
+              textAlign="center"
+              onLetterAnimationComplete={handleAnimationComplete}
+            />
+            {/* <h2 className="section-title">Perché scegliere HomeCloud?</h2> */}
             <p className="section-subtitle">
               Tutto quello che serve per organizzare la tua famiglia
             </p>
@@ -220,7 +327,14 @@ const LandingPage = () => {
 
           <div className="features-grid">
             <div className="feature-card">
-              <div className="feature-icon">📅</div>
+              <img
+                src={calendar}
+                alt="Calendario"
+                width="60"
+                height="60"
+                draggable="false"
+                className="feature-icon"
+              />
               <h3>Gestione Scadenze</h3>
               <p>
                 Tieni traccia di documenti, bollette, appuntamenti medici e
@@ -229,7 +343,16 @@ const LandingPage = () => {
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon">📧</div>
+              <div className="feature-icon">
+                <img
+                  src={email}
+                  alt="Email"
+                  width="60"
+                  height="60"
+                  draggable="false"
+                  className="feature-icon"
+                />
+              </div>
               <h3>Notifiche Smart</h3>
               <p>
                 Ricevi promemoria automatici via email per non dimenticare mai
@@ -238,7 +361,16 @@ const LandingPage = () => {
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon">👨‍👩‍👧‍👦</div>
+              <div className="feature-icon">
+                <img
+                  src={family}
+                  alt="Famiglia"
+                  width="60"
+                  height="60"
+                  draggable="false"
+                  className="feature-icon"
+                />
+              </div>
               <h3>Gestione Familiare</h3>
               <p>
                 Organizza le informazioni di tutti i membri della famiglia in un
@@ -247,7 +379,16 @@ const LandingPage = () => {
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon">🔒</div>
+              <div className="feature-icon">
+                <img
+                  src={shield}
+                  alt="Scudo"
+                  width="60"
+                  height="60"
+                  draggable="false"
+                  className="feature-icon"
+                />
+              </div>
               <h3>Sicurezza AWS</h3>
               <p>
                 I tuoi dati sono protetti con crittografia avanzata su
@@ -256,7 +397,16 @@ const LandingPage = () => {
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon">📱</div>
+              <div className="feature-icon">
+                <img
+                  src={mobilePhone}
+                  alt="Cellulare"
+                  width="60"
+                  height="60"
+                  draggable="false"
+                  className="feature-icon"
+                />
+              </div>
               <h3>Accesso Ovunque</h3>
               <p>
                 Accedi ai tuoi dati da qualsiasi dispositivo, sempre
@@ -265,7 +415,16 @@ const LandingPage = () => {
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon">⚡</div>
+              <div className="feature-icon">
+                <img
+                  src={lightning}
+                  alt="Fulmine"
+                  width="60"
+                  height="60"
+                  draggable="false"
+                  className="feature-icon"
+                />
+              </div>
               <h3>Setup Veloce</h3>
               <p>
                 Inizia in pochi minuti. Interfaccia intuitiva e configurazione
@@ -280,7 +439,21 @@ const LandingPage = () => {
       <section id="pricing" className="pricing-section">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Pricing Semplice</h2>
+            <SplitText
+              text="Pricing Semplice"
+              className="text-2xl font-semibold text-center activity-summary-important-text section-title"
+              delay={50}
+              duration={0.6}
+              ease="power3.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.1}
+              rootMargin="-100px"
+              textAlign="center"
+              onLetterAnimationComplete={handleAnimationComplete}
+            />
+            {/* <h2 className="section-title">Pricing Semplice</h2> */}
             <p className="section-subtitle">
               Tutto completamente gratuito per sempre
             </p>
@@ -295,13 +468,150 @@ const LandingPage = () => {
               <span className="price-period">/mese</span>
             </div>
             <ul className="pricing-features">
-              <li>✓ Gestione illimitata scadenze</li>
-              <li>✓ Notifiche email automatiche</li>
-              <li>✓ Fino a 6 membri famiglia</li>
-              <li>✓ Backup sicuro su AWS</li>
-              <li>✓ Accesso da tutti i dispositivi</li>
-              <li>✓ Supporto email</li>
-              <li>✓ Nessuna pubblicità</li>
+              <li
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  letterSpacing: "0.2px",
+                }}
+              >
+                <img
+                  src={checkMark}
+                  alt="✓"
+                  width="20"
+                  height="20"
+                  draggable="false"
+                  style={{ filter: "brightness(0) invert(1)" }}
+                />{" "}
+                Gestione illimitata scadenze
+              </li>
+              <li
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  letterSpacing: "0.2px",
+                }}
+              >
+                <img
+                  src={checkMark}
+                  alt="✓"
+                  width="20"
+                  height="20"
+                  draggable="false"
+                  style={{ filter: "brightness(0) invert(1)" }}
+                />{" "}
+                Notifiche email automatiche
+              </li>
+              <li
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  letterSpacing: "0.2px",
+                }}
+              >
+                <img
+                  src={checkMark}
+                  alt="✓"
+                  width="20"
+                  height="20"
+                  draggable="false"
+                  style={{ filter: "brightness(0) invert(1)" }}
+                />{" "}
+                Notifiche email automatiche
+              </li>
+              <li
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  letterSpacing: "0.2px",
+                }}
+              >
+                <img
+                  src={checkMark}
+                  alt="✓"
+                  width="20"
+                  height="20"
+                  draggable="false"
+                  style={{ filter: "brightness(0) invert(1)" }}
+                />{" "}
+                Fino a 6 membri famiglia
+              </li>
+              <li
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  letterSpacing: "0.2px",
+                }}
+              >
+                <img
+                  src={checkMark}
+                  alt="✓"
+                  width="20"
+                  height="20"
+                  draggable="false"
+                  style={{ filter: "brightness(0) invert(1)" }}
+                />{" "}
+                Backup sicuro su AWS
+              </li>
+              <li
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  letterSpacing: "0.2px",
+                }}
+              >
+                <img
+                  src={checkMark}
+                  alt="✓"
+                  width="20"
+                  height="20"
+                  draggable="false"
+                  style={{ filter: "brightness(0) invert(1)" }}
+                />{" "}
+                Accesso da tutti i dispositivi
+              </li>
+              <li
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  letterSpacing: "0.2px",
+                }}
+              >
+                <img
+                  src={checkMark}
+                  alt="✓"
+                  width="20"
+                  height="20"
+                  draggable="false"
+                  style={{ filter: "brightness(0) invert(1)" }}
+                />{" "}
+                Supporto email
+              </li>
+              <li
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  letterSpacing: "0.2px",
+                }}
+              >
+                <img
+                  src={checkMark}
+                  alt="✓"
+                  width="20"
+                  height="20"
+                  draggable="false"
+                  style={{ filter: "brightness(0) invert(1)" }}
+                />{" "}
+                Nessuna pubblicità
+              </li>
             </ul>
             <button onClick={handleRegisterClick} className="pricing-btn">
               Inizia Subito
@@ -359,7 +669,21 @@ const LandingPage = () => {
       <section id="contact" className="contact-section">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Hai domande?</h2>
+            <SplitText
+              text="Hai domande?"
+              className="text-2xl font-semibold text-center activity-summary-important-text section-title"
+              delay={50}
+              duration={0.6}
+              ease="power3.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.1}
+              rootMargin="-100px"
+              textAlign="center"
+              onLetterAnimationComplete={handleAnimationComplete}
+            />
+            {/* <h2 className="section-title">Hai domande?</h2> */}
             <p className="section-subtitle">
               Siamo qui per aiutarti. Contattaci per qualsiasi informazione
             </p>
@@ -368,7 +692,15 @@ const LandingPage = () => {
           <div className="contact-container">
             <div className="contact-info">
               <div className="contact-item">
-                <div className="contact-icon">📧</div>
+                <div className="contact-icon">
+                  <img
+                    src={loveLetter}
+                    alt="Lettera d'Amore"
+                    width="35"
+                    height="35"
+                    draggable="false"
+                  />
+                </div>
                 <div>
                   <h4>Email</h4>
                   <a href="mailto:support@homecloud.it">support@homecloud.it</a>
@@ -376,6 +708,7 @@ const LandingPage = () => {
               </div>
 
               <div className="contact-item">
+                {/* da cambiare */}
                 <div className="contact-icon">🕐</div>
                 <div>
                   <h4>Orari Assistenza</h4>
@@ -384,7 +717,15 @@ const LandingPage = () => {
               </div>
 
               <div className="contact-item">
-                <div className="contact-icon">⚡</div>
+                <div className="contact-icon">
+                  <img
+                    src={lightning}
+                    alt="Fulmine"
+                    width="35"
+                    height="35"
+                    draggable="false"
+                  />
+                </div>
                 <div>
                   <h4>Risposta Rapida</h4>
                   <p>Entro 24 ore lavorative</p>
@@ -393,27 +734,25 @@ const LandingPage = () => {
             </div>
 
             <form className="contact-form" onSubmit={handleSubmit}>
-              <div className="form-row">
-                <div className="form-group">
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Il tuo nome"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="La tua email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Il tuo nome"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="La tua email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                />
               </div>
               <div className="form-group">
                 <textarea
@@ -423,6 +762,7 @@ const LandingPage = () => {
                   value={formData.message}
                   onChange={handleInputChange}
                   required
+                  style={{ resize: "none" }}
                 ></textarea>
               </div>
               <button type="submit" className="contact-submit-btn">
@@ -437,7 +777,21 @@ const LandingPage = () => {
       <section className="cta-section">
         <div className="container">
           <div className="cta-content">
-            <h2 className="cta-title">Pronto a organizzare la tua famiglia?</h2>
+            <SplitText
+              text="Pronto ad organizzare la tua famiglia?"
+              className="text-2xl font-semibold text-center activity-summary-important-text cta-title"
+              delay={40}
+              duration={0.5}
+              ease="power3.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.1}
+              rootMargin="-100px"
+              textAlign="center"
+              onLetterAnimationComplete={handleAnimationComplete}
+            />
+            {/* <h2 className="cta-title">Pronto ad organizzare la tua famiglia?</h2> */}
             <p className="cta-subtitle">
               Unisciti a centinaia di famiglie che hanno già semplificato la
               loro vita con HomeCloud
