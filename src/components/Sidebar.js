@@ -35,19 +35,31 @@ function Sidebar({
         {logoLoading ? (
           <div
             className="skeleton skeleton-logo"
-            style={{ width: "250px", height: "80px", margin: "0 auto" }}
+            style={{
+              width: "200px",
+              height: "80px",
+              margin: "0 auto",
+            }}
             draggable="false"
           />
         ) : logoUrl ? (
           <img
             src={logoUrl}
             alt="HomeCloud Logo"
-            style={{ width: "250px", height: "80px", margin: "0 auto" }}
+            style={{
+              width: "200px",
+              height: "80px",
+              margin: "0 auto",
+            }}
             draggable="false"
           />
         ) : (
           <div
-            style={{ width: "250px", height: "80px", margin: "0 auto" }}
+            style={{
+              width: "200px",
+              height: "80px",
+              margin: "0 auto",
+            }}
             draggable="false"
           />
         )}

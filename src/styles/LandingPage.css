@@ -120,7 +120,7 @@ section {
   font-size: 1.05rem;
   cursor: pointer;
   font-family: "Poppins", sans-serif;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
 }
 
 .nav-cta-btn:hover,
@@ -133,8 +133,8 @@ section {
   position: relative;
   background: linear-gradient(
     135deg,
-    rgba(102, 126, 234, 0.5) 0%,
-    rgba(118, 75, 162, 0.5) 100%
+    rgba(102, 126, 234, 0.7) 0%,
+    rgba(118, 75, 162, 0.7) 100%
   );
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
@@ -783,7 +783,25 @@ section {
   box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
 }
 
-.pricing-badge {
+.pricing-card-spotlight {
+  max-width: 400px;
+  margin: 0 auto;
+  color: white;
+  text-align: center;
+  position: relative;
+  padding-top: 44px !important;
+  border: 1px solid #392e4e !important;
+  border-radius: 24px !important;
+  overflow: hidden !important; /* Torna a hidden per contenere il beam */
+}
+
+.pricing-badge-wrapper {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.pricing-badge-wrapper .pricing-badge {
   position: absolute;
   top: -15px;
   left: 50%;
@@ -794,75 +812,79 @@ section {
   border-radius: 20px;
   font-weight: 600;
   font-size: 0.9rem;
+  z-index: 20;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.pricing-title {
+.pricing-card-spotlight .pricing-title {
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 20px;
+  color: white;
+  margin-top: 10px;
 }
 
-.pricing-price {
+.pricing-card-spotlight .pricing-price {
   display: flex;
   align-items: baseline;
   justify-content: center;
   margin-bottom: 30px;
 }
 
-.price-currency {
-  font-size: 1.5rem;
-  font-weight: 600;
+.pricing-card-spotlight .price-currency {
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
-.price-amount {
-  font-size: 4rem;
-  font-weight: 800;
+.pricing-card-spotlight .price-amount {
+  font-size: 3.5rem;
+  font-weight: 700;
   margin: 0 5px;
 }
 
-.price-period {
-  font-size: 1.2rem;
+.pricing-card-spotlight .price-period {
+  font-size: 1rem;
   opacity: 0.8;
 }
 
-.pricing-features {
+.pricing-card-spotlight .pricing-features {
   list-style: none;
-  margin-bottom: 40px;
   text-align: left;
+  margin-bottom: 30px;
+  padding: 0 20px;
 }
 
-.pricing-features li {
-  padding: 8px 0;
+.pricing-card-spotlight .pricing-features li {
+  margin-bottom: 12px;
   font-size: 1rem;
-  opacity: 0.95;
 }
 
-.pricing-btn {
-  width: 100%;
-  background: white;
-  color: #667eea;
-  border: none;
-  padding: 16px;
-  border-radius: 15px;
+.pricing-card-spotlight .pricing-btn {
+  width: calc(100% - 40px);
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 15px 30px;
+  border-radius: 12px;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  margin-bottom: 15px;
-  font-family: "Poppins", sans-serif;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  margin: 0 20px 20px 20px;
 }
 
-.pricing-btn:hover,
-.pricing-btn:focus {
-  color: #5c71d3;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+.pricing-card-spotlight .pricing-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
 }
 
-.pricing-note {
+.pricing-card-spotlight .pricing-note {
+  margin-bottom: 20px;
   font-size: 0.9rem;
   opacity: 0.8;
-  letter-spacing: -0.1px;
+  padding: 0 20px;
 }
 
 /* Testimonials Section - COMMENTED */
@@ -954,7 +976,6 @@ section {
 .contact-item h4 {
   font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: 5px;
   color: #2d3748;
 }
 
@@ -1015,7 +1036,8 @@ section {
   font-family: "Poppins", sans-serif;
 }
 
-.contact-submit-btn:hover {
+.contact-submit-btn:hover,
+.contact-submit-btn:focus {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
 }
@@ -1023,6 +1045,7 @@ section {
 /* CTA Section */
 .cta-section {
   padding: 120px 0;
+  padding-bottom: 80px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   text-align: center;
@@ -1042,8 +1065,11 @@ section {
 
 .cta-subtitle {
   font-size: 1.2rem;
-  margin-bottom: 40px;
+  color: var(--secondary-color);
   opacity: 0.9;
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 40px;
 }
 
 .cta-btn {
@@ -1055,20 +1081,16 @@ section {
   font-size: 1.2rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
   font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease;
 }
 
-.cta-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-}
-
-.cta-note {
-  font-size: 0.9rem;
-  opacity: 0.8;
+.cta-btn:hover,
+.cta-btn:focus {
+  color: #5c71d3;
+  box-shadow: 0 8px 30px 2px rgba(0, 0, 0, 0.35);
 }
 
 /* Footer */
@@ -1089,12 +1111,14 @@ section {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
+  max-width: 300px;
 }
 
 .footer-logo-img {
-  height: 32px;
+  height: 80px;
   width: auto;
+  margin: 0 auto;
 }
 
 .footer-logo-text {
@@ -1105,11 +1129,13 @@ section {
 .footer-description {
   color: #a0aec0;
   line-height: 1.6;
+  text-align: justify;
   max-width: 300px;
 }
 
 .footer-section h4 {
   font-size: 1.1rem;
+  letter-spacing: 0.1px;
   font-weight: 600;
   margin-bottom: 20px;
 }
@@ -1129,12 +1155,14 @@ section {
   border: none;
   cursor: pointer;
   font-size: 0.95rem;
+  font-weight: 400;
   transition: color 0.3s ease;
-  font-family: "Poppins", sans-serif;
 }
 
-.footer-link:hover {
+.footer-link:hover,
+.footer-link:focus {
   color: white;
+  font-weight: 500;
 }
 
 .footer-bottom {
