@@ -15,10 +15,11 @@ import hospital from "openmoji/color/svg/1F3E5.svg";
 import loveLetter from "openmoji/color/svg/1F48C.svg";
 import checkMark from "openmoji/color/svg/2714.svg";
 import email from "openmoji/color/svg/1F4E7.svg";
-import family from "openmoji/color/svg/1F46A.svg";
+import barChart from "openmoji/color/svg/1F4CA.svg";
 import shield from "openmoji/color/svg/1F6E1.svg";
 import mobilePhone from "openmoji/color/svg/1F4F1.svg";
 import lightning from "openmoji/color/svg/26A1.svg";
+import hammerAndWrench from "openmoji/color/svg/1F6E0.svg";
 
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -89,7 +90,14 @@ const LandingPage = () => {
     <div className="landing-page">
       <nav className={`glass-nav ${isScrolled ? "scrolled" : ""}`}>
         <div className="nav-container">
-          <Link to="/landing" className="nav-logo-link">
+          <Link
+            to="/landing"
+            className="nav-logo-link"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("hero");
+            }}
+          >
             <div className="nav-logo">
               {logoUrl && (
                 <img
@@ -389,18 +397,18 @@ const LandingPage = () => {
             <div className="feature-card">
               <div className="feature-icon">
                 <img
-                  src={family}
-                  alt="Famiglia"
+                  src={barChart}
+                  alt="Grafico a barre"
                   width="60"
                   height="60"
                   draggable="false"
                   className="feature-icon"
                 />
               </div>
-              <h3>Gestione Familiare</h3>
+              <h3>Dashboard Intelligente</h3>
               <p>
-                Organizza le informazioni di tutti i membri della famiglia in un
-                unico posto sicuro
+                Visualizza le prossime scadenze, monitora quelle scadute e cerca
+                facilmente con filtri intelligenti
               </p>
             </div>
 
@@ -485,7 +493,7 @@ const LandingPage = () => {
 
           <div className="pricing-card">
             <div className="pricing-badge">Sempre Gratis</div>
-            <h3 className="pricing-title">Piano Famiglia</h3>
+            <h3 className="pricing-title">Piano Personale</h3>
             <div className="pricing-price">
               <span className="price-currency">€</span>
               <span className="price-amount">0</span>
@@ -544,24 +552,6 @@ const LandingPage = () => {
                   draggable="false"
                   style={{ filter: "brightness(0) invert(1)" }}
                 />{" "}
-                Fino a 6 membri famiglia
-              </li>
-              <li
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "5px",
-                  letterSpacing: "0.2px",
-                }}
-              >
-                <img
-                  src={checkMark}
-                  alt="✓"
-                  width="20"
-                  height="20"
-                  draggable="false"
-                  style={{ filter: "brightness(0) invert(1)" }}
-                />{" "}
                 Backup sicuro su AWS
               </li>
               <li
@@ -581,24 +571,6 @@ const LandingPage = () => {
                   style={{ filter: "brightness(0) invert(1)" }}
                 />{" "}
                 Accesso da tutti i dispositivi
-              </li>
-              <li
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "5px",
-                  letterSpacing: "0.2px",
-                }}
-              >
-                <img
-                  src={checkMark}
-                  alt="✓"
-                  width="20"
-                  height="20"
-                  draggable="false"
-                  style={{ filter: "brightness(0) invert(1)" }}
-                />{" "}
-                Supporto email
               </li>
               <li
                 style={{
@@ -668,10 +640,18 @@ const LandingPage = () => {
               </div>
 
               <div className="contact-item">
-                <div className="contact-icon">🕐</div>
+                <div className="contact-icon">
+                  <img
+                    src={hammerAndWrench}
+                    alt="Martello e Chiave Inglese"
+                    width="35"
+                    height="35"
+                    draggable="false"
+                  />
+                </div>
                 <div>
-                  <h4>Orari Assistenza</h4>
-                  <p>Lun-Ven 9:00-18:00</p>
+                  <h4>Centro Assistenza</h4>
+                  <p>Guide e soluzioni rapide</p>
                 </div>
               </div>
 
@@ -775,7 +755,7 @@ const LandingPage = () => {
                     className="footer-logo-img"
                   />
                 )}
-                <span className="footer-logo-text">HomeCloud</span>
+                {/* <span className="footer-logo-text">HomeCloud</span> */}
               </div>
               <p className="footer-description">
                 La piattaforma smart per la gestione familiare. Semplice,
