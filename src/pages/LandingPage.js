@@ -7,7 +7,7 @@ import TextPressure from "../components/TextPressure/TextPressure.jsx";
 import ShinyText from "../components/ShinyText/ShinyText.jsx";
 import SplitText from "../components/SplitText/SplitText.jsx";
 import SpotlightCard from "../components/SpotlightCard/SpotlightCard.jsx";
-import ContactForm from "../components/ContactForm"; // Aggiungi questa importazione
+import ContactForm from "../components/ContactForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import rocket from "openmoji/color/svg/1F680.svg";

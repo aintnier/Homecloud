@@ -1,17 +1,24 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AddDeadline from "./pages/AddDeadline";
 import DeadlineDetails from "./pages/DeadlineDetails";
 import UserProfile from "./pages/UserProfile";
-import ErrorPage from "./pages/ErrorPage";
 import LandingPage from "./pages/LandingPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsAndConditions";
+import ErrorPage from "./pages/ErrorPage";
+import CookiePolicy from "./pages/CookiePolicy";
+import Unsubscribe from "./pages/Unsubscribe";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/landing" element={<LandingPage />} />
         <Route
@@ -56,6 +63,10 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-conditions" element={<TermsConditions />} />
+        <Route path="/cookie-policy" element={<CookiePolicy />} />
+        <Route path="/unsubscribe" element={<Unsubscribe />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Router>

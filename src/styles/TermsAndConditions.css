@@ -1,0 +1,408 @@
+.terms-conditions-page {
+  min-height: 100vh;
+  background: #fafafa;
+  font-family: "Poppins", sans-serif;
+  color: #2d3748;
+  line-height: 1.6;
+}
+
+/* Navigation */
+.terms-conditions-page .simple-nav {
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 15px 0;
+}
+
+.terms-conditions-page .simple-nav .nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.terms-conditions-page .nav-logo-link {
+  text-decoration: none;
+}
+
+.terms-conditions-page .nav-logo-img {
+  height: 40px;
+  width: auto;
+}
+
+.terms-conditions-page .back-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.terms-conditions-page .back-link:hover {
+  background: #667eea;
+  color: white;
+}
+
+/* Main Content */
+.terms-conditions-page .terms-content {
+  padding: 60px 0;
+}
+
+.terms-conditions-page .container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header */
+.terms-conditions-page .terms-header {
+  text-align: center;
+  margin-bottom: 60px;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.terms-conditions-page .terms-header h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.terms-conditions-page .last-updated {
+  font-size: 1rem;
+  color: #718096;
+  font-style: italic;
+}
+
+/* Sections */
+.terms-conditions-page .terms-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.terms-conditions-page .terms-section {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.terms-conditions-page .terms-section h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #667eea;
+}
+
+.terms-conditions-page .terms-section h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #4a5568;
+  margin: 25px 0 15px 0;
+}
+
+.terms-conditions-page .terms-section p {
+  margin-bottom: 15px;
+  font-size: 1rem;
+  color: #2d3748;
+}
+
+.terms-conditions-page .terms-section ul {
+  margin: 15px 0;
+  padding-left: 20px;
+}
+
+.terms-conditions-page .terms-section li {
+  margin: 8px 0;
+  color: #2d3748;
+  font-size: 1rem;
+}
+
+.terms-conditions-page .terms-section li::marker {
+  color: #667eea;
+}
+
+/* Special Notice Boxes */
+.terms-conditions-page .important-notice {
+  background: linear-gradient(135deg, #fef5e7 0%, #fed7aa 100%);
+  border: 1px solid #f6ad55;
+  border-left: 4px solid #ed8936;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.terms-conditions-page .important-notice p {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Service Description */
+.terms-conditions-page .service-description {
+  display: grid;
+  gap: 25px;
+  margin: 25px 0;
+}
+
+.terms-conditions-page .service-item {
+  background: linear-gradient(135deg, #e6fffa 0%, #f0fff4 100%);
+  border: 1px solid #81e6d9;
+  border-radius: 8px;
+  padding: 25px;
+}
+
+/* Usage Conditions */
+.terms-conditions-page .usage-conditions {
+  display: grid;
+  gap: 25px;
+  margin: 25px 0;
+}
+
+.terms-conditions-page .condition-item {
+  background: linear-gradient(135deg, #f0fff4 0%, #f7fafc 100%);
+  border: 1px solid #c6f6d5;
+  border-radius: 8px;
+  padding: 25px;
+}
+
+/* Liability Limitations */
+.terms-conditions-page .liability-limitations {
+  display: grid;
+  gap: 25px;
+  margin: 25px 0;
+}
+
+.terms-conditions-page .liability-item {
+  background: linear-gradient(135deg, #fef5e7 0%, #f7fafc 100%);
+  border: 1px solid #fbd38d;
+  border-radius: 8px;
+  padding: 25px;
+}
+
+/* Service Changes */
+.terms-conditions-page .service-changes {
+  display: grid;
+  gap: 25px;
+  margin: 25px 0;
+}
+
+.terms-conditions-page .change-item {
+  background: linear-gradient(135deg, #e6fffa 0%, #f7fafc 100%);
+  border: 1px solid #81e6d9;
+  border-radius: 8px;
+  padding: 25px;
+}
+
+/* Intellectual Property */
+.terms-conditions-page .intellectual-property {
+  display: grid;
+  gap: 25px;
+  margin: 25px 0;
+}
+
+.terms-conditions-page .ip-item {
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 25px;
+}
+
+/* Privacy Reference */
+.terms-conditions-page .privacy-reference {
+  background: linear-gradient(135deg, #e6fffa 0%, #f0fff4 100%);
+  border: 1px solid #81e6d9;
+  border-radius: 8px;
+  padding: 25px;
+  margin: 20px 0;
+}
+
+.terms-conditions-page .privacy-highlights {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  border: 1px solid #c6f6d5;
+}
+
+.terms-conditions-page .policy-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid #667eea;
+  transition: all 0.2s ease;
+}
+
+.terms-conditions-page .policy-link:hover {
+  color: #5a67d8;
+  border-bottom-color: #5a67d8;
+}
+
+/* Terms Changes */
+.terms-conditions-page .terms-changes {
+  background: linear-gradient(135deg, #fef5e7 0%, #f7fafc 100%);
+  border: 1px solid #fbd38d;
+  border-radius: 8px;
+  padding: 25px;
+  margin: 20px 0;
+}
+
+.terms-conditions-page .notification-process {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  border: 1px solid #f6ad55;
+}
+
+/* Legal Jurisdiction */
+.terms-conditions-page .legal-jurisdiction {
+  display: grid;
+  gap: 25px;
+  margin: 25px 0;
+}
+
+.terms-conditions-page .jurisdiction-item {
+  background: linear-gradient(135deg, #fef5e7 0%, #f7fafc 100%);
+  border: 1px solid #fbd38d;
+  border-radius: 8px;
+  padding: 25px;
+}
+
+/* General Provisions */
+.terms-conditions-page .general-provisions {
+  display: grid;
+  gap: 20px;
+  margin: 25px 0;
+}
+
+.terms-conditions-page .provision-item {
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+/* Contact Section */
+.terms-conditions-page .contact-section {
+  background: linear-gradient(135deg, #e6fffa 0%, #f0fff4 100%);
+  border: 1px solid #81e6d9;
+  border-radius: 8px;
+  padding: 25px;
+  margin: 20px 0;
+}
+
+.terms-conditions-page .contact-details {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid #c6f6d5;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+/* Footer */
+.terms-conditions-page .simple-footer {
+  background: #2d3748;
+  color: white;
+  text-align: center;
+  padding: 30px 0;
+  margin-top: 60px;
+}
+
+.terms-conditions-page .simple-footer p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .terms-conditions-page .terms-header h1 {
+    font-size: 2.2rem;
+  }
+
+  .terms-conditions-page .terms-section {
+    padding: 25px;
+  }
+
+  .terms-conditions-page .terms-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .terms-conditions-page .simple-nav .nav-container {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .terms-conditions-page .terms-conditions-page .container {
+    padding: 0 15px;
+  }
+
+  .terms-conditions-page .terms-header {
+    padding: 25px 20px;
+  }
+
+  .terms-conditions-page .terms-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .terms-conditions-page .terms-section {
+    padding: 20px;
+  }
+
+  .terms-conditions-page .service-description,
+  .terms-conditions-page .usage-conditions,
+  .terms-conditions-page .liability-limitations,
+  .terms-conditions-page .service-changes,
+  .terms-conditions-page .intellectual-property,
+  .terms-conditions-page .legal-jurisdiction,
+  .terms-conditions-page .general-provisions {
+    gap: 15px;
+  }
+
+  .terms-conditions-page .service-item,
+  .terms-conditions-page .condition-item,
+  .terms-conditions-page .liability-item,
+  .terms-conditions-page .change-item,
+  .terms-conditions-page .ip-item,
+  .terms-conditions-page .jurisdiction-item,
+  .terms-conditions-page .provision-item {
+    padding: 20px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .terms-conditions-page .simple-nav,
+  .terms-conditions-page .simple-footer {
+    display: none;
+  }
+
+  .terms-conditions-page {
+    background: white;
+  }
+
+  .terms-conditions-page .terms-section {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    break-inside: avoid;
+  }
+}

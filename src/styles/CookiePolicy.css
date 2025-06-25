@@ -1,0 +1,484 @@
+.cookie-policy-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+  font-family: "Poppins", sans-serif;
+  color: #2d3748;
+  line-height: 1.6;
+}
+
+/* Navigation */
+.cookie-policy-page .simple-nav {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 15px 0;
+}
+
+.cookie-policy-page .simple-nav .nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cookie-policy-page .nav-logo-link {
+  text-decoration: none;
+}
+
+.cookie-policy-page .nav-logo-img {
+  height: 40px;
+  width: auto;
+}
+
+.cookie-policy-page .back-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.cookie-policy-page .back-link:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* Main Content */
+.cookie-policy-page .cookie-content {
+  padding: 60px 0;
+}
+
+.cookie-policy-page .container {
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header */
+.cookie-policy-page .cookie-header {
+  text-align: center;
+  margin-bottom: 60px;
+  padding: 40px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.cookie-policy-page .cookie-header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cookie-policy-page .last-updated {
+  font-size: 1.1rem;
+  color: #718096;
+  font-style: italic;
+}
+
+/* Sections */
+.cookie-policy-page .cookie-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.cookie-policy-page .cookie-section {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(102, 126, 234, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cookie-policy-page .cookie-section h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 25px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid #667eea;
+  position: relative;
+}
+
+.cookie-policy-page .cookie-section h2::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
+}
+
+.cookie-policy-page .cookie-section h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #4a5568;
+  margin: 25px 0 15px 0;
+}
+
+.cookie-policy-page .cookie-section h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 20px 0 10px 0;
+}
+
+.cookie-policy-page .cookie-section p {
+  margin-bottom: 15px;
+  font-size: 1.05rem;
+  color: #2d3748;
+}
+
+.cookie-policy-page .cookie-section ul {
+  margin: 15px 0;
+  padding-left: 20px;
+}
+
+.cookie-policy-page .cookie-section li {
+  margin: 8px 0;
+  color: #2d3748;
+  font-size: 1.05rem;
+}
+
+.cookie-policy-page .cookie-section li::marker {
+  color: #667eea;
+}
+
+.cookie-policy-page .cookie-section ol {
+  margin: 15px 0;
+  padding-left: 20px;
+}
+
+.cookie-policy-page .cookie-section ol li {
+  margin: 5px 0;
+  color: #4a5568;
+  font-size: 1rem;
+}
+
+/* Cookie Definition */
+.cookie-policy-page .cookie-definition {
+  background: linear-gradient(135deg, #e6fffa 0%, #f0fff4 100%);
+  border: 1px solid #81e6d9;
+  border-radius: 12px;
+  padding: 25px;
+  margin: 20px 0;
+}
+
+/* Cookie Categories */
+.cookie-policy-page .cookie-category {
+  background: linear-gradient(135deg, #f0fff4 0%, #f7fafc 100%);
+  border: 1px solid #c6f6d5;
+  border-radius: 12px;
+  padding: 30px;
+  margin: 25px 0;
+}
+
+/* Cookie List */
+.cookie-policy-page .cookie-list {
+  display: grid;
+  gap: 25px;
+  margin: 25px 0;
+}
+
+.cookie-policy-page .cookie-item {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 25px;
+  transition: all 0.3s ease;
+}
+
+.cookie-policy-page .cookie-item h3 {
+  color: #2d3748;
+  margin: 0 0 15px 0;
+  font-size: 1.3rem;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #667eea;
+}
+
+.cookie-policy-page .cookie-details p {
+  margin: 8px 0;
+  font-size: 1rem;
+}
+
+.cookie-policy-page .cookie-details code {
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: "Courier New", monospace;
+  color: #2d3748;
+  font-size: 0.9rem;
+}
+
+/* No Cookies Info */
+.cookie-policy-page .no-cookies-info {
+  background: linear-gradient(135deg, #e6fffa 0%, #f0fff4 100%);
+  border: 2px solid #38b2ac;
+  border-radius: 12px;
+  padding: 30px;
+  margin: 25px 0;
+}
+
+.cookie-policy-page .privacy-commitment {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid #81e6d9;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0 0 0;
+}
+
+/* Cookie Management */
+.cookie-policy-page .cookie-management {
+  margin: 25px 0;
+}
+
+.cookie-policy-page .management-info {
+  background: linear-gradient(135deg, #fef5e7 0%, #f7fafc 100%);
+  border: 1px solid #fbd38d;
+  border-radius: 12px;
+  padding: 25px;
+  margin: 20px 0;
+}
+
+.cookie-policy-page .browser-instructions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin: 25px 0;
+}
+
+.cookie-policy-page .browser-item {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  transition: all 0.2s ease;
+}
+
+.cookie-policy-page .browser-item h4 {
+  color: #2d3748;
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Consequences Info */
+.cookie-policy-page .consequences-info {
+  display: grid;
+  gap: 25px;
+  margin: 25px 0;
+}
+
+.cookie-policy-page .consequence-item {
+  background: linear-gradient(135deg, #fef5e7 0%, #f7fafc 100%);
+  border: 1px solid #f6ad55;
+  border-left: 4px solid #ed8936;
+  border-radius: 8px;
+  padding: 25px;
+}
+
+/* Updates Info */
+.cookie-policy-page .updates-info {
+  background: linear-gradient(135deg, #f0fff4 0%, #f7fafc 100%);
+  border: 1px solid #c6f6d5;
+  border-radius: 12px;
+  padding: 25px;
+  margin: 20px 0;
+}
+
+.cookie-policy-page .notification-info {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid #c6f6d5;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0 0 0;
+}
+
+/* Legal Basis */
+.cookie-policy-page .legal-basis {
+  display: grid;
+  gap: 25px;
+  margin: 25px 0;
+}
+
+.cookie-policy-page .legal-item {
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 25px;
+}
+
+/* Legal References */
+.cookie-policy-page .legal-references {
+  display: grid;
+  gap: 25px;
+  margin: 25px 0;
+}
+
+.cookie-policy-page .reference-item {
+  background: linear-gradient(135deg, #fef5e7 0%, #f7fafc 100%);
+  border: 1px solid #fbd38d;
+  border-radius: 12px;
+  padding: 25px;
+}
+
+/* Useful Resources */
+.cookie-policy-page .useful-resources {
+  display: grid;
+  gap: 25px;
+  margin: 25px 0;
+}
+
+.cookie-policy-page .resource-category {
+  background: linear-gradient(135deg, #e6fffa 0%, #f7fafc 100%);
+  border: 1px solid #81e6d9;
+  border-radius: 12px;
+  padding: 25px;
+}
+
+/* Contact Section */
+.cookie-policy-page .contact-section {
+  background: linear-gradient(135deg, #e6fffa 0%, #f0fff4 100%);
+  border: 2px solid #38b2ac;
+  border-radius: 12px;
+  padding: 30px;
+  margin: 20px 0;
+}
+
+.cookie-policy-page .contact-details {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid #81e6d9;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.cookie-policy-page .related-policies {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid #81e6d9;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0 0 0;
+}
+
+a[target="_blank"]::after {
+  content: " ↗";
+  font-size: 0.8em;
+  color: #718096;
+}
+
+/* Footer */
+.cookie-policy-page .simple-footer {
+  background: #2d3748;
+  color: white;
+  text-align: center;
+  padding: 30px 0;
+  margin-top: 60px;
+}
+
+.cookie-policy-page .simple-footer p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .cookie-policy-page .cookie-header h1 {
+    font-size: 2.2rem;
+  }
+
+  .cookie-policy-page .cookie-section {
+    padding: 25px;
+  }
+
+  .cookie-policy-page .cookie-section h2 {
+    font-size: 1.6rem;
+  }
+
+  .cookie-policy-page .browser-instructions {
+    grid-template-columns: 1fr;
+  }
+
+  .cookie-policy-page .simple-nav .nav-container {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .cookie-policy-page .container {
+    padding: 0 15px;
+  }
+
+  .cookie-policy-page .cookie-header {
+    padding: 25px 20px;
+  }
+
+  .cookie-policy-page .cookie-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .cookie-policy-page .cookie-section {
+    padding: 20px;
+  }
+
+  .cookie-policy-page .cookie-category,
+  .cookie-policy-page .cookie-item,
+  .cookie-policy-page .management-info,
+  .cookie-policy-page .consequence-item,
+  .cookie-policy-page .legal-item,
+  .cookie-policy-page .reference-item,
+  .cookie-policy-page .resource-category {
+    padding: 20px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .cookie-policy-page .simple-nav,
+  .cookie-policy-page .simple-footer {
+    display: none;
+  }
+
+  .cookie-policy-page {
+    background: white;
+  }
+
+  .cookie-policy-page .cookie-section {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    break-inside: avoid;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+}
