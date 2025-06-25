@@ -11,6 +11,15 @@ function getS3AvatarConfig(config) {
   };
 }
 
+// Funzione per ottenere la configurazione del logo S3
+function getS3LogoConfig(config) {
+  return {
+    bucketName: config.bucketName,
+    folderName: config.folderName,
+    region: config.region,
+  };
+}
+
 // Schema di validazione per deadline
 const deadlineSchema = Joi.object({
   title: Joi.string().min(3).max(255).required().messages({
@@ -51,5 +60,6 @@ function validateDeadline(data) {
 
 module.exports = {
   getS3AvatarConfig,
+  getS3LogoConfig,
   validateDeadline,
 };

@@ -14,7 +14,6 @@ export async function logoutAndRedirect() {
     await signOut();
     window.location.href = "/login";
   } catch (err) {
-    // Puoi mostrare un messaggio di errore se vuoi
     window.location.href = "/login";
   }
 }

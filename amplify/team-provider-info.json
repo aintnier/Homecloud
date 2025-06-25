@@ -55,7 +55,7 @@
         },
         "homecloudSharedUtils": {
           "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
-          "s3Key": "amplify-builds/homecloudSharedUtils-LambdaLayerVersion7b5090fb-build.zip"
+          "s3Key": "amplify-builds/homecloudSharedUtils-LambdaLayerVersion8b44b06f-build.zip"
         },
         "updateUser": {
           "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
@@ -94,6 +94,13 @@
           "dbName": "homecloud",
           "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
           "s3Key": "amplify-builds/deleteDeadlines-2f61392b5543442b4b48-build.zip"
+        },
+        "getAppConfig": {
+          "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
+          "s3Key": "amplify-builds/getAppConfig-57583874757242746972-build.zip",
+          "region": "eu-north-1",
+          "s3BucketName": "home-cloud-user-images",
+          "s3LogoFolder": "logo-imgs"
         }
       },
       "auth": {

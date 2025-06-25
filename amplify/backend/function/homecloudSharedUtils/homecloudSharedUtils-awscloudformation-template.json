@@ -20,7 +20,7 @@
     }
   },
   "Resources": {
-    "LambdaLayerVersion7b5090fb": {
+    "LambdaLayerVersion8b44b06f": {
       "Type": "AWS::Lambda::LayerVersion",
       "Properties": {
         "CompatibleRuntimes": {
@@ -51,19 +51,19 @@
       "DeletionPolicy": "Delete",
       "UpdateReplacePolicy": "Retain"
     },
-    "LambdaLayerPermissionPrivate7b5090fb": {
+    "LambdaLayerPermissionPrivate8b44b06f": {
       "Type": "AWS::Lambda::LayerVersionPermission",
       "Properties": {
         "Action": "lambda:GetLayerVersion",
         "LayerVersionArn": {
-          "Ref": "LambdaLayerVersion7b5090fb"
+          "Ref": "LambdaLayerVersion8b44b06f"
         },
         "Principal": {
           "Ref": "AWS::AccountId"
         }
       }
     },
-    "LambdaLayerVersion74c51c96": {
+    "LambdaLayerVersion64036c4d": {
       "Type": "AWS::Lambda::LayerVersion",
       "Properties": {
         "CompatibleRuntimes": [
@@ -73,9 +73,9 @@
           "S3Bucket": {
             "Ref": "deploymentBucketName"
           },
-          "S3Key": "amplify-builds/homecloudSharedUtils-LambdaLayerVersion74c51c96-build.zip"
+          "S3Key": "amplify-builds/homecloudSharedUtils-LambdaLayerVersion64036c4d-build.zip"
         },
-        "Description": "Updated layer version 2025-05-19T20:27:18.287Z",
+        "Description": "Updated layer version 2025-06-24T22:00:03.252Z",
         "LayerName": {
           "Fn::Sub": [
             "homecloudSharedUtils-${env}",
@@ -90,270 +90,11 @@
       "DeletionPolicy": "Delete",
       "UpdateReplacePolicy": "Retain"
     },
-    "LambdaLayerPermissionPrivate74c51c96": {
+    "LambdaLayerPermissionPrivate64036c4d": {
       "Type": "AWS::Lambda::LayerVersionPermission",
       "Properties": {
         "Action": "lambda:GetLayerVersion",
-        "LayerVersionArn": "arn:aws:lambda:eu-north-1:274756574788:layer:homecloudSharedUtils-dev:8",
-        "Principal": {
-          "Ref": "AWS::AccountId"
-        }
-      }
-    },
-    "LambdaLayerVersiond6b63263": {
-      "Type": "AWS::Lambda::LayerVersion",
-      "Properties": {
-        "CompatibleRuntimes": [
-          "nodejs22.x"
-        ],
-        "Content": {
-          "S3Bucket": {
-            "Ref": "deploymentBucketName"
-          },
-          "S3Key": "amplify-builds/homecloudSharedUtils-LambdaLayerVersiond6b63263-build.zip"
-        },
-        "Description": "Updated layer version 2025-05-19T19:37:34.099Z",
-        "LayerName": {
-          "Fn::Sub": [
-            "homecloudSharedUtils-${env}",
-            {
-              "env": {
-                "Ref": "env"
-              }
-            }
-          ]
-        }
-      },
-      "DeletionPolicy": "Delete",
-      "UpdateReplacePolicy": "Retain"
-    },
-    "LambdaLayerPermissionPrivated6b63263": {
-      "Type": "AWS::Lambda::LayerVersionPermission",
-      "Properties": {
-        "Action": "lambda:GetLayerVersion",
-        "LayerVersionArn": "arn:aws:lambda:eu-north-1:274756574788:layer:homecloudSharedUtils-dev:7",
-        "Principal": {
-          "Ref": "AWS::AccountId"
-        }
-      }
-    },
-    "LambdaLayerVersionfaa9287d": {
-      "Type": "AWS::Lambda::LayerVersion",
-      "Properties": {
-        "CompatibleRuntimes": [
-          "nodejs22.x"
-        ],
-        "Content": {
-          "S3Bucket": {
-            "Ref": "deploymentBucketName"
-          },
-          "S3Key": "amplify-builds/homecloudSharedUtils-LambdaLayerVersionfaa9287d-build.zip"
-        },
-        "Description": "Updated layer version 2025-05-19T19:31:44.742Z",
-        "LayerName": {
-          "Fn::Sub": [
-            "homecloudSharedUtils-${env}",
-            {
-              "env": {
-                "Ref": "env"
-              }
-            }
-          ]
-        }
-      },
-      "DeletionPolicy": "Delete",
-      "UpdateReplacePolicy": "Retain"
-    },
-    "LambdaLayerPermissionPrivatefaa9287d": {
-      "Type": "AWS::Lambda::LayerVersionPermission",
-      "Properties": {
-        "Action": "lambda:GetLayerVersion",
-        "LayerVersionArn": "arn:aws:lambda:eu-north-1:274756574788:layer:homecloudSharedUtils-dev:6",
-        "Principal": {
-          "Ref": "AWS::AccountId"
-        }
-      }
-    },
-    "LambdaLayerVersion2370f58d": {
-      "Type": "AWS::Lambda::LayerVersion",
-      "Properties": {
-        "CompatibleRuntimes": [
-          "nodejs22.x"
-        ],
-        "Content": {
-          "S3Bucket": {
-            "Ref": "deploymentBucketName"
-          },
-          "S3Key": "amplify-builds/homecloudSharedUtils-LambdaLayerVersion2370f58d-build.zip"
-        },
-        "Description": "Updated layer version 2025-05-19T18:23:29.876Z",
-        "LayerName": {
-          "Fn::Sub": [
-            "homecloudSharedUtils-${env}",
-            {
-              "env": {
-                "Ref": "env"
-              }
-            }
-          ]
-        }
-      },
-      "DeletionPolicy": "Delete",
-      "UpdateReplacePolicy": "Retain"
-    },
-    "LambdaLayerPermissionPrivate2370f58d": {
-      "Type": "AWS::Lambda::LayerVersionPermission",
-      "Properties": {
-        "Action": "lambda:GetLayerVersion",
-        "LayerVersionArn": "arn:aws:lambda:eu-north-1:274756574788:layer:homecloudSharedUtils-dev:5",
-        "Principal": {
-          "Ref": "AWS::AccountId"
-        }
-      }
-    },
-    "LambdaLayerVersion1b80de52": {
-      "Type": "AWS::Lambda::LayerVersion",
-      "Properties": {
-        "CompatibleRuntimes": [
-          "nodejs22.x"
-        ],
-        "Content": {
-          "S3Bucket": {
-            "Ref": "deploymentBucketName"
-          },
-          "S3Key": "amplify-builds/homecloudSharedUtils-LambdaLayerVersion1b80de52-build.zip"
-        },
-        "Description": "Updated layer version 2025-05-18T21:28:48.617Z",
-        "LayerName": {
-          "Fn::Sub": [
-            "homecloudSharedUtils-${env}",
-            {
-              "env": {
-                "Ref": "env"
-              }
-            }
-          ]
-        }
-      },
-      "DeletionPolicy": "Delete",
-      "UpdateReplacePolicy": "Retain"
-    },
-    "LambdaLayerPermissionPrivate1b80de52": {
-      "Type": "AWS::Lambda::LayerVersionPermission",
-      "Properties": {
-        "Action": "lambda:GetLayerVersion",
-        "LayerVersionArn": "arn:aws:lambda:eu-north-1:274756574788:layer:homecloudSharedUtils-dev:4",
-        "Principal": {
-          "Ref": "AWS::AccountId"
-        }
-      }
-    },
-    "LambdaLayerVersion8a725552": {
-      "Type": "AWS::Lambda::LayerVersion",
-      "Properties": {
-        "CompatibleRuntimes": [
-          "nodejs22.x"
-        ],
-        "Content": {
-          "S3Bucket": {
-            "Ref": "deploymentBucketName"
-          },
-          "S3Key": "amplify-builds/homecloudSharedUtils-LambdaLayerVersion8a725552-build.zip"
-        },
-        "Description": "Updated layer version 2025-05-15T19:43:46.987Z",
-        "LayerName": {
-          "Fn::Sub": [
-            "homecloudSharedUtils-${env}",
-            {
-              "env": {
-                "Ref": "env"
-              }
-            }
-          ]
-        }
-      },
-      "DeletionPolicy": "Delete",
-      "UpdateReplacePolicy": "Retain"
-    },
-    "LambdaLayerPermissionPrivate8a725552": {
-      "Type": "AWS::Lambda::LayerVersionPermission",
-      "Properties": {
-        "Action": "lambda:GetLayerVersion",
-        "LayerVersionArn": "arn:aws:lambda:eu-north-1:274756574788:layer:homecloudSharedUtils-dev:3",
-        "Principal": {
-          "Ref": "AWS::AccountId"
-        }
-      }
-    },
-    "LambdaLayerVersion93e334ea": {
-      "Type": "AWS::Lambda::LayerVersion",
-      "Properties": {
-        "CompatibleRuntimes": [
-          "nodejs22.x"
-        ],
-        "Content": {
-          "S3Bucket": {
-            "Ref": "deploymentBucketName"
-          },
-          "S3Key": "amplify-builds/homecloudSharedUtils-LambdaLayerVersion93e334ea-build.zip"
-        },
-        "Description": "Updated layer version 2025-05-15T14:24:36.161Z",
-        "LayerName": {
-          "Fn::Sub": [
-            "homecloudSharedUtils-${env}",
-            {
-              "env": {
-                "Ref": "env"
-              }
-            }
-          ]
-        }
-      },
-      "DeletionPolicy": "Delete",
-      "UpdateReplacePolicy": "Retain"
-    },
-    "LambdaLayerPermissionPrivate93e334ea": {
-      "Type": "AWS::Lambda::LayerVersionPermission",
-      "Properties": {
-        "Action": "lambda:GetLayerVersion",
-        "LayerVersionArn": "arn:aws:lambda:eu-north-1:274756574788:layer:homecloudSharedUtils-dev:2",
-        "Principal": {
-          "Ref": "AWS::AccountId"
-        }
-      }
-    },
-    "LambdaLayerVersion297cec6d": {
-      "Type": "AWS::Lambda::LayerVersion",
-      "Properties": {
-        "CompatibleRuntimes": [
-          "nodejs22.x"
-        ],
-        "Content": {
-          "S3Bucket": {
-            "Ref": "deploymentBucketName"
-          },
-          "S3Key": "amplify-builds/homecloudSharedUtils-LambdaLayerVersion297cec6d-build.zip"
-        },
-        "Description": "Updated layer version 2025-05-15T13:49:02.515Z",
-        "LayerName": {
-          "Fn::Sub": [
-            "homecloudSharedUtils-${env}",
-            {
-              "env": {
-                "Ref": "env"
-              }
-            }
-          ]
-        }
-      },
-      "DeletionPolicy": "Delete",
-      "UpdateReplacePolicy": "Retain"
-    },
-    "LambdaLayerPermissionPrivate297cec6d": {
-      "Type": "AWS::Lambda::LayerVersionPermission",
-      "Properties": {
-        "Action": "lambda:GetLayerVersion",
-        "LayerVersionArn": "arn:aws:lambda:eu-north-1:274756574788:layer:homecloudSharedUtils-dev:1",
+        "LayerVersionArn": "arn:aws:lambda:eu-north-1:274756574788:layer:homecloudSharedUtils-dev:10",
         "Principal": {
           "Ref": "AWS::AccountId"
         }
@@ -363,7 +104,7 @@
   "Outputs": {
     "Arn": {
       "Value": {
-        "Ref": "LambdaLayerVersion7b5090fb"
+        "Ref": "LambdaLayerVersion8b44b06f"
       }
     }
   }

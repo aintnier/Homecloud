@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "../styles/LandingPage.css";
+import { getSpecificLogo } from "../helpers/logoHelper";
 import Silk from "../components/Silk/Silk.jsx";
 import TextPressure from "../components/TextPressure/TextPressure.jsx";
+import ShinyText from "../components/ShinyText/ShinyText.jsx";
 import SplitText from "../components/SplitText/SplitText.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import rocket from "openmoji/color/svg/1F680.svg";
+import lightBulb from "openmoji/color/svg/1F4A1.svg";
 import calendar from "openmoji/color/svg/1F4C5.svg";
 import hospital from "openmoji/color/svg/1F3E5.svg";
 import loveLetter from "openmoji/color/svg/1F48C.svg";
@@ -15,7 +20,8 @@ import shield from "openmoji/color/svg/1F6E1.svg";
 import mobilePhone from "openmoji/color/svg/1F4F1.svg";
 import lightning from "openmoji/color/svg/26A1.svg";
 
-// Function to handle animation completion
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+
 const handleAnimationComplete = () => {
   console.log("All letters have animated!");
 };
@@ -27,8 +33,20 @@ const LandingPage = () => {
     message: "",
   });
   const [isScrolled, setIsScrolled] = useState(false);
+  const [logoUrl, setLogoUrl] = useState(null);
 
   useEffect(() => {
+    const fetchLogos = async () => {
+      try {
+        const landingLogo = await getSpecificLogo("Logo-2.1.1");
+        setLogoUrl(landingLogo);
+      } catch (error) {
+        console.error("Error loading logos:", error);
+      }
+    };
+
+    fetchLogos();
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 100);
     };
@@ -55,7 +73,7 @@ const LandingPage = () => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      const offsetTop = element.offsetTop - 80; // Account for fixed nav height
+      const offsetTop = element.offsetTop - 80;
       window.scrollTo({
         top: offsetTop,
         behavior: "smooth",
@@ -69,13 +87,20 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page">
-      {/* Glass Navigation */}
       <nav className={`glass-nav ${isScrolled ? "scrolled" : ""}`}>
         <div className="nav-container">
-          <div className="nav-logo">
-            <img src="imgs/Logo.png" alt="HomeCloud" className="nav-logo-img" />
-            <span className="nav-logo-text">HomeCloud</span>
-          </div>
+          <Link to="/landing" className="nav-logo-link">
+            <div className="nav-logo">
+              {logoUrl && (
+                <img
+                  src={logoUrl}
+                  alt="HomeCloud"
+                  className="nav-logo-img"
+                  draggable="false"
+                />
+              )}
+            </div>
+          </Link>
           <div className="nav-links">
             <button
               onClick={() => scrollToSection("hero")}
@@ -95,12 +120,6 @@ const LandingPage = () => {
             >
               Pricing
             </button>
-            {/* <button
-              onClick={() => scrollToSection("testimonials")}
-              className="nav-link"
-            >
-              Testimonianze
-            </button> */}
             <button
               onClick={() => scrollToSection("contact")}
               className="nav-link"
@@ -114,9 +133,7 @@ const LandingPage = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section id="hero" className="hero-section">
-        {/* Silk Background Component */}
         <div className="hero-silk-background">
           <Silk
             speed={3}
@@ -164,10 +181,14 @@ const LandingPage = () => {
 
               <p className="hero-description">
                 Trasforma il caos quotidiano in{" "}
-                <span className="text-highlight">organizzazione perfetta</span>.
-                Gestisci scadenze, documenti e appuntamenti familiari con un
-                sistema intelligente che{" "}
-                <span className="text-highlight">non dimentica mai</span> nulla.
+                <ShinyText
+                  text="organizzazione perfetta"
+                  disabled={false}
+                  speed={6}
+                  className="text-highlight"
+                />
+                . Gestisci scadenze, documenti e appuntamenti familiari con un
+                sistema intelligente che non dimentica mai nulla.
               </p>
 
               <div className="hero-stats">
@@ -177,13 +198,13 @@ const LandingPage = () => {
                 </div>
                 <div className="stat-divider"></div>
                 <div className="stat-item">
-                  <div className="stat-number">2min</div>
+                  <div className="stat-number">2 min</div>
                   <div className="stat-label">Setup veloce</div>
                 </div>
                 <div className="stat-divider"></div>
                 <div className="stat-item">
-                  <div className="stat-number">6</div>
-                  <div className="stat-label">Membri famiglia</div>
+                  <div className="stat-number">&infin;</div>
+                  <div className="stat-label">Scadenze</div>
                 </div>
               </div>
 
@@ -193,20 +214,27 @@ const LandingPage = () => {
                   className="hero-btn-primary"
                 >
                   <span>Inizia Gratis Ora</span>
-                  <div className="btn-shine"></div>
                 </button>
                 <button
                   onClick={() => scrollToSection("features")}
                   className="hero-btn-secondary"
                 >
-                  <span className="btn-icon">▶</span>
-                  <span>Guarda come funziona</span>
+                  <span className="btn-icon">
+                    <FontAwesomeIcon icon={faChevronRight} />
+                  </span>
+                  <span>Scopri come funziona</span>
                 </button>
               </div>
 
               <div className="hero-trust">
                 <span
-                  style={{ display: "flex", alignItems: "center", gap: "5px" }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                    letterSpacing: "0.1px",
+                    fontWeight: "500",
+                  }}
                 >
                   <img
                     src={checkMark}
@@ -240,8 +268,8 @@ const LandingPage = () => {
               <div className="floating-card card-1">
                 <div className="card-icon">
                   <img
-                    src={calendar}
-                    alt="Calendario"
+                    src={lightBulb}
+                    alt="Lampadina"
                     width="40"
                     height="40"
                     draggable="false"
@@ -249,7 +277,7 @@ const LandingPage = () => {
                 </div>
                 <div className="card-content">
                   <div className="card-title">Prossima Scadenza</div>
-                  <div className="card-desc">Bolletta Enel • 3 giorni</div>
+                  <div className="card-desc">Bolletta Luce • 3 giorni</div>
                 </div>
                 <div className="card-status status-warning"></div>
               </div>
@@ -265,8 +293,8 @@ const LandingPage = () => {
                   />
                 </div>
                 <div className="card-content">
-                  <div className="card-title">Visita Marco</div>
-                  <div className="card-desc">Controllo pediatrico</div>
+                  <div className="card-title">Visita Medica</div>
+                  <div className="card-desc">Controllo di routine</div>
                 </div>
                 <div className="card-status status-success"></div>
               </div>
@@ -282,26 +310,25 @@ const LandingPage = () => {
                   />
                 </div>
                 <div className="card-content">
-                  <div className="card-title">Email inviata</div>
-                  <div className="card-desc">Promemoria attivato</div>
+                  <div className="card-title">Promemoria Inviato</div>
+                  <div className="card-desc">Notifica automatica</div>
                 </div>
                 <div className="card-status status-info"></div>
               </div>
-
-              {/* <div className="hero-logo-container">
-                <img
-                  src="imgs/Logo.png"
-                  alt="HomeCloud Logo"
-                  className="hero-logo-img"
-                />
-                <div className="logo-glow"></div>
-              </div> */}
             </div>
           </div>
+
+          {/* <div className="floating-logo" style={{ opacity: 0.5 }}>
+            <img
+              src={logoUrl}
+              alt="HomeCloud"
+              className="nav-logo-img"
+              draggable="false"
+            />
+          </div> */}
         </div>
       </section>
 
-      {/* Features Section */}
       <section id="features" className="features-section">
         <div className="container">
           <div className="section-header">
@@ -319,7 +346,6 @@ const LandingPage = () => {
               textAlign="center"
               onLetterAnimationComplete={handleAnimationComplete}
             />
-            {/* <h2 className="section-title">Perché scegliere HomeCloud?</h2> */}
             <p className="section-subtitle">
               Tutto quello che serve per organizzare la tua famiglia
             </p>
@@ -435,7 +461,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Pricing Section */}
       <section id="pricing" className="pricing-section">
         <div className="container">
           <div className="section-header">
@@ -453,7 +478,6 @@ const LandingPage = () => {
               textAlign="center"
               onLetterAnimationComplete={handleAnimationComplete}
             />
-            {/* <h2 className="section-title">Pricing Semplice</h2> */}
             <p className="section-subtitle">
               Tutto completamente gratuito per sempre
             </p>
@@ -485,24 +509,6 @@ const LandingPage = () => {
                   style={{ filter: "brightness(0) invert(1)" }}
                 />{" "}
                 Gestione illimitata scadenze
-              </li>
-              <li
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "5px",
-                  letterSpacing: "0.2px",
-                }}
-              >
-                <img
-                  src={checkMark}
-                  alt="✓"
-                  width="20"
-                  height="20"
-                  draggable="false"
-                  style={{ filter: "brightness(0) invert(1)" }}
-                />{" "}
-                Notifiche email automatiche
               </li>
               <li
                 style={{
@@ -621,51 +627,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Testimonials Section - COMMENTED FOR FUTURE USE */}
-      {/* <section id="testimonials" className="testimonials-section">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Cosa dicono le famiglie</h2>
-          </div>
-
-          <div className="testimonials-grid">
-            <div className="testimonial-card">
-              <div className="testimonial-content">
-                "Finalmente non dimentichiamo più le scadenze! HomeCloud ci ha
-                semplificato la vita."
-              </div>
-              <div className="testimonial-author">
-                <strong>Marco & Giulia</strong>
-                <span>Famiglia di 4 persone</span>
-              </div>
-            </div>
-
-            <div className="testimonial-card">
-              <div className="testimonial-content">
-                "Perfetto per organizzare tutti i documenti dei bambini.
-                Interfaccia molto intuitiva."
-              </div>
-              <div className="testimonial-author">
-                <strong>Elena</strong>
-                <span>Mamma di 2 bambini</span>
-              </div>
-            </div>
-
-            <div className="testimonial-card">
-              <div className="testimonial-content">
-                "Le notifiche email sono precise e puntuali. Non abbiamo mai più
-                pagato multe per ritardi!"
-              </div>
-              <div className="testimonial-author">
-                <strong>Roberto</strong>
-                <span>Papà organizzato</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
-
-      {/* Contact Section */}
       <section id="contact" className="contact-section">
         <div className="container">
           <div className="section-header">
@@ -683,7 +644,6 @@ const LandingPage = () => {
               textAlign="center"
               onLetterAnimationComplete={handleAnimationComplete}
             />
-            {/* <h2 className="section-title">Hai domande?</h2> */}
             <p className="section-subtitle">
               Siamo qui per aiutarti. Contattaci per qualsiasi informazione
             </p>
@@ -708,7 +668,6 @@ const LandingPage = () => {
               </div>
 
               <div className="contact-item">
-                {/* da cambiare */}
                 <div className="contact-icon">🕐</div>
                 <div>
                   <h4>Orari Assistenza</h4>
@@ -773,7 +732,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="cta-section">
         <div className="container">
           <div className="cta-content">
@@ -791,7 +749,6 @@ const LandingPage = () => {
               textAlign="center"
               onLetterAnimationComplete={handleAnimationComplete}
             />
-            {/* <h2 className="cta-title">Pronto ad organizzare la tua famiglia?</h2> */}
             <p className="cta-subtitle">
               Unisciti a centinaia di famiglie che hanno già semplificato la
               loro vita con HomeCloud
@@ -806,17 +763,18 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="footer">
         <div className="container">
           <div className="footer-content">
             <div className="footer-section">
               <div className="footer-logo">
-                <img
-                  src="imgs/Logo.png"
-                  alt="HomeCloud"
-                  className="footer-logo-img"
-                />
+                {logoUrl && (
+                  <img
+                    src={logoUrl}
+                    alt="HomeCloud"
+                    className="footer-logo-img"
+                  />
+                )}
                 <span className="footer-logo-text">HomeCloud</span>
               </div>
               <p className="footer-description">

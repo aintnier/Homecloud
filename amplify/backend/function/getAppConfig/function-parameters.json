@@ -1,0 +1,25 @@
+{
+  "lambdaLayers": [
+    {
+      "type": "ProjectLayer",
+      "resourceName": "homecloudSharedUtils",
+      "env": "dev",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true
+    }
+  ],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "region",
+      "environmentVariableName": "REGION"
+    },
+    {
+      "cloudFormationParameterName": "s3BucketName",
+      "environmentVariableName": "S3_BUCKET_NAME"
+    },
+    {
+      "cloudFormationParameterName": "s3LogoFolder",
+      "environmentVariableName": "S3_LOGO_FOLDER"
+    }
+  ]
+}

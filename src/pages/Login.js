@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { signIn, resetPassword, signOut } from "aws-amplify/auth";
-import { cognitoErrorToItalian } from "../helpers/cognitoErrorHelper";
 import "../styles/Login.css";
 
 function Login() {
@@ -24,7 +23,7 @@ function Login() {
       await signIn({ username: email, password });
       window.location.href = "/dashboard";
     } catch (err) {
-      setError(cognitoErrorToItalian(err.message || err));
+      setError(err);
       setPassword("");
     } finally {
       setIsSubmitting(false);
@@ -41,7 +40,7 @@ function Login() {
       setResetStep(2);
       setResetMessage("Codice di verifica inviato via email.");
     } catch (err) {
-      setError(cognitoErrorToItalian(err.message || err));
+      setError(err);
     }
   };
 
@@ -63,7 +62,7 @@ function Login() {
       setResetCode("");
       setNewPassword("");
     } catch (err) {
-      setError(cognitoErrorToItalian(err.message || err));
+      setError(err);
       setResetCode("");
     }
   };

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { signUp, confirmSignUp, resendSignUpCode } from "aws-amplify/auth";
-import { cognitoErrorToItalian } from "../helpers/cognitoErrorHelper";
 import axios from "axios";
 import "../styles/Register.css";
 
@@ -68,7 +67,7 @@ const Register = () => {
       );
       setShowConfirm(true);
     } catch (err) {
-      setError(cognitoErrorToItalian(err.message || err));
+      setError(err);
     } finally {
       setIsSubmitting(false);
     }
@@ -89,7 +88,7 @@ const Register = () => {
       setPassword("");
       setConfirmationCode("");
     } catch (err) {
-      setError(cognitoErrorToItalian(err.message || err));
+      setError(err);
     }
   };
 
@@ -100,7 +99,7 @@ const Register = () => {
       await resendSignUpCode({ username: email });
       setSuccess("Codice di conferma inviato di nuovo!");
     } catch (err) {
-      setError(cognitoErrorToItalian(err.message || err));
+      setError(err);
     }
   };
 

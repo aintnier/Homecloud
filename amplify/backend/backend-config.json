@@ -17,6 +17,14 @@
           ],
           "category": "function",
           "resourceName": "readDeadlines"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "getAppConfig"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -93,6 +101,20 @@
       "service": "Lambda"
     },
     "deleteUser": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "homecloudSharedUtils"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "getAppConfig": {
       "build": true,
       "dependsOn": [
         {
@@ -406,6 +428,46 @@
         {
           "category": "function",
           "resourceName": "deleteUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_getAppConfig_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getAppConfig"
+        }
+      ]
+    },
+    "AMPLIFY_function_getAppConfig_region": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getAppConfig"
+        }
+      ]
+    },
+    "AMPLIFY_function_getAppConfig_s3BucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getAppConfig"
+        }
+      ]
+    },
+    "AMPLIFY_function_getAppConfig_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getAppConfig"
+        }
+      ]
+    },
+    "AMPLIFY_function_getAppConfig_s3LogoFolder": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getAppConfig"
         }
       ]
     },
