@@ -35,7 +35,7 @@
         },
         "createUsers": {
           "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
-          "s3Key": "amplify-builds/createUsers-364758794e6d616e5862-build.zip",
+          "s3Key": "amplify-builds/createUsers-475a6b786b3853663258-build.zip",
           "region": "eu-north-1",
           "dbHost": "db-homecloud.cd0giowo63w0.eu-north-1.rds.amazonaws.com",
           "dbUser": "admin",

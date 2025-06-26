@@ -5,18 +5,15 @@ exports.handler = async (event) => {
   let connection;
 
   try {
-    // Passa le env alla funzione helper
     const s3Config = getS3AvatarConfig({
       bucketName: process.env.S3_BUCKET_NAME,
       folderName: process.env.S3_BUCKET_FOLDER,
       region: process.env.REGION,
     });
 
-    // Parsing del body della richiesta
     const body = JSON.parse(event.body);
     const { full_name, email, profileImageId } = body;
 
-    // Passa le env alla funzione di connessione
     connection = await createDbConnection({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -24,13 +21,33 @@ exports.handler = async (event) => {
       database: process.env.DB_NAME,
     });
 
+    // Controlla se l'utente esiste già
+    const [existingUsers] = await connection.execute(
+      "SELECT id FROM users WHERE email = ?",
+      [email]
+    );
+
+    if (existingUsers.length > 0) {
+      return {
+        statusCode: 409, // Conflict
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: "Un utente con questa email esiste già.",
+          code: "USER_ALREADY_EXISTS",
+        }),
+      };
+    }
+
     // Inserisci il nuovo utente
     const [result] = await connection.execute(
       "INSERT INTO users (full_name, email, profileImageId) VALUES (?, ?, ?)",
       [full_name, email, profileImageId]
     );
 
-    // Crea l'oggetto utente con l'URL dell'immagine profilo
     const newUser = {
       id: result.insertId,
       full_name,
@@ -50,6 +67,23 @@ exports.handler = async (event) => {
     };
   } catch (err) {
     console.error("❌ Errore in createUsers:", err);
+
+    // Gestisci errori specifici del database
+    if (err.code === "ER_DUP_ENTRY") {
+      return {
+        statusCode: 409,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: "Un utente con questa email esiste già.",
+          code: "USER_ALREADY_EXISTS",
+        }),
+      };
+    }
+
     return {
       statusCode: 500,
       headers: {
@@ -59,7 +93,7 @@ exports.handler = async (event) => {
       },
       body: JSON.stringify({
         message: "Errore del server durante la creazione dell'utente.",
-        error: err,
+        error: err.message,
       }),
     };
   } finally {

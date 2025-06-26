@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { signUp, confirmSignUp, resendSignUpCode } from "aws-amplify/auth";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/Register.css";
 
@@ -12,6 +13,15 @@ const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [confirmationCode, setConfirmationCode] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Funzione per estrarre il messaggio di errore
+  const getErrorMessage = (error) => {
+    if (typeof error === "string") return error;
+    if (error?.message) return error.message;
+    if (error?.errors?.[0]?.message) return error.errors[0].message;
+    return "Si è verificato un errore. Riprova.";
+  };
 
   // Genera un profileImageId casuale tra avatar0 e avatar4
   const getRandomAvatarId = () => {
@@ -34,7 +44,7 @@ const Register = () => {
     setIsSubmitting(true);
 
     if (!fullName.trim().includes(" ")) {
-      setError("Inserire nome intero");
+      setError("Inserire nome e cognome completo");
       setIsSubmitting(false);
       return;
     }
@@ -42,32 +52,85 @@ const Register = () => {
     try {
       const profileImageId = getRandomAvatarId();
       const capitalizedFullName = capitalizeWords(fullName.trim());
-      // 1. Registrazione Cognito
-      await signUp({
-        username: email,
-        password,
-        options: {
-          userAttributes: {
-            email,
-            name: capitalizedFullName,
-            "custom:profileImageId": profileImageId,
-          },
-        },
-      });
 
-      // 2. Chiamata alla funzione Lambda per inserire l'utente nel DB
-      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/users`, {
-        full_name: capitalizedFullName,
-        email,
-        profileImageId,
-      });
+      // 1. Prima controlla se l'utente esiste già nel database
+      try {
+        const existingUsersResponse = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/users`
+        );
+        const existingUser = existingUsersResponse.data.find(
+          (user) => user.email.toLowerCase() === email.toLowerCase()
+        );
+
+        if (existingUser) {
+          setError(
+            "Un account con questa email esiste già. Prova ad accedere invece di registrarti."
+          );
+          setIsSubmitting(false);
+          return;
+        }
+      } catch (dbCheckError) {
+        console.error(
+          "Errore durante il controllo dell'esistenza dell'utente:",
+          dbCheckError
+        );
+        // Continua comunque con la registrazione
+      }
+
+      // 2. Registrazione Cognito
+      let cognitoSuccess = false;
+      try {
+        await signUp({
+          username: email,
+          password,
+          options: {
+            userAttributes: {
+              email,
+              name: capitalizedFullName,
+              "custom:profileImageId": profileImageId,
+            },
+          },
+        });
+        cognitoSuccess = true;
+      } catch (cognitoError) {
+        console.error("Errore Cognito:", cognitoError);
+        throw cognitoError;
+      }
+
+      // 3. Inserimento nel database
+      try {
+        await axios.post(`${process.env.REACT_APP_BACKEND_URL}/users`, {
+          full_name: capitalizedFullName,
+          email,
+          profileImageId,
+        });
+      } catch (dbError) {
+        console.error("Errore database dopo successo Cognito:", dbError);
+
+        // Se il database fallisce ma Cognito è riuscito, prova a pulire Cognito
+        if (cognitoSuccess) {
+          try {
+            // Questo richiede configurazione admin per funzionare
+            console.warn(
+              "Utente creato in Cognito ma non nel database. Necessaria pulizia manuale."
+            );
+          } catch (cleanupError) {
+            console.error("Errore durante la pulizia:", cleanupError);
+          }
+        }
+
+        throw new Error(
+          "Errore durante la creazione dell'account. Contatta il supporto se il problema persiste."
+        );
+      }
 
       setSuccess(
-        "Registrazione avvenuta! Controlla la tua email per confermare"
+        "Registrazione completata! Controlla la tua email per il codice di conferma"
       );
       setShowConfirm(true);
     } catch (err) {
-      setError(err);
+      console.error("Registration error:", err);
+      setError(getErrorMessage(err));
     } finally {
       setIsSubmitting(false);
     }
@@ -79,16 +142,14 @@ const Register = () => {
     setSuccess("");
     try {
       await confirmSignUp({ username: email, confirmationCode });
-      setSuccess("Account confermato! Ora puoi effettuare il login");
-      // Reindirizza alla pagina di login dopo la conferma
-      window.location.href = "/login";
-      setShowConfirm(false);
-      setFullName("");
-      setEmail("");
-      setPassword("");
-      setConfirmationCode("");
+      setSuccess("Account confermato con successo!");
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 2000);
     } catch (err) {
-      setError(err);
+      console.error("Confirmation error:", err);
+      setError(getErrorMessage(err));
+      setConfirmationCode(""); // Pulisci il codice
     }
   };
 
@@ -97,102 +158,222 @@ const Register = () => {
     setSuccess("");
     try {
       await resendSignUpCode({ username: email });
-      setSuccess("Codice di conferma inviato di nuovo!");
+      setSuccess("Nuovo codice di conferma inviato!");
     } catch (err) {
-      setError(err);
+      console.error("Resend code error:", err);
+      setError(getErrorMessage(err));
+    }
+  };
+
+  // Funzione per gestire input del codice di conferma (solo numeri, max 6)
+  const handleConfirmationCodeChange = (e) => {
+    const value = e.target.value.replace(/\D/g, ""); // Solo numeri
+    if (value.length <= 6) {
+      setConfirmationCode(value);
     }
   };
 
   return (
-    <div className="register-container">
-      <h1 className="auth-section-title">Registrazione</h1>
-      {!showConfirm ? (
-        <form className="register-form" onSubmit={handleRegister}>
-          <label>
-            <p>Nome completo:</p>
-            <input
-              type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              required
-              maxLength={255}
-              placeholder="Nome e Cognome"
-              disabled={isSubmitting}
-            />
-          </label>
-          <label>
-            <p>Email:</p>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              maxLength={255}
-              placeholder="Email"
-              disabled={isSubmitting}
-            />
-          </label>
-          <label>
-            <p>Password:</p>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={8}
-              placeholder="Password"
-              disabled={isSubmitting}
-            />
-          </label>
-          <button
-            type="submit"
-            className="register-button"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Registrando..." : "Registrati"}
-          </button>
-          <div className="login-section">
-            <p className="login-label">Hai già un account?</p>
-            <button
-              type="button"
-              className="login-link-button"
-              onClick={() => (window.location.href = "/login")}
-              disabled={isSubmitting}
-            >
-              Accedi
-            </button>
+    <div className="auth-page">
+      <div className="auth-container">
+        <div className="auth-card">
+          {/* Header */}
+          <div className="auth-header">
+            <h1 className="auth-title">
+              {showConfirm ? "Conferma Account" : "Crea il tuo Account"}
+            </h1>
+            <p className="auth-subtitle">
+              {showConfirm
+                ? "Inserisci il codice di conferma ricevuto via email"
+                : "Inizia gratuitamente con HomeCloud"}
+            </p>
           </div>
-          {error && <div className="message error">{error}</div>}
-          {success && <div className="message success">{success}</div>}
-        </form>
-      ) : (
-        <form className="register-form" onSubmit={handleConfirm}>
-          <label>
-            <p>Codice di conferma:</p>
-            <input
-              type="text"
-              value={confirmationCode}
-              onChange={(e) => setConfirmationCode(e.target.value)}
-              required
-              maxLength={6}
-              placeholder="Codice"
-            />
-          </label>
-          <button type="submit" className="register-button">
-            Conferma account
-          </button>
-          <button
-            type="button"
-            className="register-button"
-            style={{ background: "#888", marginTop: 10 }}
-            onClick={handleResendCode}
-          >
-            Invia di nuovo il codice
-          </button>
-          {error && <div className="message error">{error}</div>}
-          {success && <div className="message success">{success}</div>}
-        </form>
-      )}
+
+          {/* Contenuto principale */}
+          <div className="auth-content">
+            {!showConfirm ? (
+              <form className="auth-form" onSubmit={handleRegister}>
+                <div className="form-group">
+                  <label htmlFor="fullName">Nome Completo</label>
+                  <div className="input-wrapper">
+                    <input
+                      id="fullName"
+                      type="text"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      required
+                      maxLength={255}
+                      placeholder="Mario Rossi"
+                      disabled={isSubmitting}
+                      className="form-input"
+                    />
+                    <div className="input-icon user"></div>
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <div className="input-wrapper">
+                    <input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      maxLength={255}
+                      placeholder="mario@example.com"
+                      disabled={isSubmitting}
+                      className="form-input"
+                    />
+                    <div className="input-icon email"></div>
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <div className="input-wrapper">
+                    <input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      minLength={8}
+                      placeholder="Minimo 8 caratteri"
+                      disabled={isSubmitting}
+                      className="form-input"
+                    />
+                    <button
+                      type="button"
+                      className={`password-toggle ${
+                        showPassword ? "show" : "hide"
+                      }`}
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-label={
+                        showPassword ? "Nascondi password" : "Mostra password"
+                      }
+                    />
+                  </div>
+                  <div className="password-requirements">
+                    <small>La password deve contenere almeno 8 caratteri</small>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="auth-btn primary"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <span className="loading-spinner"></span>
+                      Registrazione in corso...
+                    </>
+                  ) : (
+                    "Crea Account Gratuito"
+                  )}
+                </button>
+
+                <div className="auth-divider">
+                  <span>Hai già un account?</span>
+                </div>
+
+                <Link to="/login" className="auth-btn tertiary">
+                  Accedi al tuo Account
+                </Link>
+
+                {error && <div className="message error">{error}</div>}
+                {success && <div className="message success">{success}</div>}
+              </form>
+            ) : (
+              <form className="auth-form" onSubmit={handleConfirm}>
+                <div className="verification-info">
+                  <div className="verification-icon">
+                    <svg
+                      width="48"
+                      height="48"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                        stroke="#10b981"
+                        strokeWidth="2"
+                        fill="none"
+                      />
+                      <path
+                        d="m22 6-10 6L2 6"
+                        stroke="#10b981"
+                        strokeWidth="2"
+                        fill="none"
+                      />
+                    </svg>
+                  </div>
+                  <p>
+                    Abbiamo inviato un codice di verifica a: <br />
+                    <strong>{email}</strong>
+                  </p>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="confirmationCode">Codice di Conferma</label>
+                  <div className="input-wrapper">
+                    <input
+                      id="confirmationCode"
+                      type="text"
+                      value={confirmationCode}
+                      onChange={handleConfirmationCodeChange}
+                      required
+                      maxLength={6}
+                      placeholder="123456"
+                      className="form-input code-input"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                    />
+                    <div className="input-icon key"></div>
+                  </div>
+                </div>
+
+                <button type="submit" className="auth-btn primary">
+                  Conferma Account
+                </button>
+
+                <button
+                  type="button"
+                  className="auth-btn secondary"
+                  onClick={handleResendCode}
+                >
+                  Invia Nuovo Codice
+                </button>
+
+                <button
+                  type="button"
+                  className="auth-btn link"
+                  onClick={() => {
+                    setShowConfirm(false);
+                    setConfirmationCode("");
+                    setError("");
+                    setSuccess("");
+                  }}
+                >
+                  Modifica Email
+                </button>
+
+                {error && <div className="message error">{error}</div>}
+                {success && <div className="message success">{success}</div>}
+              </form>
+            )}
+          </div>
+
+          {/* Footer */}
+          <div className="auth-footer">
+            <Link to="/landing" className="back-to-home">
+              Torna alla Home
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
