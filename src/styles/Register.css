@@ -1,5 +1,1 @@
-/* Importa tutti gli stili di Login e aggiunge specifici per Register */
 @import "./Login.css";
-
-/* Stili specifici per la registrazione (già con prefisso .auth-page dal Login.css) */
-/* Non serve aggiungere altro poiché tutti gli stili sono già scopati a .auth-page */

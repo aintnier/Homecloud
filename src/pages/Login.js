@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   signIn,
   signOut,
@@ -131,12 +131,10 @@ function Login() {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="tua-email@example.com"
                       required
                       disabled={isSubmitting}
                       className="form-input"
                     />
-                    <div className="input-icon email"></div>
                   </div>
                 </div>
 
@@ -148,7 +146,6 @@ function Login() {
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Password"
                       required
                       disabled={isSubmitting}
                       className="form-input"
@@ -181,14 +178,21 @@ function Login() {
                   )}
                 </button>
 
-                <button
-                  type="button"
-                  className="auth-btn secondary"
-                  onClick={() => setShowReset(true)}
-                  disabled={isSubmitting}
+                <Link
+                  to="#"
+                  className="forgot-password"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (!isSubmitting) {
+                      setShowReset(true);
+                    }
+                  }}
+                  style={
+                    isSubmitting ? { pointerEvents: "none", opacity: 0.6 } : {}
+                  }
                 >
                   Password dimenticata?
-                </button>
+                </Link>
 
                 <div className="auth-divider">
                   <span>Non hai ancora un account?</span>
@@ -217,11 +221,9 @@ function Login() {
                           type="email"
                           value={resetEmail}
                           onChange={(e) => setResetEmail(e.target.value)}
-                          placeholder="tua-email@example.com"
                           required
                           className="form-input"
                         />
-                        <div className="input-icon email"></div>
                       </div>
                     </div>
 
@@ -239,14 +241,12 @@ function Login() {
                           type="text"
                           value={resetCode}
                           onChange={handleCodeChange}
-                          placeholder="123456"
                           required
                           maxLength={6}
                           className="form-input code-input"
                           inputMode="numeric"
                           pattern="[0-9]*"
                         />
-                        <div className="input-icon key"></div>
                       </div>
                       <div className="code-requirements">
                         <small>
@@ -263,7 +263,6 @@ function Login() {
                           type={showPassword ? "text" : "password"}
                           value={newPassword}
                           onChange={(e) => setNewPassword(e.target.value)}
-                          placeholder="Nuova password"
                           required
                           minLength={8}
                           className="form-input"

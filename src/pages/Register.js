@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { signUp, confirmSignUp, resendSignUpCode } from "aws-amplify/auth";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -8,12 +8,14 @@ const Register = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [confirmationCode, setConfirmationCode] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Funzione per estrarre il messaggio di errore
   const getErrorMessage = (error) => {
@@ -39,15 +41,22 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
-    setIsSubmitting(true);
 
     if (!fullName.trim().includes(" ")) {
       setError("Inserire nome e cognome completo");
       setIsSubmitting(false);
       return;
     }
+
+    if (password !== confirmPassword) {
+      setError("Le password non coincidono");
+      setIsSubmitting(false);
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError("");
+    setSuccess("");
 
     try {
       const profileImageId = getRandomAvatarId();
@@ -203,11 +212,9 @@ const Register = () => {
                       onChange={(e) => setFullName(e.target.value)}
                       required
                       maxLength={255}
-                      placeholder="Nome Completo"
                       disabled={isSubmitting}
                       className="form-input"
                     />
-                    <div className="input-icon user"></div>
                   </div>
                 </div>
 
@@ -221,11 +228,9 @@ const Register = () => {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       maxLength={255}
-                      placeholder="tua-email@example.com"
                       disabled={isSubmitting}
                       className="form-input"
                     />
-                    <div className="input-icon email"></div>
                   </div>
                 </div>
 
@@ -239,7 +244,6 @@ const Register = () => {
                       onChange={(e) => setPassword(e.target.value)}
                       required
                       minLength={8}
-                      placeholder="Password"
                       disabled={isSubmitting}
                       className="form-input"
                     />
@@ -256,6 +260,36 @@ const Register = () => {
                   </div>
                   <div className="password-requirements">
                     <small>La password deve contenere almeno 8 caratteri</small>
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="confirmPassword">Conferma Password</label>
+                  <div className="input-wrapper">
+                    <input
+                      id="confirmPassword"
+                      type={showConfirmPassword ? "text" : "password"}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                      minLength={8}
+                      disabled={isSubmitting}
+                      className="form-input"
+                    />
+                    <button
+                      type="button"
+                      className={`password-toggle ${
+                        showConfirmPassword ? "show" : "hide"
+                      }`}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                      aria-label={
+                        showConfirmPassword
+                          ? "Nascondi password"
+                          : "Mostra password"
+                      }
+                    />
                   </div>
                 </div>
 
@@ -326,12 +360,10 @@ const Register = () => {
                       onChange={handleConfirmationCodeChange}
                       required
                       maxLength={6}
-                      placeholder="123456"
                       className="form-input code-input"
                       inputMode="numeric"
                       pattern="[0-9]*"
                     />
-                    <div className="input-icon key"></div>
                   </div>
                 </div>
 
