@@ -147,11 +147,8 @@ button {
 }
 
 .logo {
-  font-size: 2.6rem;
-  font-weight: bold;
   margin-bottom: 20px;
   margin-top: 10px;
-  font-family: "Charm", "Poppins", sans-serif;
   text-align: center;
   width: 100%;
   color: inherit;
@@ -465,4 +462,168 @@ button:focus {
 /* Per la landing page */
 .landing-page *:focus {
   scroll-margin-top: 100px; /* Accounting for fixed navbar */
+}
+
+/* =================== RESPONSIVE SIDEBAR =================== */
+@media (max-width: 1024px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 320px;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 2000;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .avatar {
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 260px; /* Ridotto da 280px per lasciare più spazio alla pagina */
+    padding: 15px; /* Ridotto da 20px */
+  }
+
+  .logo {
+    text-align: left;
+    padding: 5px 8px;
+  }
+
+  /* Logo immagine più piccola */
+  .logo img {
+    width: 140px !important; /* Ridotto da 200px */
+    height: 56px !important; /* Ridotto da 80px */
+  }
+
+  /* Skeleton logo più piccolo */
+  .skeleton-logo {
+    width: 140px !important;
+    height: 56px !important;
+  }
+
+  /* Link di navigazione più piccoli */
+  .sidebar-nav li a,
+  .sidebar-bottom-nav button,
+  .user-profile {
+    font-size: 0.9rem; /* Ridotto da 1rem */
+    gap: 8px; /* Ridotto da 10px */
+    padding: 6px 10px; /* Ridotto da 8px 12px */
+  }
+
+  /* Logout button specifico per allineamento */
+  .sidebar-bottom-nav .logout-button {
+    padding: 6px 10px; /* Ridotto */
+    padding-left: 0; /* Mantieni allineamento a sinistra */
+  }
+
+  /* Icone più piccole */
+  .sidebar-nav li .icon,
+  .sidebar-bottom-nav button .icon {
+    width: 18px; /* Ridotto da 20px */
+    height: 18px; /* Ridotto da 20px */
+  }
+
+  /* Avatar utente più piccolo */
+  .user-profile .avatar {
+    width: 30px; /* Ridotto da 35px */
+    height: 30px; /* Ridotto da 35px */
+  }
+
+  /* Info utente più piccole */
+  .user-info .name {
+    font-size: 0.9rem; /* Ridotto da 1rem */
+  }
+
+  .user-info .email {
+    font-size: 0.8rem; /* Ridotto da 0.85rem */
+  }
+
+  /* Margini ridotti */
+  .sidebar-nav li {
+    margin-bottom: 1px; /* Ridotto da 2px */
+  }
+
+  .sidebar-bottom-nav {
+    margin-top: 15px; /* Ridotto da 20px */
+    padding-inline: 10px; /* Ridotto da 12px */
+  }
+}
+
+@media (max-width: 360px) {
+  .sidebar {
+    width: 240px; /* Ridotto da 100vw per lasciare un po' di sfondo visibile */
+    padding: 12px; /* Ridotto da 15px */
+  }
+
+  /* Logo immagine ancora più piccola */
+  .logo img {
+    width: 120px !important; /* Ridotto da 140px */
+    height: 48px !important; /* Ridotto da 56px */
+  }
+
+  /* Skeleton logo ancora più piccolo */
+  .skeleton-logo {
+    width: 120px !important;
+    height: 48px !important;
+  }
+
+  /* Link ancora più compatti per schermi extra small */
+  .sidebar-nav li a,
+  .sidebar-bottom-nav button,
+  .user-profile {
+    font-size: 0.85rem; /* Ridotto da precedente */
+    gap: 6px; /* Ridotto */
+    padding: 5px 8px; /* Ridotto da 6px 10px */
+  }
+
+  .sidebar-bottom-nav .logout-button {
+    padding: 5px 8px;
+    padding-left: 0;
+  }
+
+  /* Icone ancora più piccole */
+  .sidebar-nav li .icon,
+  .sidebar-bottom-nav button .icon {
+    width: 16px; /* Ridotto da 18px */
+    height: 16px; /* Ridotto da 18px */
+  }
+
+  /* Avatar ancora più piccolo */
+  .user-profile .avatar {
+    width: 28px; /* Ridotto da 30px */
+    height: 28px; /* Ridotto da 30px */
+  }
+
+  /* Info utente ancora più piccole */
+  .user-info .name {
+    font-size: 0.85rem;
+  }
+
+  .user-info .email {
+    font-size: 0.75rem; /* Ridotto da 0.8rem */
+  }
+
+  /* Margini minimi */
+  .sidebar-nav li {
+    margin-bottom: 0px; /* Ridotto a 0 */
+  }
+
+  .sidebar-bottom-nav {
+    margin-top: 12px; /* Ridotto da 15px */
+    padding-inline: 8px; /* Ridotto da 10px */
+  }
 }

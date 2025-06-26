@@ -7,7 +7,6 @@ import {
   faChartLine,
   faCalendarPlus,
   faRightFromBracket,
-  faUser,
   faCircleUser,
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
@@ -16,6 +15,7 @@ import CountUp from "../components/CountUp/CountUp.jsx";
 import GradientText from "../components/GradientText/GradientText.jsx";
 import SplitText from "../components/SplitText/SplitText.jsx";
 import Sidebar from "../components/Sidebar";
+import UserProfileSection from "../components/UserProfileSection.js";
 
 const handleAnimationComplete = () => {
   console.log("All letters have animated!");
@@ -131,6 +131,17 @@ const UserProfile = () => {
     }
   };
 
+  // Callback per aggiornare l'utente dal componente figlio
+  const handleUserUpdate = (updatedUser) => {
+    setUser(updatedUser);
+  };
+
+  // Callback per gestire i messaggi dal componente figlio
+  const handleMessage = (newMessage) => {
+    setMessage(newMessage);
+    setTimeout(() => setMessage(null), 3500);
+  };
+
   return (
     <div className="dashboard-container">
       <Sidebar
@@ -152,45 +163,13 @@ const UserProfile = () => {
         <section>
           <h1 className="section-title">Profilo Utente</h1>
           <div className="profile-details">
-            <div className="profile-left">
-              <div className="profile-avatar avatar">
-                {loadingUser ? (
-                  <div className="skeleton skeleton-avatar"></div>
-                ) : user?.profileImageUrl ? (
-                  <img
-                    src={user.profileImageUrl}
-                    alt="Avatar"
-                    className="avatar-image"
-                  />
-                ) : (
-                  <div className="avatar-placeholder">
-                    <FontAwesomeIcon icon={faUser} />
-                  </div>
-                )}
-              </div>
-              <div className="profile-info-list">
-                <div className="profile-field">
-                  <span className="profile-label">Nome completo:</span>
-                  <span className="profile-value">
-                    {loadingUser ? (
-                      <div className="skeleton skeleton-name skeleton-profile-page"></div>
-                    ) : (
-                      user?.full_name || "Nome Utente"
-                    )}
-                  </span>
-                </div>
-                <div className="profile-field">
-                  <span className="profile-label">Email:</span>
-                  <span className="profile-value">
-                    {loadingUser ? (
-                      <div className="skeleton skeleton-email skeleton-profile-page"></div>
-                    ) : (
-                      user?.email || "email@example.com"
-                    )}
-                  </span>
-                </div>
-              </div>
-            </div>
+            {/* Sostituisci la sezione profile-left con il nuovo componente */}
+            <UserProfileSection
+              user={user}
+              loadingUser={loadingUser}
+              onUserUpdate={handleUserUpdate}
+              onMessage={handleMessage}
+            />
 
             <div className="profile-right">
               {!loadingUser && deadlinesCount === 1 ? (
@@ -374,7 +353,6 @@ const UserProfile = () => {
                             setDropdownOpen(false);
                           } else if (event.key === "Tab") {
                             event.preventDefault();
-                            // Trova tutte le opzioni visibili
                             const optionsEls = Array.from(
                               event.currentTarget.parentNode.querySelectorAll(
                                 ".option"

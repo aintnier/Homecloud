@@ -526,3 +526,593 @@ section {
 .expired-deadline-card .due-date {
   color: var(--expired-card-text-color);
 }
+
+/* =================== RESPONSIVE DESIGN =================== */
+
+/* Mobile Header */
+.mobile-header {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--white);
+  border-bottom: 1px solid var(--secondary-color);
+  padding: 0 20px;
+  align-items: center;
+  gap: 15px;
+  z-index: 1001;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.hamburger-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.hamburger-btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.mobile-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* Sidebar Overlay per mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1999;
+}
+
+/* Pulsante di chiusura mobile nella sidebar */
+.mobile-close-btn {
+  display: none;
+  position: absolute;
+  top: 25px; /* Aumentato da 20px */
+  right: 25px; /* Aumentato da 20px */
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  z-index: 10;
+  transition: color 0.3s ease;
+}
+
+.mobile-close-btn:hover {
+  color: var(--secondary-color);
+}
+
+.mobile-deadline-cards {
+  display: none; /* Nascoste per default */
+}
+
+/* =================== TABLET (862px - 1024px) =================== */
+@media (max-width: 1024px) {
+  /* Mostra header mobile */
+  .mobile-header {
+    display: flex;
+  }
+
+  /* Nascondi sidebar desktop */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 2000;
+  }
+
+  /* Mostra sidebar quando aperta */
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  /* Mostra overlay quando sidebar è aperta */
+  .sidebar.mobile-open ~ .sidebar-overlay,
+  .sidebar-overlay {
+    display: block;
+  }
+
+  /* Mostra pulsante di chiusura mobile */
+  .mobile-close-btn {
+    display: block;
+  }
+
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 80px 40px 40px;
+    width: 100%;
+  }
+
+  /* Cards grid responsive - corretto per evitare 3 card tagliate */
+  .cards-grid {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(320px, 1fr)
+    ); /* Aumentato da 280px a 320px */
+    column-gap: 20px;
+    row-gap: 20px;
+  }
+
+  /* Card content più compatto */
+  .card {
+    min-height: 160px;
+  }
+
+  .card-content {
+    padding: 20px;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+  }
+
+  .card-title .deadline-icon {
+    font-size: 1.5rem;
+    width: 22px;
+    height: 22px;
+    margin-right: 12px;
+  }
+
+  .card-body .due-date {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+
+  .card-body .description {
+    font-size: 1rem;
+  }
+
+  .card-header {
+    margin-bottom: 18px;
+    gap: 12px;
+  }
+
+  /* Placeholder card più compatta */
+  .placeholder-card {
+    min-height: 160px;
+  }
+
+  .placeholder-content .icon {
+    font-size: 2.2rem;
+  }
+
+  .placeholder-content .add-deadline-text {
+    font-size: 1rem;
+  }
+
+  /* Table responsive */
+  .deadlines-table-container {
+    overflow-x: auto;
+  }
+
+  .deadlines-table {
+    min-width: 800px;
+  }
+
+  .deadlines-table th,
+  .deadlines-table td {
+    padding: 12px 16px;
+    font-size: 1rem;
+  }
+
+  /* Search and filter responsive */
+  .deadlines-filter {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+
+  .search-input input[type="text"],
+  .custom-select {
+    width: 100%;
+  }
+}
+
+/* =================== Breakpoint intermedio per fix grid =================== */
+@media (max-width: 960px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr); /* Forza 2 colonne esatte */
+    column-gap: 20px;
+    row-gap: 20px;
+  }
+}
+
+/* =================== MOBILE (862px e inferiore) =================== */
+@media (max-width: 862px) {
+  /* Main content adjustments per mobile più piccoli */
+  .main-content {
+    padding: 80px 30px 40px;
+  }
+
+  /* Section titles */
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  /* Cards grid mobile */
+  .cards-grid {
+    grid-template-columns: 1fr; /* Torna a 1 colonna su mobile */
+    gap: 15px;
+  }
+
+  /* Carousel arrows più piccole su mobile */
+  .carousel-arrow {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+
+  .carousel-arrow.left {
+    left: -42px;
+  }
+
+  .carousel-arrow.right {
+    right: -42px;
+  }
+
+  /* Card content mobile - reset alle dimensioni mobile normali */
+  .card {
+    min-height: 180px;
+  }
+
+  .card-content {
+    padding: 28px;
+  }
+
+  .card-title {
+    font-size: 1.4rem;
+  }
+
+  .card-title .deadline-icon {
+    font-size: 1.8rem;
+    width: 26px;
+    height: 26px;
+    margin-right: 16px;
+  }
+
+  .card-body .due-date {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+
+  .card-body .description {
+    font-size: 1rem;
+  }
+
+  .card-header {
+    margin-bottom: 24px;
+    gap: 16px;
+  }
+
+  /* Placeholder card mobile */
+  .placeholder-card {
+    min-height: 180px;
+  }
+
+  .placeholder-content .icon {
+    font-size: 2.5rem;
+  }
+
+  .placeholder-content .add-deadline-text {
+    font-size: 1.1rem;
+  }
+
+  /* Table mobile - stack su mobile */
+  .deadlines-table-container {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .deadlines-table {
+    display: none; /* Nascondi tabella su mobile */
+  }
+
+  /* Mobile cards per le deadlines nella tabella - ORA VISIBILI */
+  .mobile-deadline-cards {
+    display: block; /* Mostra solo da 862px in giù */
+  }
+
+  .mobile-deadline-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--accent-color);
+  }
+
+  .mobile-deadline-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .mobile-deadline-card .card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mobile-deadline-card .deadline-icon {
+    font-size: 1.1rem;
+  }
+
+  .mobile-deadline-card .card-body {
+    color: var(--card-description-color);
+    line-height: 1.5;
+  }
+
+  .mobile-deadline-card .card-info {
+    margin-bottom: 8px;
+  }
+
+  .mobile-deadline-card .card-info strong {
+    color: var(--text-color);
+    font-weight: 600;
+  }
+
+  .mobile-deadline-card .card-actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* Search input mobile */
+  .search-input {
+    margin-bottom: 15px;
+  }
+
+  .search-input input[type="text"] {
+    width: 100%;
+    padding: 12px 40px 12px 40px;
+    font-size: 1rem;
+  }
+
+  /* Custom select mobile */
+  .custom-select {
+    width: 100%;
+  }
+
+  /* No data message */
+  .no-data {
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 1.1rem;
+    color: var(--card-description-color);
+  }
+}
+
+/* =================== SMALL MOBILE (480px e inferiore) =================== */
+@media (max-width: 480px) {
+  .mobile-header {
+    padding: 0 20px; /* Aumentato da 15px */
+    height: 55px;
+  }
+
+  .mobile-title {
+    font-size: 1.2rem;
+  }
+
+  .main-content {
+    padding: 70px 25px 30px; /* Aumentato padding laterale da 20px a 25px */
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  /* Sidebar mobile più stretta */
+  .sidebar {
+    width: 260px; /* Ridotto da 280px */
+  }
+
+  /* Cards grid con gap aumentato */
+  .cards-grid {
+    gap: 20px; /* Aumentato da 15px */
+  }
+
+  /* Cards molto più compatte */
+  .card {
+    min-height: 140px; /* Ridotto da 160px */
+  }
+
+  .card-content {
+    padding: 18px; /* Ridotto da 28px */
+  }
+
+  .card-header {
+    margin-bottom: 12px; /* Ridotto da 24px */
+    gap: 8px; /* Ridotto da 16px */
+  }
+
+  .card-title {
+    font-size: 1.1rem; /* Ridotto da 1.3rem */
+  }
+
+  .card-title .deadline-icon {
+    font-size: 1.3rem; /* Ridotto da 1.8rem */
+    width: 18px; /* Ridotto da 26px */
+    height: 18px; /* Ridotto da 26px */
+    margin-right: 10px; /* Ridotto da 16px */
+  }
+
+  .card-type {
+    font-size: 0.8rem; /* Ridotto da 1rem */
+    padding: 4px 8px; /* Ridotto da 8px 16px */
+  }
+
+  .card-body .due-date {
+    font-size: 1rem; /* Ridotto da 1.1rem */
+    margin-bottom: 8px; /* Ridotto da 16px */
+  }
+
+  .card-body .description {
+    font-size: 0.9rem; /* Ridotto da 1rem */
+    line-height: 1.3; /* Compatto */
+  }
+
+  /* Placeholder card più compatta */
+  .placeholder-card {
+    min-height: 140px; /* Ridotto da 180px */
+  }
+
+  .placeholder-content .icon {
+    font-size: 2rem; /* Ridotto da 2.5rem */
+  }
+
+  .placeholder-content .add-deadline-text {
+    font-size: 0.95rem; /* Ridotto da 1.1rem */
+  }
+
+  /* Nascondi frecce del carousel su schermi molto piccoli */
+  .carousel-arrow {
+    display: none;
+  }
+
+  /* Mobile deadline cards più compatte */
+  .mobile-deadline-card {
+    padding: 12px; /* Ridotto da 15px */
+    margin-bottom: 12px; /* Ridotto da 15px */
+  }
+
+  .mobile-deadline-card .card-header {
+    margin-bottom: 8px; /* Ridotto da 12px */
+    gap: 6px; /* Ridotto da 10px */
+  }
+
+  .mobile-deadline-card .card-title {
+    font-size: 1rem; /* Ridotto da 1.1rem */
+  }
+
+  .mobile-deadline-card .deadline-icon {
+    font-size: 0.9rem; /* Ridotto da 1.1rem */
+  }
+
+  .mobile-deadline-card .card-info {
+    margin-bottom: 6px; /* Ridotto da 8px */
+    font-size: 0.9rem; /* Aggiunto per ridurre testo */
+  }
+
+  .mobile-deadline-card .card-actions {
+    margin-top: 10px; /* Ridotto da 15px */
+  }
+}
+
+/* =================== EXTRA SMALL (360px e inferiore) =================== */
+@media (max-width: 360px) {
+  .sidebar {
+    width: 240px; /* Ridotto da 100vw */
+  }
+
+  .main-content {
+    padding: 70px 20px 20px; /* Aumentato padding laterale da 15px a 20px */
+  }
+
+  /* Cards ancora più compatte per schermi extra small */
+  .card {
+    min-height: 120px; /* Ulteriormente ridotto */
+  }
+
+  .card-content {
+    padding: 15px; /* Ridotto da 18px */
+  }
+
+  .card-title {
+    font-size: 1rem; /* Ridotto da 1.1rem */
+  }
+
+  .card-title .deadline-icon {
+    font-size: 1.1rem; /* Ridotto da 1.3rem */
+    width: 16px; /* Ridotto da 18px */
+    height: 16px; /* Ridotto da 18px */
+    margin-right: 8px; /* Ridotto da 10px */
+  }
+
+  .card-type {
+    font-size: 0.75rem; /* Ridotto da 0.8rem */
+    padding: 3px 6px; /* Ridotto da 4px 8px */
+  }
+
+  .card-body .due-date {
+    font-size: 0.9rem; /* Ridotto da 1rem */
+    margin-bottom: 6px; /* Ridotto da 8px */
+  }
+
+  .card-body .description {
+    font-size: 0.85rem; /* Ridotto da 0.9rem */
+  }
+
+  .card-header {
+    margin-bottom: 10px; /* Ridotto da 12px */
+    gap: 6px; /* Ridotto da 8px */
+  }
+
+  /* Placeholder card extra small */
+  .placeholder-card {
+    min-height: 120px; /* Ridotto */
+  }
+
+  .placeholder-content .icon {
+    font-size: 1.8rem; /* Ridotto da 2rem */
+  }
+
+  .placeholder-content .add-deadline-text {
+    font-size: 0.85rem; /* Ridotto da 0.95rem */
+  }
+
+  /* Mobile deadline cards extra small */
+  .mobile-deadline-card {
+    padding: 10px; /* Ridotto da 12px */
+    margin-bottom: 10px; /* Ridotto da 12px */
+  }
+
+  .mobile-deadline-card .card-title {
+    font-size: 0.9rem; /* Ridotto da 1rem */
+  }
+
+  .mobile-deadline-card .deadline-icon {
+    font-size: 0.8rem; /* Ridotto da 0.9rem */
+  }
+
+  .mobile-deadline-card .card-info {
+    font-size: 0.85rem; /* Ridotto da 0.9rem */
+    margin-bottom: 5px; /* Ridotto da 6px */
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .mobile-header {
+    padding: 0 15px; /* Mantieni 15px per l'header */
+  }
+}

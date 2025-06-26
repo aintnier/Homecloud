@@ -84,6 +84,8 @@
   font-weight: 600;
   word-break: break-all;
   padding-left: 2px;
+  line-height: 1.4;
+  margin: 0;
 }
 
 .skeleton-name.skeleton-profile-page {
@@ -201,4 +203,208 @@
   font-size: 1.2rem;
   margin: 0;
   color: currentColor;
+}
+
+/* Stili per la modifica del nome */
+.profile-value-container {
+  width: 100%;
+  min-height: 44px; /* Altezza fissa che corrisponde all'input */
+  display: flex;
+  align-items: center;
+}
+
+.profile-value-display {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: inherit;
+}
+
+.profile-value {
+  font-size: 1.35rem;
+  color: var(--text-color);
+  font-weight: 600;
+  word-break: break-all;
+  padding-left: 2px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.edit-trigger-btn {
+  background: none;
+  border: none;
+  color: var(--text-color-light);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  opacity: 0.6;
+  margin-left: 4px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-trigger-btn:hover,
+.edit-trigger-btn:focus {
+  color: var(--primary-color);
+  opacity: 1;
+}
+
+.edit-name-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px; /* Stessa altezza del container */
+}
+
+.edit-name-input {
+  flex: 1;
+  padding: 10px 14px; /* Padding leggermente aumentato */
+  border: 1px solid var(--secondary-color);
+  border-radius: 8px;
+  font-size: 1.35rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-color);
+  background: var(--white);
+  transition: all 0.2s ease;
+  height: 44px; /* Altezza fissa uguale al container */
+  box-sizing: border-box;
+  line-height: 1.4; /* Stessa line-height del testo */
+}
+
+.edit-name-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(67, 8, 98, 0.1);
+}
+
+.edit-name-input:disabled {
+  background-color: var(--secondary-color-alpha);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.edit-name-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.edit-action-btn {
+  width: 36px;
+  height: 36px; /* Leggermente più piccolo dell'input per proporzioni */
+  border: 1px solid var(--secondary-color);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  color: var(--text-color);
+}
+
+.edit-action-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.edit-action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.save-btn {
+  border-color: var(--notification-on);
+  color: var(--notification-on);
+}
+
+.save-btn:hover:not(:disabled) {
+  background-color: var(--notification-on);
+  color: var(--white);
+  border-color: var(--notification-on);
+}
+
+.cancel-btn {
+  border-color: var(--notification-off);
+  color: var(--notification-off);
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background-color: var(--notification-off);
+  color: var(--white);
+  border-color: var(--notification-off);
+}
+
+.loading-spinner-small {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(67, 8, 98, 0.2);
+  border-top: 2px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive per mobile */
+@media (max-width: 768px) {
+  .profile-left {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .profile-info-list {
+    width: 100%;
+    align-items: center;
+  }
+
+  .profile-field {
+    width: 100%;
+    align-items: center;
+  }
+
+  .edit-name-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    min-height: auto; /* Su mobile può essere flessibile */
+  }
+
+  .edit-name-input {
+    height: 48px; /* Leggermente più alto su mobile per touch */
+  }
+
+  .edit-name-actions {
+    justify-content: center;
+  }
+
+  .profile-value-display {
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .edit-trigger-btn {
+    margin-left: 0;
+    margin-top: 8px;
+  }
 }

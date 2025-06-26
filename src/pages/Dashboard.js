@@ -19,10 +19,11 @@ import {
   faPlusSquare,
   faChevronLeft,
   faChevronRight,
+  faBars, // Aggiunta per il menu hamburger
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { getLoggedUser, logoutAndRedirect } from "../helpers/authHelper";
-import Sidebar from "../components/Sidebar"; // importa il nuovo componente
+import Sidebar from "../components/Sidebar";
 
 // Definisci le voci di menu per la dashboard
 const menuItems = [
@@ -42,6 +43,7 @@ function Dashboard() {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [loadingUser, setLoadingUser] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Nuovo stato per la sidebar mobile
   const cardsGridRef = useRef(null);
   const dropdownRef = useRef(null);
 
@@ -259,14 +261,34 @@ function Dashboard() {
     );
   });
 
+  // Funzione per toggle della sidebar mobile
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  // Chiude la sidebar quando si clicca su un link (mobile)
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
   if (loading) {
     return (
       <div className="dashboard-container">
+        {/* Header mobile con hamburger */}
+        <header className="mobile-header">
+          <button className="hamburger-btn" onClick={toggleSidebar}>
+            <FontAwesomeIcon icon={faBars} />
+          </button>
+          <h1 className="mobile-title">Dashboard</h1>
+        </header>
+
         <Sidebar
           menuItems={menuItems}
           user={user}
           loadingUser={loadingUser}
           activePath="/dashboard"
+          isMobileOpen={isSidebarOpen}
+          onMobileClose={closeSidebar}
           bottomNav={
             <button className="logout-button" onClick={logoutAndRedirect}>
               <FontAwesomeIcon
@@ -288,11 +310,21 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
+      {/* Header mobile con hamburger */}
+      <header className="mobile-header">
+        <button className="hamburger-btn" onClick={toggleSidebar}>
+          <FontAwesomeIcon icon={faBars} />
+        </button>
+        <h1 className="mobile-title">Dashboard</h1>
+      </header>
+
       <Sidebar
         menuItems={menuItems}
         user={user}
         loadingUser={loadingUser}
         activePath="/dashboard"
+        isMobileOpen={isSidebarOpen}
+        onMobileClose={closeSidebar}
         bottomNav={
           <button className="logout-button" onClick={logoutAndRedirect}>
             <FontAwesomeIcon
@@ -437,8 +469,8 @@ function Dashboard() {
                 <input
                   type="text"
                   placeholder="Cerca scadenze..."
-                  value={searchTerm} // Colleghiamo lo stato al campo di input
-                  onChange={handleSearchChange} // Gestore per l'input di ricerca
+                  value={searchTerm}
+                  onChange={handleSearchChange}
                 />
                 {searchTerm && (
                   <FontAwesomeIcon
@@ -483,7 +515,7 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* Deadlines Table */}
+          {/* Desktop Table */}
           <div className="deadlines-table-container">
             <table className="deadlines-table">
               <thead>
@@ -552,6 +584,64 @@ function Dashboard() {
                 )}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile Cards */}
+          <div className="mobile-deadline-cards">
+            {filteredDeadlines.length > 0 ? (
+              filteredDeadlines.map((deadline) => (
+                <div key={deadline.id} className="mobile-deadline-card">
+                  <div className="card-header">
+                    <div className="card-title">
+                      <FontAwesomeIcon
+                        icon={typeIcons[deadline.type] || faExclamationTriangle}
+                        className="deadline-icon"
+                      />
+                      {deadline.title}
+                    </div>
+                    <span
+                      className={`deadline-type ${deadline.type
+                        .toLowerCase()
+                        .replace(" ", "-")}-type`}
+                    >
+                      {deadline.type}
+                    </span>
+                  </div>
+                  <div className="card-body">
+                    <div className="card-info">
+                      <strong>Scadenza:</strong> {formatDate(deadline.due_date)}
+                    </div>
+                    <div className="card-info">
+                      <strong>Descrizione:</strong> {deadline.description}
+                    </div>
+                    <div className="card-info">
+                      <strong>Notifiche:</strong>{" "}
+                      <span
+                        className={`notification-status ${
+                          deadline.notifications_on === 1 ? "true" : "false"
+                        }`}
+                      >
+                        <FontAwesomeIcon
+                          icon={faCircleDot}
+                          className="notification-icon"
+                        />
+                        {deadline.notifications_on === 1 ? "On" : "Off"}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="card-actions">
+                    <Link
+                      to={`/deadline-details/${deadline.id}`}
+                      className="dots-container"
+                    >
+                      <span className="dots-icon"></span>
+                    </Link>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="no-data">Nessuna scadenza.</div>
+            )}
           </div>
         </section>
       </main>
