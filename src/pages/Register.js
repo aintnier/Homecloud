@@ -203,7 +203,7 @@ const Register = () => {
                       onChange={(e) => setFullName(e.target.value)}
                       required
                       maxLength={255}
-                      placeholder="Mario Rossi"
+                      placeholder="Nome Completo"
                       disabled={isSubmitting}
                       className="form-input"
                     />
@@ -221,7 +221,7 @@ const Register = () => {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       maxLength={255}
-                      placeholder="mario@example.com"
+                      placeholder="tua-email@example.com"
                       disabled={isSubmitting}
                       className="form-input"
                     />
@@ -239,7 +239,7 @@ const Register = () => {
                       onChange={(e) => setPassword(e.target.value)}
                       required
                       minLength={8}
-                      placeholder="Minimo 8 caratteri"
+                      placeholder="Password"
                       disabled={isSubmitting}
                       className="form-input"
                     />
