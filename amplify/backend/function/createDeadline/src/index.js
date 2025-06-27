@@ -6,7 +6,8 @@ exports.handler = async (event) => {
 
   try {
     const body = JSON.parse(event.body);
-    const { title, description, due_date, notifications_on, user_id, type } = body;
+    const { title, description, due_date, notifications_on, user_id, type } =
+      body;
 
     // Validazione
     const { error } = validateDeadline({
@@ -37,7 +38,9 @@ exports.handler = async (event) => {
     });
 
     // Verifica che l'user_id esista
-    const [user] = await connection.query("SELECT id FROM users WHERE id = ?", [user_id]);
+    const [user] = await connection.query("SELECT id FROM users WHERE id = ?", [
+      user_id,
+    ]);
     if (user.length === 0) {
       return {
         statusCode: 400,
@@ -60,7 +63,10 @@ exports.handler = async (event) => {
       statusCode: 201,
       headers: {
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Headers":
+          "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+        "Access-Control-Allow-Methods":
+          "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

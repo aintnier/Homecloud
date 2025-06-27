@@ -60,7 +60,10 @@ exports.handler = async (event) => {
       statusCode: 201,
       headers: {
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Headers":
+          "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+        "Access-Control-Allow-Methods":
+          "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newUser),
