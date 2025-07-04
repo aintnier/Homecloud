@@ -6,6 +6,7 @@
 section {
   margin-bottom: 40px;
 }
+
 /* Contenitore del carosello */
 .carousel-container {
   position: relative;
@@ -15,9 +16,12 @@ section {
 /* Griglia scrollabile */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-  row-gap: 28px;
-  column-gap: 28px;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(clamp(18rem, 30vw, 26rem), 1fr)
+  );
+  row-gap: clamp(1rem, 2vw, 2rem);
+  column-gap: clamp(1rem, 2vw, 2rem);
   overflow-x: auto;
   scroll-behavior: smooth;
   padding: 10px 0;
@@ -36,8 +40,8 @@ section {
   background-color: var(--white);
   border: 1px solid var(--secondary-color);
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: clamp(2rem, 2.5vw, 2.5rem);
+  height: clamp(2rem, 2.5vw, 2.5rem);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,8 +52,8 @@ section {
 }
 
 .carousel-arrow svg {
-  width: 12px;
-  height: 12px;
+  width: clamp(0.6rem, 0.8vw, 0.75rem);
+  height: clamp(0.6rem, 0.8vw, 0.75rem);
 }
 
 .carousel-arrow:hover {
@@ -67,10 +71,12 @@ section {
 
 .card {
   background-color: var(--white);
-  border-radius: 10px;
+  border-radius: 14px;
   box-shadow: 0 2px 10px var(--card-shadow);
   padding: 8px 0;
   transition: box-shadow 0.3s ease;
+  min-height: clamp(8.5rem, 16vw, 12rem); /* ridotta rispetto a prima */
+  /* padding già dinamico tramite .card-content */
 }
 
 .card:hover,
@@ -85,7 +91,7 @@ section {
 }
 
 .card-content {
-  padding: 28px;
+  padding: clamp(1rem, 2vw, 2rem);
 }
 
 .card-header {
@@ -101,23 +107,22 @@ section {
   color: var(--card-title-icon-color);
   display: flex;
   align-items: center;
-  font-size: 1.6rem;
+  font-size: clamp(1.2rem, 1.4vw, 1.6rem);
 }
 
 .card-title .deadline-icon {
-  font-size: 1.8rem;
-  width: 26px;
-  height: 26px;
-  margin-right: 16px;
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  width: clamp(1.2rem, 1.5vw, 1.375rem);
+  height: clamp(1.2rem, 1.5vw, 1.375rem);
+  margin-right: 10px;
   color: var(--card-title-icon-color);
 }
 
 .card-type {
-  font-size: 1rem;
+  font-size: clamp(0.8rem, 0.9vw, 1rem);
   font-weight: bold;
   padding: 8px 16px;
   border-radius: 16px;
-  color: var(--white);
 }
 
 .salute-type {
@@ -156,14 +161,14 @@ section {
 }
 
 .card-body .due-date {
-  font-size: 1.4rem;
+  font-size: clamp(1.1rem, 1.3vw, 1.2rem);
   color: currentColor;
   margin-bottom: 16px;
   font-weight: bold;
 }
 
 .card-body .description {
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 1vw, 1.1rem);
   color: var(--card-description-color);
 }
 
@@ -193,7 +198,7 @@ section {
   font-weight: bold;
   text-align: center;
   height: 100%;
-  min-height: 200px;
+  min-height: clamp(7rem, 12vw, 9.5rem); /* ridotta anche la placeholder */
 }
 
 .placeholder-content {
@@ -202,11 +207,11 @@ section {
 }
 
 .placeholder-content .icon {
-  font-size: 3rem;
+  font-size: clamp(1.5rem, 2vw, 2.2rem);
 }
 
 .placeholder-content .add-deadline-text {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1vw, 1.2rem);
   font-weight: 500;
   text-align: center;
   letter-spacing: 0.5px;
@@ -246,8 +251,8 @@ section {
   border: 1px solid var(--secondary-color);
   background-color: var(--white);
   border-radius: 10px;
-  font-size: 1.1rem;
-  width: 250px;
+  font-size: clamp(0.95rem, 1vw, 1.1rem);
+  width: clamp(12rem, 18vw, 15.625rem);
   height: 100%;
   padding-left: 42px;
   color: currentColor;
@@ -285,8 +290,8 @@ section {
 
 .custom-select {
   position: relative;
-  width: 250px;
-  font-size: 1.1rem;
+  width: clamp(12rem, 18vw, 15.625rem);
+  font-size: clamp(0.95rem, 1vw, 1.1rem);
   cursor: pointer;
   user-select: none;
 }
@@ -311,7 +316,7 @@ section {
   background-color: var(--white);
   color: currentColor;
   position: relative;
-  font-size: 1.1rem;
+  font-size: clamp(0.95rem, 1vw, 1.1rem);
   transition: background-color 0.3s ease;
 }
 
@@ -321,8 +326,8 @@ section {
   top: 50%;
   right: 16px;
   transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
+  width: clamp(0.8rem, 1vw, 1.125rem);
+  height: clamp(0.8rem, 1vw, 1.125rem);
   background-image: url("../../imgs/angle-down-solid.svg");
   background-repeat: no-repeat;
   background-size: contain;
@@ -355,6 +360,7 @@ section {
 .option {
   padding: 14px;
   color: currentColor;
+  font-size: clamp(0.95rem, 1vw, 1.1rem);
   transition: background-color 0.3s ease;
 }
 
@@ -384,7 +390,7 @@ section {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 1.1rem;
+  font-size: clamp(0.95rem, 1vw, 1.1rem);
   color: var(--card-description-color);
 }
 
@@ -438,13 +444,13 @@ section {
 }
 
 .deadline-icon {
-  width: 22px;
-  height: 22px;
+  width: clamp(1rem, 1vw, 1.375rem);
+  height: clamp(1rem, 1vw, 1.375rem);
   margin-right: 10px;
 }
 
 .deadline-type {
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 0.9vw, 0.9rem);
   padding: 5px 8px;
   border-radius: 6px;
   width: fit-content;
@@ -489,14 +495,14 @@ section {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1vw, 1rem);
   letter-spacing: 0.2px;
   font-weight: 500;
   margin-left: 3px;
 }
 
 .notification-status .notification-icon {
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1vw, 1rem);
 }
 
 .notification-status.true,
@@ -514,7 +520,7 @@ section {
   text-align: center;
   color: var(--user-icon-placeholder-color);
   height: 64px;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1vw, 1.2rem);
   letter-spacing: 0.2px;
 }
 
@@ -536,7 +542,7 @@ section {
   top: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: clamp(4rem, 4vw, 6rem);
   background: var(--white);
   border-bottom: 1px solid var(--secondary-color);
   padding: 0 20px;
@@ -549,7 +555,7 @@ section {
 .hamburger-btn {
   background: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: clamp(1.1rem, 1.5vw, 1.5rem);
   color: var(--text-color);
   cursor: pointer;
   padding: 8px;
@@ -562,7 +568,7 @@ section {
 }
 
 .mobile-title {
-  font-size: 1.4rem;
+  font-size: clamp(1.1rem, 1.3vw, 1.4rem);
   font-weight: 600;
   color: var(--text-color);
   margin: 0;
@@ -588,7 +594,7 @@ section {
   right: 25px; /* Aumentato da 20px */
   background: none;
   border: none;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1.1vw, 1.2rem);
   color: var(--text-color);
   cursor: pointer;
   padding: 8px;
@@ -641,7 +647,8 @@ section {
 
   .main-content {
     margin-left: 0;
-    padding: 80px 40px 40px;
+    padding: clamp(4.8rem, 4vw, 2.5rem) clamp(0.8rem, 3vw, 2.5rem)
+      clamp(1.5rem, 4vw, 2.5rem);
     width: 100%;
   }
 
@@ -665,23 +672,23 @@ section {
   }
 
   .card-title {
-    font-size: 1.3rem;
+    font-size: clamp(1.2rem, 2vw, 1.4rem);
   }
 
   .card-title .deadline-icon {
-    font-size: 1.5rem;
-    width: 22px;
-    height: 22px;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    width: clamp(1.2rem, 2vw, 1.375rem);
+    height: clamp(1.2rem, 2vw, 1.375rem);
     margin-right: 12px;
   }
 
   .card-body .due-date {
-    font-size: 1.2rem;
+    font-size: clamp(1.1rem, 2vw, 1.2rem);
     margin-bottom: 12px;
   }
 
   .card-body .description {
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 2vw, 1rem);
   }
 
   .card-header {
@@ -760,8 +767,8 @@ section {
 
   /* Carousel arrows più piccole su mobile */
   .carousel-arrow {
-    width: 35px;
-    height: 35px;
+    width: 2.2rem;
+    height: 2.2rem;
     font-size: 0.9rem;
   }
 
@@ -788,8 +795,8 @@ section {
 
   .card-title .deadline-icon {
     font-size: 1.8rem;
-    width: 26px;
-    height: 26px;
+    width: 1.625rem;
+    height: 1.625rem;
     margin-right: 16px;
   }
 
@@ -914,205 +921,107 @@ section {
 /* =================== SMALL MOBILE (480px e inferiore) =================== */
 @media (max-width: 480px) {
   .mobile-header {
-    padding: 0 20px; /* Aumentato da 15px */
-    height: 55px;
+    height: clamp(4rem, 4vw, 5rem);
   }
 
   .mobile-title {
     font-size: 1.2rem;
   }
 
-  .main-content {
-    padding: 70px 25px 30px; /* Aumentato padding laterale da 20px a 25px */
-  }
-
   .section-title {
     font-size: 1.8rem;
   }
 
-  /* Sidebar mobile più stretta */
-  .sidebar {
-    width: 260px; /* Ridotto da 280px */
-  }
-
-  /* Cards grid con gap aumentato */
-  .cards-grid {
-    gap: 20px; /* Aumentato da 15px */
-  }
-
-  /* Cards molto più compatte */
-  .card {
-    min-height: 140px; /* Ridotto da 160px */
-  }
-
-  .card-content {
-    padding: 18px; /* Ridotto da 28px */
-  }
-
-  .card-header {
-    margin-bottom: 12px; /* Ridotto da 24px */
-    gap: 8px; /* Ridotto da 16px */
-  }
-
   .card-title {
-    font-size: 1.1rem; /* Ridotto da 1.3rem */
+    font-size: 1.1rem;
   }
 
   .card-title .deadline-icon {
-    font-size: 1.3rem; /* Ridotto da 1.8rem */
-    width: 18px; /* Ridotto da 26px */
-    height: 18px; /* Ridotto da 26px */
-    margin-right: 10px; /* Ridotto da 16px */
+    font-size: 1.3rem;
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-right: 10px;
   }
 
   .card-type {
-    font-size: 0.8rem; /* Ridotto da 1rem */
-    padding: 4px 8px; /* Ridotto da 8px 16px */
+    font-size: 0.8rem;
   }
 
   .card-body .due-date {
-    font-size: 1rem; /* Ridotto da 1.1rem */
-    margin-bottom: 8px; /* Ridotto da 16px */
+    font-size: 1rem;
   }
 
   .card-body .description {
-    font-size: 0.9rem; /* Ridotto da 1rem */
-    line-height: 1.3; /* Compatto */
-  }
-
-  /* Placeholder card più compatta */
-  .placeholder-card {
-    min-height: 140px; /* Ridotto da 180px */
+    font-size: 0.9rem;
   }
 
   .placeholder-content .icon {
-    font-size: 2rem; /* Ridotto da 2.5rem */
+    font-size: 2rem;
   }
 
   .placeholder-content .add-deadline-text {
-    font-size: 0.95rem; /* Ridotto da 1.1rem */
-  }
-
-  /* Nascondi frecce del carousel su schermi molto piccoli */
-  .carousel-arrow {
-    display: none;
-  }
-
-  /* Mobile deadline cards più compatte */
-  .mobile-deadline-card {
-    padding: 12px; /* Ridotto da 15px */
-    margin-bottom: 12px; /* Ridotto da 15px */
-  }
-
-  .mobile-deadline-card .card-header {
-    margin-bottom: 8px; /* Ridotto da 12px */
-    gap: 6px; /* Ridotto da 10px */
+    font-size: 0.95rem;
   }
 
   .mobile-deadline-card .card-title {
-    font-size: 1rem; /* Ridotto da 1.1rem */
+    font-size: 1rem;
   }
 
   .mobile-deadline-card .deadline-icon {
-    font-size: 0.9rem; /* Ridotto da 1.1rem */
+    font-size: 0.9rem;
   }
 
   .mobile-deadline-card .card-info {
-    margin-bottom: 6px; /* Ridotto da 8px */
-    font-size: 0.9rem; /* Aggiunto per ridurre testo */
-  }
-
-  .mobile-deadline-card .card-actions {
-    margin-top: 10px; /* Ridotto da 15px */
+    font-size: 0.9rem;
   }
 }
 
 /* =================== EXTRA SMALL (360px e inferiore) =================== */
 @media (max-width: 360px) {
-  .sidebar {
-    width: 240px; /* Ridotto da 100vw */
-  }
-
-  .main-content {
-    padding: 70px 20px 20px; /* Aumentato padding laterale da 15px a 20px */
-  }
-
-  /* Cards ancora più compatte per schermi extra small */
-  .card {
-    min-height: 120px; /* Ulteriormente ridotto */
-  }
-
-  .card-content {
-    padding: 15px; /* Ridotto da 18px */
-  }
-
   .card-title {
-    font-size: 1rem; /* Ridotto da 1.1rem */
+    font-size: 1rem;
   }
 
   .card-title .deadline-icon {
-    font-size: 1.1rem; /* Ridotto da 1.3rem */
-    width: 16px; /* Ridotto da 18px */
-    height: 16px; /* Ridotto da 18px */
-    margin-right: 8px; /* Ridotto da 10px */
+    font-size: 1.1rem;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 8px;
   }
 
   .card-type {
-    font-size: 0.75rem; /* Ridotto da 0.8rem */
-    padding: 3px 6px; /* Ridotto da 4px 8px */
+    font-size: 0.75rem;
   }
 
   .card-body .due-date {
-    font-size: 0.9rem; /* Ridotto da 1rem */
-    margin-bottom: 6px; /* Ridotto da 8px */
+    font-size: 0.9rem;
   }
 
   .card-body .description {
-    font-size: 0.85rem; /* Ridotto da 0.9rem */
-  }
-
-  .card-header {
-    margin-bottom: 10px; /* Ridotto da 12px */
-    gap: 6px; /* Ridotto da 8px */
-  }
-
-  /* Placeholder card extra small */
-  .placeholder-card {
-    min-height: 120px; /* Ridotto */
+    font-size: 0.85rem;
   }
 
   .placeholder-content .icon {
-    font-size: 1.8rem; /* Ridotto da 2rem */
+    font-size: 1.8rem;
   }
 
   .placeholder-content .add-deadline-text {
-    font-size: 0.85rem; /* Ridotto da 0.95rem */
-  }
-
-  /* Mobile deadline cards extra small */
-  .mobile-deadline-card {
-    padding: 10px; /* Ridotto da 12px */
-    margin-bottom: 10px; /* Ridotto da 12px */
+    font-size: 0.85rem;
   }
 
   .mobile-deadline-card .card-title {
-    font-size: 0.9rem; /* Ridotto da 1rem */
+    font-size: 0.9rem;
   }
 
   .mobile-deadline-card .deadline-icon {
-    font-size: 0.8rem; /* Ridotto da 0.9rem */
+    font-size: 0.8rem;
   }
 
   .mobile-deadline-card .card-info {
-    font-size: 0.85rem; /* Ridotto da 0.9rem */
-    margin-bottom: 5px; /* Ridotto da 6px */
+    font-size: 0.85rem;
   }
 
   .section-title {
     font-size: 1.6rem;
-  }
-
-  .mobile-header {
-    padding: 0 15px; /* Mantieni 15px per l'header */
   }
 }

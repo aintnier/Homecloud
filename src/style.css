@@ -80,6 +80,7 @@ body {
   font-family: "Poppins", Tahoma, Geneva, Verdana, sans-serif;
   color: var(--text-color);
   background-color: var(--background-color);
+  font-size: clamp(0.95rem, 1vw, 1.1rem);
 }
 
 input,
@@ -109,8 +110,8 @@ button {
   border: 5px solid var(--secondary-color);
   border-top: 5px solid var(--primary-color);
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 3.125rem; /* 50px -> 3.125rem */
+  height: 3.125rem;
   animation: spin 1s linear infinite;
 }
 
@@ -127,8 +128,12 @@ button {
 .sidebar {
   background-color: var(--aside-background-color);
   color: var(--secondary-color);
-  width: 400px;
-  padding: 30px;
+  width: clamp(
+    22rem,
+    25vw,
+    25rem
+  ); /* Sidebar più ampia anche su schermi piccoli */
+  padding: clamp(1rem, 2vw, 2rem);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -193,8 +198,8 @@ button {
 .sidebar-nav li .icon,
 .sidebar-bottom-nav button .icon {
   display: inline-block;
-  width: 26px;
-  height: 26px;
+  width: 1.625rem; /* 26px -> 1.625rem */
+  height: 1.625rem;
   transition: color 0.2s ease;
 }
 
@@ -221,7 +226,7 @@ button {
   display: flex;
   align-items: center;
   gap: 14px;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1vw, 1.2rem);
 }
 
 .sidebar-bottom-nav .logout-button {
@@ -232,7 +237,7 @@ button {
   padding-left: 0;
   width: auto;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1vw, 1.2rem);
   transition: color 0.2s ease;
 }
 
@@ -251,8 +256,8 @@ a.user-profile {
 }
 
 .avatar {
-  width: 50px;
-  height: 50px;
+  width: clamp(2.8rem, 4vw, 3.5rem);
+  height: clamp(2.8rem, 4vw, 3.5rem);
   border-radius: 50%;
   overflow: hidden;
   display: flex;
@@ -290,15 +295,15 @@ a.user-profile {
 }
 
 .skeleton-name {
-  width: 100px;
-  height: 14px;
+  width: clamp(4rem, 8vw, 6.25rem);
+  height: clamp(0.7rem, 1vw, 0.875rem);
   margin-top: 8px;
   margin-bottom: 14px;
 }
 
 .skeleton-email {
-  width: 200px;
-  height: 12px;
+  width: clamp(7rem, 16vw, 12.5rem);
+  height: clamp(0.6rem, 1vw, 0.75rem);
   margin-bottom: 6px;
 }
 
@@ -333,12 +338,12 @@ a.user-profile {
 }
 
 .user-info .name {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1vw, 1.2rem);
   font-weight: 600;
 }
 
 .user-info .email {
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 0.95vw, 1rem);
   color: var(--text-color-light);
 }
 
@@ -351,14 +356,14 @@ a.user-profile {
 /* Main Content Styles */
 .main-content {
   flex-grow: 1;
-  padding: 60px 48px;
-  margin-left: 400px;
+  padding: clamp(2.2rem, 2.2vw, 2rem);
+  margin-left: clamp(23rem, 22vw, 25rem); /* Dinamico come la sidebar */
   overflow-y: auto;
   height: 100vh;
 }
 
 .section-title {
-  font-size: 2.4rem;
+  font-size: clamp(1.8rem, 2.3vw, 2.4rem);
   font-weight: bold;
   color: var(--primary-color);
   margin-bottom: 28px;
@@ -372,7 +377,7 @@ a.user-profile {
   transform: translateX(-50%);
   padding: 12px 24px;
   border-radius: 6px;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1vw, 1.2rem);
   font-weight: 600;
   color: var(--white);
   z-index: 1000;
@@ -470,7 +475,7 @@ button:focus {
     position: fixed;
     top: 0;
     left: 0;
-    width: 320px;
+    width: 20rem; /* 320px */
     height: 100vh;
     transform: translateX(-100%);
     transition: transform 0.3s ease;
@@ -494,136 +499,76 @@ button:focus {
 
 @media (max-width: 480px) {
   .sidebar {
-    width: 260px; /* Ridotto da 280px per lasciare più spazio alla pagina */
-    padding: 15px; /* Ridotto da 20px */
+    width: 16.25rem; /* 260px */
+    padding: 0.9375rem; /* 15px */
   }
-
   .logo {
     text-align: left;
     padding: 5px 8px;
   }
-
   /* Logo immagine più piccola */
   .logo img {
-    width: 140px !important; /* Ridotto da 200px */
-    height: 56px !important; /* Ridotto da 80px */
+    width: 8.75rem !important; /* 140px */
+    height: 3.5rem !important; /* 56px */
   }
-
   /* Skeleton logo più piccolo */
   .skeleton-logo {
-    width: 140px !important;
-    height: 56px !important;
+    width: 8.75rem !important;
+    height: 3.5rem !important;
   }
-
-  /* Link di navigazione più piccoli */
   .sidebar-nav li a,
   .sidebar-bottom-nav button,
   .user-profile {
-    font-size: 0.9rem; /* Ridotto da 1rem */
-    gap: 8px; /* Ridotto da 10px */
-    padding: 6px 10px; /* Ridotto da 8px 12px */
+    font-size: clamp(0.85rem, 1vw, 0.9rem);
   }
-
-  /* Logout button specifico per allineamento */
-  .sidebar-bottom-nav .logout-button {
-    padding: 6px 10px; /* Ridotto */
-    padding-left: 0; /* Mantieni allineamento a sinistra */
-  }
-
-  /* Icone più piccole */
   .sidebar-nav li .icon,
   .sidebar-bottom-nav button .icon {
-    width: 18px; /* Ridotto da 20px */
-    height: 18px; /* Ridotto da 20px */
+    width: 1.125rem; /* 18px */
+    height: 1.125rem;
   }
-
-  /* Avatar utente più piccolo */
   .user-profile .avatar {
-    width: 30px; /* Ridotto da 35px */
-    height: 30px; /* Ridotto da 35px */
+    width: 1.875rem; /* 30px */
+    height: 1.875rem;
   }
-
-  /* Info utente più piccole */
   .user-info .name {
-    font-size: 0.9rem; /* Ridotto da 1rem */
+    font-size: clamp(0.8rem, 1vw, 0.9rem);
   }
-
   .user-info .email {
-    font-size: 0.8rem; /* Ridotto da 0.85rem */
-  }
-
-  /* Margini ridotti */
-  .sidebar-nav li {
-    margin-bottom: 1px; /* Ridotto da 2px */
-  }
-
-  .sidebar-bottom-nav {
-    margin-top: 15px; /* Ridotto da 20px */
-    padding-inline: 10px; /* Ridotto da 12px */
+    font-size: clamp(0.75rem, 1vw, 0.8rem);
   }
 }
 
 @media (max-width: 360px) {
   .sidebar {
-    width: 240px; /* Ridotto da 100vw per lasciare un po' di sfondo visibile */
-    padding: 12px; /* Ridotto da 15px */
+    width: 15rem; /* 240px */
+    padding: 0.75rem; /* 12px */
   }
-
-  /* Logo immagine ancora più piccola */
   .logo img {
-    width: 120px !important; /* Ridotto da 140px */
-    height: 48px !important; /* Ridotto da 56px */
+    width: 7.5rem !important; /* 120px */
+    height: 3rem !important; /* 48px */
   }
-
-  /* Skeleton logo ancora più piccolo */
   .skeleton-logo {
-    width: 120px !important;
-    height: 48px !important;
+    width: 7.5rem !important;
+    height: 3rem !important;
   }
-
-  /* Link ancora più compatti per schermi extra small */
   .sidebar-nav li a,
   .sidebar-bottom-nav button,
   .user-profile {
-    font-size: 0.85rem; /* Ridotto da precedente */
-    gap: 6px; /* Ridotto */
-    padding: 5px 8px; /* Ridotto da 6px 10px */
+    font-size: clamp(0.8rem, 1vw, 0.85rem);
   }
-
-  .sidebar-bottom-nav .logout-button {
-    padding: 5px 8px;
-    padding-left: 0;
-  }
-
-  /* Icone ancora più piccole */
   .sidebar-nav li .icon,
   .sidebar-bottom-nav button .icon {
-    width: 16px; /* Ridotto da 18px */
-    height: 16px; /* Ridotto da 18px */
+    width: 1rem; /* 16px */
+    height: 1rem;
   }
-
-  /* Avatar ancora più piccolo */
   .user-profile .avatar {
-    width: 28px; /* Ridotto da 30px */
-    height: 28px; /* Ridotto da 30px */
+    width: 1.75rem; /* 28px */
+    height: 1.75rem;
   }
-
-  /* Info utente ancora più piccole */
   .user-info .name {
-    font-size: 0.85rem;
+    font-size: clamp(0.7rem, 1vw, 0.85rem);
   }
-
   .user-info .email {
-    font-size: 0.75rem; /* Ridotto da 0.8rem */
-  }
-
-  /* Margini minimi */
-  .sidebar-nav li {
-    margin-bottom: 0px; /* Ridotto a 0 */
-  }
-
-  .sidebar-bottom-nav {
-    margin-top: 12px; /* Ridotto da 15px */
-    padding-inline: 8px; /* Ridotto da 10px */
+    font-size: clamp(0.7rem, 1vw, 0.75rem);
   }
 }
