@@ -2,22 +2,55 @@ const { getS3LogoConfig } = require("/opt/nodejs/helper");
 const AWS = require("aws-sdk");
 
 exports.handler = async (event) => {
+  console.log("=== getAppConfig START ===");
   console.log("getAppConfig - Event:", JSON.stringify(event, null, 2));
 
+  // Debug delle variabili d'ambiente
+  console.log("Environment variables:", {
+    S3_BUCKET_NAME: process.env.S3_BUCKET_NAME,
+    S3_LOGO_FOLDER: process.env.S3_LOGO_FOLDER,
+    REGION: process.env.REGION,
+  });
+
   try {
-    // Configurazione S3 per logo
-    const s3LogoConfig = getS3LogoConfig({
+    console.log("About to call getS3LogoConfig...");
+
+    // Prova a chiamare getS3LogoConfig step by step
+    const configParams = {
       bucketName: process.env.S3_BUCKET_NAME,
       folderName: process.env.S3_LOGO_FOLDER || "logo-imgs",
       region: process.env.REGION,
-    });
+    };
 
-    console.log("S3 Logo Config:", s3LogoConfig);
+    console.log("Config params:", configParams);
+
+    // Verifica che la funzione helper esista
+    console.log("getS3LogoConfig function:", typeof getS3LogoConfig);
+
+    if (typeof getS3LogoConfig !== "function") {
+      throw new Error("getS3LogoConfig is not a function");
+    }
+
+    console.log("Calling getS3LogoConfig with params:", configParams);
+
+    // Configurazione S3 per logo
+    const s3LogoConfig = getS3LogoConfig(configParams);
+
+    console.log("S3 Logo Config received:", s3LogoConfig);
+
+    // Verifica che la configurazione sia valida
+    if (!s3LogoConfig || !s3LogoConfig.bucketName || !s3LogoConfig.region) {
+      throw new Error(`Invalid S3 config: ${JSON.stringify(s3LogoConfig)}`);
+    }
+
+    console.log("Initializing S3 client...");
 
     // Inizializza il client S3
     const s3 = new AWS.S3({
       region: s3LogoConfig.region,
     });
+
+    console.log("S3 client initialized successfully");
 
     // Lista tutti i file nella cartella dei loghi
     const listParams = {
@@ -25,8 +58,12 @@ exports.handler = async (event) => {
       Prefix: s3LogoConfig.folderName + "/",
     };
 
+    console.log("S3 list parameters:", listParams);
+    console.log("Calling S3 listObjectsV2...");
+
     const listResult = await s3.listObjectsV2(listParams).promise();
 
+    console.log("S3 listObjectsV2 completed");
     console.log("Files found in logo folder:", listResult.Contents);
 
     // Costruisci gli URL per tutti i loghi
@@ -62,6 +99,9 @@ exports.handler = async (event) => {
       // features: {},
     };
 
+    console.log("Final app config:", appConfig);
+    console.log("=== getAppConfig SUCCESS ===");
+
     return {
       statusCode: 200,
       headers: {
@@ -75,7 +115,14 @@ exports.handler = async (event) => {
       body: JSON.stringify(appConfig),
     };
   } catch (err) {
-    console.error("Error in getAppConfig:", err);
+    console.error("=== getAppConfig ERROR ===");
+    console.error("Error details:", {
+      message: err.message,
+      stack: err.stack,
+      code: err.code,
+      statusCode: err.statusCode,
+    });
+
     return {
       statusCode: 500,
       headers: {

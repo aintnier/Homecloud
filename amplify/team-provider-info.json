@@ -15,7 +15,7 @@
       "function": {
         "readUsers": {
           "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
-          "s3Key": "amplify-builds/readUsers-496c674b344c5277344c-build.zip",
+          "s3Key": "amplify-builds/readUsers-694659314b6532305438-build.zip",
           "region": "eu-north-1",
           "dbHost": "db-homecloud.cd0giowo63w0.eu-north-1.rds.amazonaws.com",
           "dbUser": "admin",
@@ -26,7 +26,7 @@
         },
         "createDeadline": {
           "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
-          "s3Key": "amplify-builds/createDeadline-67722f6d617a435a3238-build.zip",
+          "s3Key": "amplify-builds/createDeadline-4f357373477a61725659-build.zip",
           "dbHost": "db-homecloud.cd0giowo63w0.eu-north-1.rds.amazonaws.com",
           "dbName": "homecloud",
           "dbPassword": "rubbing-departure-kitchen",
@@ -35,7 +35,7 @@
         },
         "createUsers": {
           "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
-          "s3Key": "amplify-builds/createUsers-475a6b786b3853663258-build.zip",
+          "s3Key": "amplify-builds/createUsers-766a376c5746786c6b4f-build.zip",
           "region": "eu-north-1",
           "dbHost": "db-homecloud.cd0giowo63w0.eu-north-1.rds.amazonaws.com",
           "dbUser": "admin",
@@ -46,7 +46,7 @@
         },
         "deleteUser": {
           "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
-          "s3Key": "amplify-builds/deleteUser-7176426e5563464f5953-build.zip",
+          "s3Key": "amplify-builds/deleteUser-5173564531384e486336-build.zip",
           "region": "eu-north-1",
           "dbHost": "db-homecloud.cd0giowo63w0.eu-north-1.rds.amazonaws.com",
           "dbUser": "admin",
@@ -59,7 +59,7 @@
         },
         "updateUser": {
           "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
-          "s3Key": "amplify-builds/updateUser-50367945496b6e6c3071-build.zip",
+          "s3Key": "amplify-builds/updateUser-2f3055764c463767742f-build.zip",
           "region": "eu-north-1",
           "dbHost": "db-homecloud.cd0giowo63w0.eu-north-1.rds.amazonaws.com",
           "dbUser": "admin",
@@ -75,7 +75,7 @@
           "dbPassword": "rubbing-departure-kitchen",
           "dbName": "homecloud",
           "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
-          "s3Key": "amplify-builds/readDeadlines-3564554c2b356a314443-build.zip"
+          "s3Key": "amplify-builds/readDeadlines-3851474d585234714e6a-build.zip"
         },
         "updateDeadlines": {
           "region": "eu-north-1",
@@ -84,7 +84,7 @@
           "dbPassword": "rubbing-departure-kitchen",
           "dbName": "homecloud",
           "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
-          "s3Key": "amplify-builds/updateDeadlines-305753716c44396a4f7a-build.zip"
+          "s3Key": "amplify-builds/updateDeadlines-56496945687a34597951-build.zip"
         },
         "deleteDeadlines": {
           "region": "eu-north-1",
@@ -93,11 +93,11 @@
           "dbPassword": "rubbing-departure-kitchen",
           "dbName": "homecloud",
           "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
-          "s3Key": "amplify-builds/deleteDeadlines-2f61392b5543442b4b48-build.zip"
+          "s3Key": "amplify-builds/deleteDeadlines-34556475545236346269-build.zip"
         },
         "getAppConfig": {
           "deploymentBucketName": "amplify-homecloud-dev-c8587-deployment",
-          "s3Key": "amplify-builds/getAppConfig-57583874757242746972-build.zip",
+          "s3Key": "amplify-builds/getAppConfig-5a61654b415a46477533-build.zip",
           "region": "eu-north-1",
           "s3BucketName": "home-cloud-user-images",
           "s3LogoFolder": "logo-imgs"
