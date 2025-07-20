@@ -46,7 +46,6 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   background: rgba(255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Solo cambia colore */
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
@@ -590,8 +589,8 @@
 .landing-page .card-icon,
 .landing-page .contact-icon {
   font-size: clamp(1.2rem, 2vw, 2rem);
-  width: clamp(2rem, 4vw, 3.125rem);
-  height: clamp(2rem, 4vw, 3.125rem);
+  width: clamp(2.8rem, 4vw, 3.125rem);
+  height: clamp(2.8rem, 4vw, 3.125rem);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -929,8 +928,9 @@
 
 .landing-page .contact-icon {
   font-size: clamp(1.2rem, 2vw, 2rem);
-  min-width: clamp(2.5rem, 5vw, 3.75rem);
-  height: clamp(2.5rem, 5vw, 3.75rem);
+  min-width: clamp(2.6rem, 5vw, 3.75rem);
+  width: clamp(2.8rem, 5vw, 3.75rem);
+  height: clamp(2.8rem, 5vw, 3.75rem);
   border-radius: 15px;
   display: flex;
   align-items: center;
@@ -1086,7 +1086,7 @@
 }
 
 .landing-page .footer-logo-img {
-  height: clamp(2.5rem, 5vw, 5rem); /* 80px -> dinamico */
+  height: clamp(3.2rem, 5.3vw, 5rem);
   width: auto;
 }
 
@@ -1224,8 +1224,28 @@
     scale: 1.2;
   }
 
-  .landing-page .nav-links {
+  .landing-page .nav-links .nav-link {
     display: none;
+  }
+
+  .landing-page .nav-cta-btn {
+    display: block;
+    padding: clamp(0.8rem, 2.8vw, 0.8rem) clamp(1.6rem, 3.5vw, 2rem);
+    font-size: clamp(0.9rem, 2.1vw, 1.15rem);
+    border-radius: 25px;
+  }
+
+  /* Logo centrato e CTA button a destra nella navbar mobile */
+  .landing-page .nav-container {
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .landing-page .nav-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
   }
 
   .landing-page .hero-title {
@@ -1237,24 +1257,26 @@
   }
 
   .landing-page .hero-buttons {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
   .landing-page .hero-btn-primary,
   .landing-page .hero-btn-secondary {
-    width: 100%;
-    max-width: 300px;
+    width: auto;
+    max-width: none;
   }
 
   .landing-page .hero-stats {
-    flex-direction: column;
+    flex-direction: row;
     gap: 20px;
+    justify-content: center;
   }
 
   .landing-page .stat-divider {
-    width: 40px;
-    height: 1px;
+    width: 1px;
+    height: 40px;
   }
 
   .landing-page .section-title {
@@ -1263,6 +1285,27 @@
 
   .landing-page .features-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Contact section responsive - stack verticalmente */
+  .landing-page .contact-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .landing-page .contact-info {
+    gap: 30px;
+  }
+
+  .landing-page .contact-item div:nth-child(2) {
+    text-align: left;
+  }
+
+  .landing-page .contact-form {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
   }
 
   .landing-page .form-row {
@@ -1281,13 +1324,43 @@
   }
 }
 
+@media (max-width: 600px) {
+  .landing-page .nav-cta-btn {
+    display: none;
+  }
+
+  .landing-page .glass-nav {
+    min-height: 80px;
+  }
+
+  .landing-page .nav-container {
+    min-height: 60px;
+    align-items: center;
+  }
+}
+
 @media (max-width: 480px) {
+  .landing-page .glass-nav {
+    min-height: 80px;
+  }
+
+  .landing-page .nav-container {
+    min-height: 40px;
+    align-items: center;
+  }
+
   .landing-page .hero-silk-background {
     scale: 1.4;
   }
 
   .landing-page .hero-grid {
-    padding: 60px 20px;
+    padding: 80px 20px 60px;
+    grid-template-columns: 1fr;
+  }
+
+  /* Rimuovi la hero visual */
+  .landing-page .hero-visual {
+    display: none;
   }
 
   .landing-page .hero-title {
@@ -1298,18 +1371,5 @@
   .landing-page .hero-description {
     font-size: 1rem;
     margin-bottom: 30px;
-  }
-
-  .landing-page .hero-btn-primary,
-  .landing-page .hero-btn-secondary {
-    padding: 12px 24px;
-    font-size: 1rem;
-    width: 100%;
-    max-width: none;
-  }
-
-  .landing-page .hero-visual {
-    height: auto;
-    min-height: 300px;
   }
 }
