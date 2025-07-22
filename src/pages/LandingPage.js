@@ -197,8 +197,10 @@ const LandingPage = () => {
                 </div>
                 <div className="stat-divider"></div>
                 <div className="stat-item">
-                  <div className="stat-number">&infin;</div>
-                  <div className="stat-label">Scadenze</div>
+                  <div className="stat-number" style={{ fontFamily: "inter" }}>
+                    &infin;
+                  </div>
+                  <div className="stat-label">Scadenze gestibili</div>
                 </div>
               </div>
 

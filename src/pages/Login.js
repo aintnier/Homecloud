@@ -7,6 +7,7 @@ import {
 } from "aws-amplify/auth";
 import { Link } from "react-router-dom";
 import "../styles/Login.css";
+import { useKeyboardHeight } from "../hooks/useKeyboardHeight";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -20,6 +21,7 @@ function Login() {
   const [newPassword, setNewPassword] = useState("");
   const [resetMessage, setResetMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { isKeyboardVisible } = useKeyboardHeight();
 
   // Funzione per estrarre il messaggio di errore
   const getErrorMessage = (error) => {
@@ -104,7 +106,7 @@ function Login() {
   };
 
   return (
-    <div className="auth-page">
+    <div className={`auth-page ${isKeyboardVisible ? "keyboard-visible" : ""}`}>
       <div className="auth-container">
         <div className="auth-card">
           {/* Header */}

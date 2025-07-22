@@ -1,27 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Unsubscribe.css";
-import { getSpecificLogo } from "../helpers/logoHelper";
+import emailIcon from "openmoji/color/svg/1F4E7.svg";
 
 const Unsubscribe = () => {
-  const [logoUrl, setLogoUrl] = useState(null);
-  const [unsubscribeStep, setUnsubscribeStep] = useState("initial"); // initial, success, error
+  const [unsubscribeStep, setUnsubscribeStep] = useState("initial");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const fetchLogo = async () => {
-      try {
-        const logo = await getSpecificLogo("Logo-2.1.1");
-        setLogoUrl(logo);
-      } catch (error) {
-        console.error("Error loading logo:", error);
-      }
-    };
-
-    fetchLogo();
-
     // Controlla se c'è un email nei parametri URL (da link email)
     const urlParams = new URLSearchParams(window.location.search);
     const emailParam = urlParams.get("email");
@@ -41,8 +29,7 @@ const Unsubscribe = () => {
     setMessage("");
 
     try {
-      // Qui implementerai la logica per disattivare le email
-      // Per ora simuliamo una chiamata API
+      // Simula una chiamata API
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       // TODO: Implementare chiamata API per disattivare le notifiche email
@@ -64,33 +51,22 @@ const Unsubscribe = () => {
 
   return (
     <div className="unsubscribe-page">
-      <nav className="simple-nav">
-        <div className="nav-container">
-          <Link to="/landing" className="nav-logo-link">
-            <div className="nav-logo">
-              {logoUrl && (
-                <img
-                  src={logoUrl}
-                  alt="HomeCloud"
-                  className="nav-logo-img"
-                  draggable="false"
-                />
-              )}
-            </div>
-          </Link>
-          <Link to="/landing" className="back-link">
-            ← Torna alla Home
-          </Link>
-        </div>
-      </nav>
-
       <main className="unsubscribe-content">
         <div className="container">
           <div className="unsubscribe-card">
             {unsubscribeStep === "initial" && (
               <>
                 <div className="unsubscribe-header">
-                  <div className="unsubscribe-icon">📧</div>
+                  <div className="unsubscribe-icon">
+                    <img
+                      src={emailIcon}
+                      alt="Email"
+                      width="100"
+                      height="100"
+                      draggable="false"
+                      className="feature-icon"
+                    />
+                  </div>
                   <h1>Gestione Preferenze Email</h1>
                   <p className="unsubscribe-subtitle">
                     Disattiva le notifiche email di HomeCloud
@@ -136,7 +112,6 @@ const Unsubscribe = () => {
                       id="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="tua-email@example.com"
                       required
                       disabled={isLoading}
                     />
