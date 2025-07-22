@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { signUp, confirmSignUp, resendSignUpCode } from "aws-amplify/auth";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "../styles/Register.css";
+import { useKeyboardHeight } from "../hooks/useKeyboardHeight";
+import "../styles/Login.css";
 
 const Register = () => {
   const [fullName, setFullName] = useState("");
@@ -16,6 +17,7 @@ const Register = () => {
   const [confirmationCode, setConfirmationCode] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { isKeyboardVisible } = useKeyboardHeight();
 
   // Funzione per estrarre il messaggio di errore
   const getErrorMessage = (error) => {
@@ -183,7 +185,7 @@ const Register = () => {
   };
 
   return (
-    <div className="auth-page">
+    <div className={`auth-page ${isKeyboardVisible ? "keyboard-visible" : ""}`}>
       <div className="auth-container">
         <div className="auth-card">
           {/* Header */}
