@@ -22,16 +22,7 @@
   padding: 0 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.privacy-policy-page .nav-logo-link {
-  text-decoration: none;
-}
-
-.privacy-policy-page .nav-logo-img {
-  height: 40px;
-  width: auto;
+  justify-content: center;
 }
 
 .privacy-policy-page .back-link {
@@ -47,6 +38,7 @@
 .privacy-policy-page .back-link:hover {
   background: #667eea;
   color: white;
+  text-decoration: none;
 }
 
 /* Main Content */
@@ -104,7 +96,19 @@
   color: #2d3748;
   margin-bottom: 25px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #667eea;
+  border-bottom: 1px solid transparent;
+  position: relative;
+}
+
+.privacy-policy-page .privacy-section h2::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 2.2px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
 }
 
 .privacy-policy-page .privacy-section h3 {
@@ -261,7 +265,26 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .privacy-policy-page .container {
+    padding: 0 15px;
+    max-width: 90%;
+  }
+
+  .privacy-policy-page .privacy-header h1 {
+    font-size: 2.4rem;
+  }
+
+  .privacy-policy-page .privacy-section {
+    padding: 30px;
+  }
+}
+
 @media (max-width: 768px) {
+  .privacy-policy-page .container {
+    max-width: 92%;
+  }
+
   .privacy-policy-page .privacy-header h1 {
     font-size: 2.2rem;
   }
@@ -274,31 +297,131 @@
     font-size: 1.5rem;
   }
 
+  .privacy-policy-page .privacy-section h3 {
+    font-size: 1.2rem;
+  }
+
+  .privacy-policy-page .privacy-section p,
+  .privacy-policy-page .privacy-section li {
+    font-size: 1rem;
+  }
+
   .privacy-policy-page .rights-grid {
     grid-template-columns: 1fr;
   }
 
   .privacy-policy-page .simple-nav .nav-container {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .privacy-policy-page .container {
     padding: 0 15px;
   }
 
+  .privacy-policy-page .back-link {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .privacy-policy-page .container {
+    max-width: 95%;
+  }
+
   .privacy-policy-page .privacy-header {
-    padding: 25px 20px;
+    padding: 30px 20px;
   }
 
   .privacy-policy-page .privacy-header h1 {
     font-size: 1.8rem;
   }
 
+  .privacy-policy-page .privacy-section h2 {
+    font-size: 1.4rem;
+  }
+
+  .privacy-policy-page .privacy-section h3 {
+    font-size: 1.1rem;
+  }
+
+  .privacy-policy-page .privacy-section p,
+  .privacy-policy-page .privacy-section li {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .privacy-policy-page .container {
+    padding: 0 15px;
+    max-width: 90%;
+  }
+
+  .privacy-policy-page .privacy-header {
+    padding: 20px 15px;
+  }
+
+  .privacy-policy-page .privacy-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .privacy-policy-page .last-updated {
+    font-size: 0.9rem;
+  }
+
   .privacy-policy-page .privacy-section {
-    padding: 20px;
+    padding: 20px 15px;
+  }
+
+  .privacy-policy-page .privacy-section h2 {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .privacy-policy-page .privacy-section h3 {
+    font-size: 1rem;
+  }
+
+  .privacy-policy-page .privacy-section p,
+  .privacy-policy-page .privacy-section li {
+    font-size: 0.9rem;
+  }
+
+  .privacy-policy-page .back-link {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .privacy-policy-page .container {
+    max-width: 92%;
+  }
+
+  .privacy-policy-page .privacy-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .privacy-policy-page .last-updated {
+    font-size: 0.85rem;
+  }
+
+  .privacy-policy-page .privacy-section {
+    padding: 15px 12px;
+  }
+
+  .privacy-policy-page .privacy-section h2 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .privacy-policy-page .privacy-section h3 {
+    font-size: 0.95rem;
+  }
+
+  .privacy-policy-page .privacy-section p,
+  .privacy-policy-page .privacy-section li {
+    font-size: 0.85rem;
+  }
+
+  .privacy-policy-page .back-link {
+    padding: 6px 10px;
+    font-size: 0.8rem;
   }
 }

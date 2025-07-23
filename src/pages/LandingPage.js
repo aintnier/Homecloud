@@ -151,7 +151,10 @@ const LandingPage = () => {
                   draggable="false"
                 />
                 <span style={{ letterSpacing: "0.5px" }}>
-                  Nuovo • Completamente Gratuito
+                  <span className="badge-text-full">
+                    Nuovo • Completamente Gratuito
+                  </span>
+                  <span className="badge-text-short">Nuovo • Gratis</span>
                 </span>
               </div>
 
@@ -313,15 +316,6 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-
-          {/* <div className="floating-logo" style={{ opacity: 0.5 }}>
-            <img
-              src={logoUrl}
-              alt="HomeCloud"
-              className="nav-logo-img"
-              draggable="false"
-            />
-          </div> */}
         </div>
       </section>
 
@@ -331,10 +325,10 @@ const LandingPage = () => {
             <SplitText
               text="Perché scegliere HomeCloud?"
               className="text-2xl font-semibold text-center activity-summary-important-text section-title"
-              delay={50}
+              delay={100}
               duration={0.6}
               ease="power3.out"
-              splitType="chars"
+              splitType="words"
               from={{ opacity: 0, y: 40 }}
               to={{ opacity: 1, y: 0 }}
               threshold={0.1}
@@ -359,8 +353,13 @@ const LandingPage = () => {
               />
               <h3>Gestione Scadenze</h3>
               <p>
-                Tieni traccia di documenti, bollette, appuntamenti medici e
-                tutte le scadenze importanti della famiglia
+                <span className="feature-text-full">
+                  Tieni traccia di documenti, bollette, appuntamenti medici e
+                  tutte le scadenze importanti della famiglia
+                </span>
+                <span className="feature-text-short">
+                  Gestisci tutte le scadenze familiari
+                </span>
               </p>
             </div>
 
@@ -377,8 +376,13 @@ const LandingPage = () => {
               </div>
               <h3>Notifiche Smart</h3>
               <p>
-                Ricevi promemoria automatici via email per non dimenticare mai
-                una scadenza importante
+                <span className="feature-text-full">
+                  Ricevi promemoria automatici via email per non dimenticare mai
+                  una scadenza importante
+                </span>
+                <span className="feature-text-short">
+                  Promemoria automatici via email
+                </span>
               </p>
             </div>
 
@@ -395,8 +399,13 @@ const LandingPage = () => {
               </div>
               <h3>Dashboard Intelligente</h3>
               <p>
-                Visualizza le prossime scadenze, monitora quelle scadute e cerca
-                facilmente con filtri intelligenti
+                <span className="feature-text-full">
+                  Visualizza le prossime scadenze, monitora quelle scadute e
+                  cerca facilmente con filtri intelligenti
+                </span>
+                <span className="feature-text-short">
+                  Dashboard con filtri intelligenti
+                </span>
               </p>
             </div>
 
@@ -413,8 +422,13 @@ const LandingPage = () => {
               </div>
               <h3>Sicurezza AWS</h3>
               <p>
-                I tuoi dati sono protetti con crittografia avanzata su
-                infrastruttura cloud sicura
+                <span className="feature-text-full">
+                  I tuoi dati sono protetti con crittografia avanzata su
+                  infrastruttura cloud sicura
+                </span>
+                <span className="feature-text-short">
+                  Crittografia avanzata e cloud sicuro
+                </span>
               </p>
             </div>
 
@@ -431,8 +445,13 @@ const LandingPage = () => {
               </div>
               <h3>Accesso Ovunque</h3>
               <p>
-                Accedi ai tuoi dati da qualsiasi dispositivo, sempre
-                sincronizzati e aggiornati
+                <span className="feature-text-full">
+                  Accedi ai tuoi dati da qualsiasi dispositivo, sempre
+                  sincronizzati e aggiornati
+                </span>
+                <span className="feature-text-short">
+                  Accesso da tutti i dispositivi
+                </span>
               </p>
             </div>
 
@@ -449,8 +468,13 @@ const LandingPage = () => {
               </div>
               <h3>Setup Veloce</h3>
               <p>
-                Inizia in pochi minuti. Interfaccia intuitiva e configurazione
-                guidata
+                <span className="feature-text-full">
+                  Inizia in pochi minuti. Interfaccia intuitiva e configurazione
+                  guidata
+                </span>
+                <span className="feature-text-short">
+                  Setup in pochi minuti
+                </span>
               </p>
             </div>
           </div>
@@ -463,10 +487,10 @@ const LandingPage = () => {
             <SplitText
               text="Pricing Semplice"
               className="text-2xl font-semibold text-center activity-summary-important-text section-title"
-              delay={50}
+              delay={100}
               duration={0.6}
               ease="power3.out"
-              splitType="chars"
+              splitType="words"
               from={{ opacity: 0, y: 40 }}
               to={{ opacity: 1, y: 0 }}
               threshold={0.1}
@@ -598,10 +622,10 @@ const LandingPage = () => {
             <SplitText
               text="Hai domande?"
               className="text-2xl font-semibold text-center activity-summary-important-text section-title"
-              delay={50}
+              delay={100}
               duration={0.6}
               ease="power3.out"
-              splitType="chars"
+              splitType="words"
               from={{ opacity: 0, y: 40 }}
               to={{ opacity: 1, y: 0 }}
               threshold={0.1}
@@ -666,8 +690,6 @@ const LandingPage = () => {
                 </div>
               </div>
             </div>
-
-            {/* Sostituisci tutto il form con questo: */}
             <ContactForm />
           </div>
         </div>
@@ -679,10 +701,10 @@ const LandingPage = () => {
             <SplitText
               text="Pronto ad organizzare la tua famiglia?"
               className="text-2xl font-semibold text-center activity-summary-important-text cta-title"
-              delay={40}
+              delay={80}
               duration={0.5}
               ease="power3.out"
-              splitType="chars"
+              splitType="words"
               from={{ opacity: 0, y: 40 }}
               to={{ opacity: 1, y: 0 }}
               threshold={0.1}
