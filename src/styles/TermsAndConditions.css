@@ -22,16 +22,7 @@
   padding: 0 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.terms-conditions-page .nav-logo-link {
-  text-decoration: none;
-}
-
-.terms-conditions-page .nav-logo-img {
-  height: 40px;
-  width: auto;
+  justify-content: center;
 }
 
 .terms-conditions-page .back-link {
@@ -47,6 +38,7 @@
 .terms-conditions-page .back-link:hover {
   background: #667eea;
   color: white;
+  text-decoration: none;
 }
 
 /* Main Content */
@@ -108,7 +100,19 @@
   color: #2d3748;
   margin-bottom: 25px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #667eea;
+  border-bottom: 1px solid transparent;
+  position: relative;
+}
+
+.terms-conditions-page .terms-section h2::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 2.2px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
 }
 
 .terms-conditions-page .terms-section h3 {
@@ -331,7 +335,26 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .terms-conditions-page .container {
+    padding: 0 15px;
+    max-width: 90%;
+  }
+
+  .terms-conditions-page .terms-header h1 {
+    font-size: 2.4rem;
+  }
+
+  .terms-conditions-page .terms-section {
+    padding: 30px;
+  }
+}
+
 @media (max-width: 768px) {
+  .terms-conditions-page .container {
+    max-width: 92%;
+  }
+
   .terms-conditions-page .terms-header h1 {
     font-size: 2.2rem;
   }
@@ -344,28 +367,86 @@
     font-size: 1.5rem;
   }
 
-  .terms-conditions-page .simple-nav .nav-container {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
+  .terms-conditions-page .terms-section h3 {
+    font-size: 1.2rem;
   }
-}
 
-@media (max-width: 480px) {
-  .terms-conditions-page .terms-conditions-page .container {
+  .terms-conditions-page .terms-section p,
+  .terms-conditions-page .terms-section li {
+    font-size: 1rem;
+  }
+
+  .terms-conditions-page .simple-nav .nav-container {
     padding: 0 15px;
   }
 
+  .terms-conditions-page .back-link {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .terms-conditions-page .container {
+    max-width: 95%;
+  }
+
   .terms-conditions-page .terms-header {
-    padding: 25px 20px;
+    padding: 30px 20px;
   }
 
   .terms-conditions-page .terms-header h1 {
     font-size: 1.8rem;
   }
 
+  .terms-conditions-page .terms-section h2 {
+    font-size: 1.4rem;
+  }
+
+  .terms-conditions-page .terms-section h3 {
+    font-size: 1.1rem;
+  }
+
+  .terms-conditions-page .terms-section p,
+  .terms-conditions-page .terms-section li {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .terms-conditions-page .container {
+    padding: 0 15px;
+    max-width: 90%;
+  }
+
+  .terms-conditions-page .terms-header {
+    padding: 20px 15px;
+  }
+
+  .terms-conditions-page .terms-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .terms-conditions-page .last-updated {
+    font-size: 0.9rem;
+  }
+
   .terms-conditions-page .terms-section {
-    padding: 20px;
+    padding: 20px 15px;
+  }
+
+  .terms-conditions-page .terms-section h2 {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .terms-conditions-page .terms-section h3 {
+    font-size: 1rem;
+  }
+
+  .terms-conditions-page .terms-section p,
+  .terms-conditions-page .terms-section li {
+    font-size: 0.9rem;
   }
 
   .terms-conditions-page .service-description,
@@ -385,7 +466,59 @@
   .terms-conditions-page .ip-item,
   .terms-conditions-page .jurisdiction-item,
   .terms-conditions-page .provision-item {
-    padding: 20px;
+    padding: 12px 10px;
+  }
+
+  .terms-conditions-page .back-link {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .terms-conditions-page .container {
+    max-width: 92%;
+  }
+
+  .terms-conditions-page .terms-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .terms-conditions-page .last-updated {
+    font-size: 0.85rem;
+  }
+
+  .terms-conditions-page .terms-section {
+    padding: 15px 12px;
+  }
+
+  .terms-conditions-page .terms-section h2 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .terms-conditions-page .terms-section h3 {
+    font-size: 0.95rem;
+  }
+
+  .terms-conditions-page .terms-section p,
+  .terms-conditions-page .terms-section li {
+    font-size: 0.85rem;
+  }
+
+  .terms-conditions-page .service-item,
+  .terms-conditions-page .condition-item,
+  .terms-conditions-page .liability-item,
+  .terms-conditions-page .change-item,
+  .terms-conditions-page .ip-item,
+  .terms-conditions-page .jurisdiction-item,
+  .terms-conditions-page .provision-item {
+    padding: 10px 8px;
+  }
+
+  .terms-conditions-page .back-link {
+    padding: 6px 10px;
+    font-size: 0.8rem;
   }
 }
 

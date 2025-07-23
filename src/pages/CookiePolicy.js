@@ -1,42 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/CookiePolicy.css";
-import { getSpecificLogo } from "../helpers/logoHelper";
 
 const CookiePolicy = () => {
-  const [logoUrl, setLogoUrl] = useState(null);
-
-  useEffect(() => {
-    const fetchLogo = async () => {
-      try {
-        const logo = await getSpecificLogo("Logo-2.1.1");
-        setLogoUrl(logo);
-      } catch (error) {
-        console.error("Error loading logo:", error);
-      }
-    };
-
-    fetchLogo();
-  }, []);
-
   return (
     <div className="cookie-policy-page">
       <nav className="simple-nav">
         <div className="nav-container">
-          <Link to="/landing" className="nav-logo-link">
-            <div className="nav-logo">
-              {logoUrl && (
-                <img
-                  src={logoUrl}
-                  alt="HomeCloud"
-                  className="nav-logo-img"
-                  draggable="false"
-                />
-              )}
-            </div>
-          </Link>
           <Link to="/landing" className="back-link">
-            ← Torna alla Home
+            Torna alla Home
           </Link>
         </div>
       </nav>
