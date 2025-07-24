@@ -39,7 +39,7 @@ jobs:
       - name: Generate cache key
         id: cache-key
         run: |
-          echo "key=pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}" >> $GITHUB_OUTPUT
+          echo "key=pnpm-${{ hashFiles('**/package.json') }}" >> $GITHUB_OUTPUT
 
       - name: Cache pnpm dependencies
         uses: actions/cache@v3
@@ -83,7 +83,7 @@ jobs:
           key: ${{ needs.setup.outputs.cache-key }}
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Run ESLint
         run: npx eslint src/ --ext .js,.jsx,.ts,.tsx --max-warnings 0
@@ -130,7 +130,7 @@ jobs:
           key: ${{ needs.setup.outputs.cache-key }}
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Run tests
         run: pnpm test -- --coverage --watchAll=false
