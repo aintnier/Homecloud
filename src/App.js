@@ -14,6 +14,7 @@ import CookiePolicy from "./pages/CookiePolicy";
 import Unsubscribe from "./pages/Unsubscribe";
 
 import ProtectedRoute from "./components/ProtectedRoute";
+import RootRoute from "./components/RootRoute";
 
 function App() {
   return (
@@ -21,14 +22,7 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/landing" element={<LandingPage />} />
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/" element={<RootRoute />} />
         <Route
           path="/dashboard"
           element={
