@@ -18,7 +18,8 @@ const UserProfileSection = ({ user, loadingUser, onUserUpdate, onMessage }) => {
     const value = e.target.value;
 
     // Regex per permettere solo lettere, spazi, apostrofi e caratteri accentati
-    const allowedCharsRegex = /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\u1E00-\u1EFF\s']*$/;
+    const allowedCharsRegex =
+      /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\u1E00-\u1EFF\s']*$/;
 
     // Controlla se il valore contiene solo caratteri consentiti
     if (allowedCharsRegex.test(value)) {
@@ -43,7 +44,7 @@ const UserProfileSection = ({ user, loadingUser, onUserUpdate, onMessage }) => {
     // Previeni l'inserimento di numeri anche tramite tastiera
     const char = e.key;
     const isNumber = /[0-9]/.test(char);
-    const isSpecialChar = /[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?]/.test(char);
+    const isSpecialChar = /[!@#$%^&*()_+=[\]{};:"\\|,.<>/?]/.test(char);
 
     // Permettiamo solo: lettere, spazi, backspace, delete, tab, enter, escape
     const allowedKeys = [
@@ -58,7 +59,13 @@ const UserProfileSection = ({ user, loadingUser, onUserUpdate, onMessage }) => {
       "ArrowDown",
     ];
 
-    if (isNumber || (isSpecialChar && !allowedKeys.includes(char) && char !== "'" && char !== ' ')) {
+    if (
+      isNumber ||
+      (isSpecialChar &&
+        !allowedKeys.includes(char) &&
+        char !== "'" &&
+        char !== " ")
+    ) {
       e.preventDefault();
       return;
     }
@@ -107,6 +114,16 @@ const UserProfileSection = ({ user, loadingUser, onUserUpdate, onMessage }) => {
       onMessage({
         type: "error",
         text: "Nome e cognome devono avere almeno 2 caratteri ciascuno.",
+      });
+      return;
+    }
+
+    // Controllo caratteri speciali (permettiamo solo lettere, spazi, apostrofi e trattini)
+    const validNameRegex = /^[a-zA-ZÀ-ÿ\s'-]+$/;
+    if (!validNameRegex.test(trimmedName)) {
+      onMessage({
+        type: "error",
+        text: "Il nome può contenere solo lettere, spazi, apostrofi e trattini.",
       });
       return;
     }
