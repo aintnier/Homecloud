@@ -30,6 +30,12 @@ jobs:
         with:
           version: ${{ env.PNPM_VERSION }}
 
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
       - name: Generate cache key
         id: cache-key
         run: |
@@ -38,13 +44,13 @@ jobs:
       - name: Cache pnpm dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.pnpm-store
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ steps.cache-key.outputs.key }}
           restore-keys: |
             pnpm-
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
   lint:
     name: Lint Code
@@ -64,10 +70,16 @@ jobs:
         with:
           version: ${{ env.PNPM_VERSION }}
 
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
       - name: Restore pnpm cache
         uses: actions/cache@v3
         with:
-          path: ~/.pnpm-store
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ needs.setup.outputs.cache-key }}
 
       - name: Install dependencies
@@ -105,10 +117,16 @@ jobs:
         with:
           version: ${{ env.PNPM_VERSION }}
 
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
       - name: Restore pnpm cache
         uses: actions/cache@v3
         with:
-          path: ~/.pnpm-store
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ needs.setup.outputs.cache-key }}
 
       - name: Install dependencies
@@ -220,9 +238,6 @@ jobs:
 
           echo "📁 Backend test structure created for future use"
 
-  # Build e Deploy gestiti automaticamente da AWS Amplify
-  # La pipeline CI si concentra solo su qualità del codice e validazione
-
   security-scan:
     name: Security Scan
     runs-on: ubuntu-latest
@@ -325,13 +340,13 @@ jobs:
           echo "| Security Scan | ${{ needs.security-scan.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Amplify Validation | ${{ needs.amplify-validation.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**ℹ️ Build & Deploy**: Gestiti automaticamente da AWS Amplify ad ogni push su \`main\`" >> $GITHUB_STEP_SUMMARY
+          echo "**ℹ️ Build & Deploy**: Automatically managed by AWS Amplify on every push to \`main\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
           if [[ "${{ needs.lint.result }}" == "success" && "${{ needs.test-frontend.result }}" == "success" ]]; then
-            echo "✅ **Pipeline CI completata con successo!**" >> $GITHUB_STEP_SUMMARY
-            echo "🚀 **Codice pronto per il deploy automatico Amplify**" >> $GITHUB_STEP_SUMMARY
+            echo "✅ **CI pipeline completed successfully!**" >> $GITHUB_STEP_SUMMARY
+            echo "🚀 **Code is ready for automatic Amplify deploy**" >> $GITHUB_STEP_SUMMARY
           else
-            echo "❌ **Pipeline CI fallita. Controlla i job sopra.**" >> $GITHUB_STEP_SUMMARY
-            echo "⚠️ **Il deploy Amplify potrebbe fallire se ci sono errori critici**" >> $GITHUB_STEP_SUMMARY
+            echo "❌ **CI pipeline failed. Check the jobs above.**" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ **Amplify deploy may fail if there are critical errors**" >> $GITHUB_STEP_SUMMARY
           fi
