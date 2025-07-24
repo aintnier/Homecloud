@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import App from "./App";
 
 test("renders without crashing", () => {
@@ -6,10 +6,9 @@ test("renders without crashing", () => {
 });
 
 test("renders main content", () => {
-  render(<App />);
+  const { container } = render(<App />);
   // Verifica che l'app si renderizzi correttamente
-  const appElement = document.querySelector(".App") || document.body;
-  expect(appElement).toBeInTheDocument();
+  expect(container).toBeInTheDocument();
 });
 
 test("app contains content", () => {
