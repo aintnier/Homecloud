@@ -200,9 +200,7 @@ const LandingPage = () => {
                 </div>
                 <div className="stat-divider"></div>
                 <div className="stat-item">
-                  <div className="stat-number" style={{ fontFamily: "inter" }}>
-                    &infin;
-                  </div>
+                  <div className="stat-number">100+</div>
                   <div className="stat-label">Scadenze gestibili</div>
                 </div>
               </div>
@@ -328,7 +326,7 @@ const LandingPage = () => {
               delay={100}
               duration={0.6}
               ease="power3.out"
-              splitType="words"
+              splitType="lines"
               from={{ opacity: 0, y: 40 }}
               to={{ opacity: 1, y: 0 }}
               threshold={0.1}
@@ -490,7 +488,7 @@ const LandingPage = () => {
               delay={100}
               duration={0.6}
               ease="power3.out"
-              splitType="words"
+              splitType="lines"
               from={{ opacity: 0, y: 40 }}
               to={{ opacity: 1, y: 0 }}
               threshold={0.1}
@@ -625,7 +623,7 @@ const LandingPage = () => {
               delay={100}
               duration={0.6}
               ease="power3.out"
-              splitType="words"
+              splitType="lines"
               from={{ opacity: 0, y: 40 }}
               to={{ opacity: 1, y: 0 }}
               threshold={0.1}
@@ -701,10 +699,10 @@ const LandingPage = () => {
             <SplitText
               text="Pronto ad organizzare la tua famiglia?"
               className="text-2xl font-semibold text-center activity-summary-important-text cta-title"
-              delay={80}
+              delay={100}
               duration={0.5}
               ease="power3.out"
-              splitType="words"
+              splitType="lines"
               from={{ opacity: 0, y: 40 }}
               to={{ opacity: 1, y: 0 }}
               threshold={0.1}

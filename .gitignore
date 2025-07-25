@@ -26,6 +26,8 @@ yarn-error.log*
 # Cache
 /cache
 
+team-provider-info.json
+
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
@@ -46,6 +48,4 @@ amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
 **.sample
-
-team-provider-info.json
 #amplify-do-not-edit-end
