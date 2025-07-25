@@ -7,14 +7,16 @@
   background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
   color: white;
   text-align: center;
-  padding: clamp(1rem, 3vw, 2rem);
+  padding: clamp(1.4rem, 4vw, 3rem);
   gap: clamp(1.5rem, 4vw, 2.5rem);
 }
 
-.error-page canvas {
-  max-width: 100%;
-  height: auto;
-  display: block;
+.error-title {
+  font-size: clamp(7.4rem, 19vw, 12rem);
+  font-weight: 800;
+  margin: 0;
+  color: #fff;
+  text-shadow: 0 0 50px rgba(102, 126, 234, 0.3);
 }
 
 .error-page p {
@@ -23,6 +25,7 @@
   max-width: 600px;
   line-height: 1.5;
   margin: 0;
+  text-align: center;
 }
 
 .back-button {
@@ -31,12 +34,12 @@
   border: 2px solid rgba(255, 255, 255, 0.3);
   color: white;
   text-decoration: none;
-  border-radius: clamp(6px, 1vw, 12px);
-  transition: all 0.3s ease;
-  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  border-radius: 10px;
+  font-size: clamp(0.9rem, 2.1vw, 1.2rem);
   font-weight: 500;
   display: inline-block;
   min-width: 140px;
+  transition: all 0.3s ease;
 }
 
 .back-button:hover {
@@ -44,100 +47,4 @@
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   border-color: rgba(255, 255, 255, 0.5);
-}
-
-/* Responsive Design - seguendo i breakpoint della LandingPage */
-@media (max-width: 1024px) {
-  .error-page {
-    padding: clamp(1.5rem, 4vw, 2.5rem);
-    gap: clamp(2rem, 5vw, 3rem);
-  }
-
-  .error-page canvas {
-    min-width: 200px;
-    min-height: 120px;
-  }
-}
-
-@media (max-width: 768px) {
-  .error-page {
-    padding: clamp(1rem, 3vw, 2rem);
-    gap: clamp(2rem, 5vw, 3rem);
-  }
-
-  .error-page canvas {
-    min-width: 180px;
-    min-height: 100px;
-  }
-
-  .error-page p {
-    font-size: clamp(0.95rem, 3vw, 1.2rem);
-    max-width: 500px;
-  }
-
-  .back-button {
-    padding: clamp(0.7rem, 2.5vw, 0.9rem) clamp(1.2rem, 5vw, 1.8rem);
-    font-size: clamp(0.85rem, 2.5vw, 1.1rem);
-    min-width: 120px;
-  }
-}
-
-@media (max-width: 600px) {
-  .error-page {
-    padding: clamp(0.8rem, 2.5vw, 1.5rem);
-    gap: clamp(1.8rem, 4vw, 2.5rem);
-  }
-
-  .error-page canvas {
-    min-width: 160px;
-    min-height: 90px;
-  }
-
-  .error-page p {
-    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
-    max-width: 400px;
-    padding: 0 10px;
-  }
-
-  .back-button {
-    padding: clamp(0.6rem, 2vw, 0.8rem) clamp(1rem, 4vw, 1.5rem);
-    font-size: clamp(0.8rem, 3vw, 1rem);
-    min-width: 100px;
-    border-radius: 6px;
-  }
-}
-
-@media (max-width: 480px) {
-  .error-page {
-    padding: clamp(0.5rem, 2vw, 1rem);
-    gap: clamp(1.5rem, 4vw, 2rem);
-    min-height: 100vh;
-    min-height: 100svh; /* Supporto per Safari mobile */
-  }
-
-  .error-page canvas {
-    min-width: 140px;
-    min-height: 80px;
-    width: 60vw !important;
-    max-width: 250px;
-  }
-
-  .error-page p {
-    font-size: clamp(0.85rem, 4vw, 1rem);
-    max-width: 300px;
-    padding: 0 5px;
-    line-height: 1.4;
-  }
-
-  .back-button {
-    padding: clamp(0.5rem, 2vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem);
-    font-size: clamp(0.75rem, 3.5vw, 0.9rem);
-    min-width: 90px;
-    border-radius: 5px;
-  }
-
-  .back-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-  }
 }
