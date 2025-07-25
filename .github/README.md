@@ -18,7 +18,7 @@ La pipeline si attiva automaticamente per:
 
 - Configura Node.js 18 e pnpm 8
 - Cache intelligente delle dipendenze
-- Installazione con `pnpm install --frozen-lockfile`
+- Installazione con `pnpm install`
 
 ### 2. **Lint Code**
 
@@ -153,38 +153,6 @@ pnpm audit --fix
 ### ESLint (già configurato)
 
 Il progetto usa `eslint-config-react-app` - configurazione ottimale per React.
-
-### Prettier (opzionale)
-
-```json
-// .prettierrc
-{
-  "semi": true,
-  "trailingComma": "all",
-  "singleQuote": true,
-  "printWidth": 80,
-  "tabWidth": 2
-}
-```
-
-### VS Code Settings
-
-```json
-// .vscode/settings.json
-{
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  }
-}
-```
-
-## 🎯 Next Steps
-
-1. **Commit** questo workflow
-2. **Crea una PR** per testare la pipeline
-3. **Verifica** che tutti i job passino
-4. **Estendi** con test backend quando necessario
 
 ---
 
