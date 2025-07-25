@@ -8,6 +8,7 @@ import {
   faCalendarDay,
   faChevronDown,
   faCheck,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -72,6 +73,7 @@ const AddDeadline = () => {
   const [typeDropdownOpen, setTypeDropdownOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("");
   const [isNotificationOn, setIsNotificationOn] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -118,6 +120,24 @@ const AddDeadline = () => {
     setTypeDropdownOpen(false);
   };
 
+  // Funzione per toggle della sidebar mobile
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  // Chiude la sidebar quando si clicca su un link (mobile)
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
+  // Aggiorna il form quando selectedType cambia
+  useEffect(() => {
+    setForm((prev) => ({
+      ...prev,
+      type: selectedType,
+    }));
+  }, [selectedType]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage(null);
@@ -162,10 +182,27 @@ const AddDeadline = () => {
         user_id: user.id,
       };
 
-      await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/deadlines`,
-        deadlineData
+      // Debug logs
+      console.log(
+        "Request URL:",
+        `${process.env.REACT_APP_BACKEND_URL}/deadlines`
       );
+      console.log("Request data:", deadlineData);
+      console.log("Request headers:", {
+        "Content-Type": "application/json",
+      });
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/deadlines`,
+        deadlineData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("Response:", response);
 
       setMessage({
         type: "success",
@@ -188,6 +225,11 @@ const AddDeadline = () => {
         navigate("/dashboard");
       }, 1000);
     } catch (error) {
+      console.error("Full error:", error);
+      console.error("Error response:", error.response);
+      console.error("Error status:", error.response?.status);
+      console.error("Error data:", error.response?.data);
+
       setMessage({
         type: "error",
         text:
@@ -201,11 +243,21 @@ const AddDeadline = () => {
 
   return (
     <div className="dashboard-container deadline-details-container">
+      {/* Header mobile con hamburger */}
+      <header className="mobile-header">
+        <button className="hamburger-btn" onClick={toggleSidebar}>
+          <FontAwesomeIcon icon={faBars} />
+        </button>
+        <h1 className="mobile-title">Aggiungi Scadenza</h1>
+      </header>
+
       <Sidebar
         menuItems={menuItems}
         user={user}
         loadingUser={userLoading}
         activePath="/add-deadline"
+        isMobileOpen={isSidebarOpen}
+        onMobileClose={closeSidebar}
         bottomNav={
           <button className="logout-button" onClick={logoutAndRedirect}>
             <FontAwesomeIcon

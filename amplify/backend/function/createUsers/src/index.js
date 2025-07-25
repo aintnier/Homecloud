@@ -1,7 +1,15 @@
 const { createDbConnection } = require("/opt/nodejs/dbConnection");
-const { getS3AvatarConfig } = require("/opt/nodejs/helper");
+const {
+  getS3AvatarConfig,
+  createCorsResponse,
+  handleOptionsRequest,
+} = require("/opt/nodejs/helper");
 
 exports.handler = async (event) => {
+  if (event.httpMethod === "OPTIONS") {
+    return handleOptionsRequest();
+  }
+
   let connection;
 
   try {
@@ -28,18 +36,10 @@ exports.handler = async (event) => {
     );
 
     if (existingUsers.length > 0) {
-      return {
-        statusCode: 409, // Conflict
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: "Un utente con questa email esiste già.",
-          code: "USER_ALREADY_EXISTS",
-        }),
-      };
+      return createCorsResponse(409, {
+        message: "Un utente con questa email esiste già.",
+        code: "USER_ALREADY_EXISTS",
+      });
     }
 
     // Inserisci il nuovo utente
@@ -56,49 +56,22 @@ exports.handler = async (event) => {
       profileImageUrl: `https://${s3Config.bucketName}.s3.${s3Config.region}.amazonaws.com/${s3Config.folderName}/${profileImageId}.jpg`,
     };
 
-    return {
-      statusCode: 201,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers":
-          "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
-        "Access-Control-Allow-Methods":
-          "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newUser),
-    };
+    return createCorsResponse(201, newUser);
   } catch (err) {
     console.error("❌ Errore in createUsers:", err);
 
     // Gestisci errori specifici del database
     if (err.code === "ER_DUP_ENTRY") {
-      return {
-        statusCode: 409,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: "Un utente con questa email esiste già.",
-          code: "USER_ALREADY_EXISTS",
-        }),
-      };
+      return createCorsResponse(409, {
+        message: "Un utente con questa email esiste già.",
+        code: "USER_ALREADY_EXISTS",
+      });
     }
 
-    return {
-      statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: "Errore del server durante la creazione dell'utente.",
-        error: err.message,
-      }),
-    };
+    return createCorsResponse(500, {
+      message: "Errore del server durante la creazione dell'utente.",
+      error: err.message,
+    });
   } finally {
     if (connection) {
       await connection.end();

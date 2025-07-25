@@ -1,7 +1,15 @@
 const { createDbConnection } = require("/opt/nodejs/dbConnection");
-const { getS3AvatarConfig } = require("/opt/nodejs/helper");
+const {
+  getS3AvatarConfig,
+  createCorsResponse,
+  handleOptionsRequest,
+} = require("/opt/nodejs/helper");
 
 exports.handler = async (event) => {
+  if (event.httpMethod === "OPTIONS") {
+    return handleOptionsRequest();
+  }
+
   let connection;
 
   try {
@@ -41,32 +49,13 @@ exports.handler = async (event) => {
       profileImageUrl: `https://${s3Config.bucketName}.s3.${s3Config.region}.amazonaws.com/${s3Config.folderName}/${profileImageId}.jpg`,
     };
 
-    return {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers":
-          "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
-        "Access-Control-Allow-Methods":
-          "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedUser),
-    };
+    return createCorsResponse(200, updatedUser);
   } catch (err) {
     console.error("❌ Errore in updateUser:", err);
-    return {
-      statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: "Errore del server durante l'aggiornamento dell'utente.",
-        error: err,
-      }),
-    };
+    return createCorsResponse(500, {
+      message: "Errore del server durante l'aggiornamento dell'utente.",
+      error: err.message,
+    });
   } finally {
     if (connection) {
       await connection.end();

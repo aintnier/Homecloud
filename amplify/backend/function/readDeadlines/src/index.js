@@ -1,6 +1,14 @@
 const { createDbConnection } = require("/opt/nodejs/dbConnection");
+const {
+  createCorsResponse,
+  handleOptionsRequest,
+} = require("/opt/nodejs/helper");
 
 exports.handler = async (event) => {
+  if (event.httpMethod === "OPTIONS") {
+    return handleOptionsRequest();
+  }
+
   let connection;
 
   try {
@@ -13,32 +21,13 @@ exports.handler = async (event) => {
 
     const [results] = await connection.query("SELECT * FROM deadlines");
 
-    return {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers":
-          "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
-        "Access-Control-Allow-Methods":
-          "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(results),
-    };
+    return createCorsResponse(200, results);
   } catch (err) {
     console.error("❌ Errore in readDeadlines:", err);
-    return {
-      statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: "Errore del server. Impossibile ottenere le scadenze.",
-        error: err.message,
-      }),
-    };
+    return createCorsResponse(500, {
+      message: "Errore del server. Impossibile ottenere le scadenze.",
+      error: err.message,
+    });
   } finally {
     if (connection) await connection.end();
   }

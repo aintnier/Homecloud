@@ -1,7 +1,15 @@
 const { createDbConnection } = require("/opt/nodejs/dbConnection");
-const { validateDeadline } = require("/opt/nodejs/helper");
+const {
+  validateDeadline,
+  createCorsResponse,
+  handleOptionsRequest,
+} = require("/opt/nodejs/helper");
 
 exports.handler = async (event) => {
+  if (event.httpMethod === "OPTIONS") {
+    return handleOptionsRequest();
+  }
+
   let connection;
 
   try {
@@ -19,15 +27,7 @@ exports.handler = async (event) => {
       type,
     });
     if (error) {
-      return {
-        statusCode: 400,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: error.details[0].message }),
-      };
+      return createCorsResponse(400, { message: error.details[0].message });
     }
 
     connection = await createDbConnection({
@@ -42,15 +42,7 @@ exports.handler = async (event) => {
       user_id,
     ]);
     if (user.length === 0) {
-      return {
-        statusCode: 400,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: "Utente non trovato." }),
-      };
+      return createCorsResponse(400, { message: "Utente non trovato." });
     }
 
     // Inserisci la deadline
@@ -59,35 +51,16 @@ exports.handler = async (event) => {
       [title, description, due_date, notifications_on, user_id, type]
     );
 
-    return {
-      statusCode: 201,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers":
-          "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
-        "Access-Control-Allow-Methods":
-          "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: "Scadenza creata con successo",
-        id: result.insertId,
-      }),
-    };
+    return createCorsResponse(201, {
+      message: "Scadenza creata con successo",
+      id: result.insertId,
+    });
   } catch (err) {
     console.error("❌ Errore in createDeadline:", err);
-    return {
-      statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: "Errore durante la creazione della deadline.",
-        error: err,
-      }),
-    };
+    return createCorsResponse(500, {
+      message: "Errore durante la creazione della deadline.",
+      error: err.message,
+    });
   } finally {
     if (connection) await connection.end();
   }

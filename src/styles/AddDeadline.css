@@ -19,11 +19,11 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 24px;
   background: var(--white);
   border-radius: 10px;
   box-shadow: 0 2px 10px var(--card-shadow);
-  padding: 42px;
+  padding: 35px;
   max-width: 600px;
   margin-inline: auto;
   margin-block: auto;
@@ -38,7 +38,7 @@
 }
 
 .add-deadline-form label p {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--card-title-icon-color);
   margin-bottom: 4px;
 }
@@ -48,11 +48,11 @@
 .add-deadline-form textarea,
 .add-deadline-form select {
   width: 100%;
-  padding: 14px;
+  padding: 12px;
   border: 1px solid var(--secondary-color);
   color: currentColor;
   border-radius: 6px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   letter-spacing: 0.3px;
 }
 
@@ -73,11 +73,11 @@
   color: var(--white);
   border: none;
   border-radius: 8px;
-  padding: 16px;
-  font-size: 1.2rem;
+  padding: 14px;
+  font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 12px;
+  margin-top: 8px;
   transition: background 0.3s;
 }
 
@@ -279,4 +279,395 @@ label.add-deadline-notifications-input-container .notification-toggle {
 
 .no-pointer {
   pointer-events: none;
+}
+
+/* Dropdown custom per tipo */
+.type-input-container {
+  position: relative;
+}
+
+.custom-type-dropdown {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+}
+
+.custom-type-dropdown:focus {
+  outline: none;
+}
+
+.dropdown-selected {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--secondary-color);
+  border-radius: 6px;
+  background-color: var(--white);
+  color: currentColor;
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.dropdown-selected:hover {
+  border-color: var(--accent-color);
+}
+
+.dropdown-selected.open {
+  border-color: var(--accent-color);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.type-selected-placeholder {
+  color: currentColor;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.dropdown-arrow {
+  color: var(--text-color-light);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-selected.open .dropdown-arrow {
+  transform: rotate(180deg);
+  color: var(--accent-color);
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--white);
+  border: 1px solid var(--accent-color);
+  border-top: none;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px var(--hover-shadow);
+}
+
+.dropdown-option {
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 0.95rem;
+  color: currentColor;
+  border-bottom: 1px solid var(--secondary-color);
+}
+
+.dropdown-option:last-child {
+  border-bottom: none;
+}
+
+.dropdown-option:hover {
+  background-color: var(--select-hover-color);
+}
+
+.dropdown-option.selected {
+  background-color: var(--accent-color);
+  color: var(--white);
+}
+
+/* =================== RESPONSIVE DESIGN =================== */
+
+/* Mobile Header - Solo per AddDeadline */
+.deadline-details-container .mobile-header {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--white);
+  border-bottom: 1px solid var(--secondary-color);
+  padding: 0 20px;
+  align-items: center;
+  gap: 15px;
+  z-index: 1001;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.deadline-details-container .hamburger-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.deadline-details-container .hamburger-btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.deadline-details-container .mobile-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* =================== TABLET (862px - 1024px) =================== */
+@media (max-width: 1024px) {
+  /* Mostra header mobile solo per AddDeadline */
+  .deadline-details-container .mobile-header {
+    display: flex;
+  }
+
+  /* Nascondi sidebar desktop solo per AddDeadline */
+  .deadline-details-container .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 2000;
+  }
+
+  /* Mostra sidebar quando aperta solo per AddDeadline */
+  .deadline-details-container .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .deadline-details-container.dashboard-container {
+    flex-direction: column;
+  }
+
+  .deadline-details-container .adddeadline.main-content {
+    margin-left: 0;
+    padding: 80px 40px 40px;
+    width: 100%;
+  }
+
+  .deadline-details-container .add-deadline-form {
+    max-width: 90%;
+    padding: 30px;
+    gap: 22px;
+  }
+
+  .deadline-details-container .add-deadline-form label p {
+    font-size: 1.1rem;
+  }
+
+  .deadline-details-container .add-deadline-form input[type="text"],
+  .deadline-details-container .add-deadline-form textarea,
+  .deadline-details-container .dropdown-selected {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+
+  .deadline-details-container .add-deadline-form .save-button {
+    padding: 14px;
+    font-size: 1.1rem;
+  }
+
+  .deadline-details-container .custom-date-picker {
+    padding: 12px;
+    padding-right: 40px;
+    font-size: 0.95rem;
+  }
+
+  .deadline-details-container .custom-date-input .calendar-icon {
+    font-size: 1.3rem;
+    right: 16px;
+  }
+}
+
+/* =================== MOBILE (862px e inferiore) =================== */
+@media (max-width: 862px) {
+  .deadline-details-container .adddeadline.main-content {
+    padding: 75px 20px 35px;
+  }
+
+  .deadline-details-container .add-deadline-form {
+    max-width: 100%;
+    padding: 22px;
+    gap: 18px;
+    margin-inline: 0;
+  }
+
+  .deadline-details-container .add-deadline-form label p {
+    font-size: 0.95rem;
+  }
+
+  .deadline-details-container .add-deadline-form input[type="text"],
+  .deadline-details-container .add-deadline-form textarea,
+  .deadline-details-container .dropdown-selected {
+    padding: 11px;
+    font-size: 0.9rem;
+  }
+
+  .deadline-details-container .add-deadline-form textarea {
+    min-height: 65px;
+  }
+
+  .deadline-details-container .add-deadline-form .save-button {
+    padding: 13px;
+    font-size: 0.95rem;
+    margin-top: 6px;
+  }
+
+  .deadline-details-container .custom-date-picker {
+    padding: 11px;
+    padding-right: 38px;
+    font-size: 0.9rem;
+  }
+
+  .deadline-details-container .custom-date-input .calendar-icon {
+    font-size: 1.1rem;
+    right: 13px;
+  }
+
+  .deadline-details-container .notification-toggle {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .deadline-details-container .notification-toggle span {
+    font-size: 0.9rem;
+  }
+
+  /* DatePicker responsive solo per AddDeadline */
+  .deadline-details-container .react-datepicker {
+    font-size: 0.85rem;
+  }
+
+  .deadline-details-container .react-datepicker__current-month {
+    font-size: 1.1rem;
+  }
+
+  .deadline-details-container .react-datepicker__day {
+    width: 2.1rem;
+    height: 2.1rem;
+    line-height: 2.1rem;
+    font-size: 0.85rem;
+  }
+
+  .deadline-details-container .react-datepicker__day-name {
+    width: 2.3rem;
+    line-height: 2.1rem;
+    font-size: 0.85rem;
+  }
+
+  .deadline-details-container .mobile-title {
+    font-size: 1.1rem;
+  }
+}
+
+/* =================== SMALL MOBILE (480px e inferiore) =================== */
+@media (max-width: 480px) {
+  .deadline-details-container .adddeadline.main-content {
+    padding: 70px 15px 25px;
+  }
+
+  .deadline-details-container .add-deadline-form {
+    padding: 18px;
+    gap: 16px;
+  }
+
+  .deadline-details-container .add-deadline-form label p {
+    font-size: 0.9rem;
+  }
+
+  .deadline-details-container .add-deadline-form input[type="text"],
+  .deadline-details-container .add-deadline-form textarea,
+  .deadline-details-container .dropdown-selected {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+
+  .deadline-details-container .add-deadline-form .save-button {
+    padding: 11px;
+    font-size: 0.9rem;
+  }
+
+  .deadline-details-container .custom-date-picker {
+    padding: 10px;
+    padding-right: 35px;
+    font-size: 0.85rem;
+  }
+
+  .deadline-details-container .custom-date-input .calendar-icon {
+    font-size: 1rem;
+    right: 11px;
+  }
+
+  .deadline-details-container .notification-toggle span {
+    font-size: 0.85rem;
+  }
+
+  .deadline-details-container .mobile-title {
+    font-size: 1rem;
+  }
+
+  .deadline-details-container .mobile-header {
+    height: 55px;
+  }
+
+  .deadline-details-container .hamburger-btn {
+    font-size: 1.1rem;
+  }
+}
+
+/* =================== EXTRA SMALL (360px e inferiore) =================== */
+@media (max-width: 360px) {
+  .deadline-details-container .adddeadline.main-content {
+    padding: 65px 10px 20px;
+  }
+
+  .deadline-details-container .add-deadline-form {
+    padding: 15px;
+    gap: 14px;
+  }
+
+  .deadline-details-container .add-deadline-form label p {
+    font-size: 0.85rem;
+  }
+
+  .deadline-details-container .add-deadline-form input[type="text"],
+  .deadline-details-container .add-deadline-form textarea,
+  .deadline-details-container .dropdown-selected {
+    padding: 9px;
+    font-size: 0.8rem;
+  }
+
+  .deadline-details-container .add-deadline-form .save-button {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+
+  .deadline-details-container .custom-date-picker {
+    padding: 9px;
+    padding-right: 32px;
+    font-size: 0.8rem;
+  }
+
+  .deadline-details-container .custom-date-input .calendar-icon {
+    font-size: 0.9rem;
+    right: 9px;
+  }
+
+  .deadline-details-container .notification-toggle span {
+    font-size: 0.8rem;
+  }
+
+  .deadline-details-container .mobile-title {
+    font-size: 0.95rem;
+  }
+
+  .deadline-details-container .mobile-header {
+    height: 50px;
+  }
+
+  .deadline-details-container .hamburger-btn {
+    font-size: 1rem;
+  }
 }

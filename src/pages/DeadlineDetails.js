@@ -14,6 +14,7 @@ import {
   faTrash,
   faCheck,
   faChevronDown,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { getLoggedUser, logoutAndRedirect } from "../helpers/authHelper";
@@ -53,6 +54,7 @@ function DeadlineDetails() {
   const [selectedType, setSelectedType] = useState(deadline?.type || "");
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const typeOptions = [
     "Casa",
@@ -306,6 +308,16 @@ function DeadlineDetails() {
     setTypeDropdownOpen(false);
   };
 
+  // Funzione per toggle della sidebar mobile
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  // Chiude la sidebar quando si clicca su un link (mobile)
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
   const menuItems = [
     {
       label: "Dettagli Scadenza",
@@ -318,11 +330,21 @@ function DeadlineDetails() {
 
   return (
     <div className="deadline-details-container">
+      {/* Header mobile con hamburger */}
+      <header className="mobile-header">
+        <button className="hamburger-btn" onClick={toggleSidebar}>
+          <FontAwesomeIcon icon={faBars} />
+        </button>
+        <h1 className="mobile-title">Dettagli Scadenza</h1>
+      </header>
+
       <Sidebar
         menuItems={menuItems}
         user={user}
         loadingUser={userLoading}
         activePath={`/deadline-details/${id}`}
+        isMobileOpen={isSidebarOpen}
+        onMobileClose={closeSidebar}
         bottomNav={bottomNav}
       />
       <main className="main-content">

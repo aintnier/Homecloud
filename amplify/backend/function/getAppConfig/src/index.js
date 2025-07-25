@@ -1,7 +1,15 @@
-const { getS3LogoConfig } = require("/opt/nodejs/helper");
+const {
+  getS3LogoConfig,
+  createCorsResponse,
+  handleOptionsRequest,
+} = require("/opt/nodejs/helper");
 const AWS = require("aws-sdk");
 
 exports.handler = async (event) => {
+  if (event.httpMethod === "OPTIONS") {
+    return handleOptionsRequest();
+  }
+
   console.log("=== getAppConfig START ===");
   console.log("getAppConfig - Event:", JSON.stringify(event, null, 2));
 
@@ -102,18 +110,7 @@ exports.handler = async (event) => {
     console.log("Final app config:", appConfig);
     console.log("=== getAppConfig SUCCESS ===");
 
-    return {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers":
-          "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
-        "Access-Control-Allow-Methods":
-          "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(appConfig),
-    };
+    return createCorsResponse(200, appConfig);
   } catch (err) {
     console.error("=== getAppConfig ERROR ===");
     console.error("Error details:", {
@@ -123,19 +120,11 @@ exports.handler = async (event) => {
       statusCode: err.statusCode,
     });
 
-    return {
-      statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: "Errore del server durante il recupero della configurazione.",
-        error: err.message,
-        logos: {},
-        logoUrl: null,
-      }),
-    };
+    return createCorsResponse(500, {
+      message: "Errore del server durante il recupero della configurazione.",
+      error: err.message,
+      logos: {},
+      logoUrl: null,
+    });
   }
 };
