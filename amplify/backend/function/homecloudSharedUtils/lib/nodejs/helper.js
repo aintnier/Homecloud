@@ -58,8 +58,31 @@ function validateDeadline(data) {
   return deadlineSchema.validate(data);
 }
 
+// Funzione helper per le risposte CORS
+const createCorsResponse = (statusCode, body) => {
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers":
+      "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+    "Access-Control-Allow-Methods": "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
+    "Content-Type": "application/json",
+  };
+
+  return {
+    statusCode,
+    headers: corsHeaders,
+    body: JSON.stringify(body),
+  };
+};
+
+const handleOptionsRequest = () => {
+  return createCorsResponse(200, "");
+};
+
 module.exports = {
   getS3AvatarConfig,
   getS3LogoConfig,
   validateDeadline,
+  createCorsResponse,
+  handleOptionsRequest,
 };

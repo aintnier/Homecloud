@@ -171,6 +171,14 @@ function Dashboard() {
     return date.toLocaleDateString("it-IT", options);
   };
 
+  const formatDateShort = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   const handleSort = (sortOption) => {
     let sortedDeadlines = [...otherDeadlines];
 
@@ -366,7 +374,7 @@ function Dashboard() {
                           }
                           className="deadline-icon"
                         />
-                        {deadline.title}
+                        <span className="title-text">{deadline.title}</span>
                       </div>
                       <div
                         className={`card-type ${deadline.type
@@ -433,7 +441,7 @@ function Dashboard() {
                           }
                           className="deadline-icon"
                         />
-                        {deadline.title}
+                        <span className="title-text">{deadline.title}</span>
                       </div>
                       <div
                         className={`card-type ${deadline.type
@@ -550,7 +558,7 @@ function Dashboard() {
                           {deadline.type}
                         </span>
                       </td>
-                      <td>{formatDate(deadline.due_date)}</td>
+                      <td>{formatDateShort(deadline.due_date)}</td>
                       <td>{deadline.description}</td>
                       <td>
                         <span
@@ -597,7 +605,7 @@ function Dashboard() {
                         icon={typeIcons[deadline.type] || faExclamationTriangle}
                         className="deadline-icon"
                       />
-                      {deadline.title}
+                      <span className="title-text">{deadline.title}</span>
                     </div>
                     <span
                       className={`deadline-type ${deadline.type
@@ -609,7 +617,8 @@ function Dashboard() {
                   </div>
                   <div className="card-body">
                     <div className="card-info">
-                      <strong>Scadenza:</strong> {formatDate(deadline.due_date)}
+                      <strong>Scadenza:</strong>{" "}
+                      {formatDateShort(deadline.due_date)}
                     </div>
                     <div className="card-info">
                       <strong>Descrizione:</strong> {deadline.description}

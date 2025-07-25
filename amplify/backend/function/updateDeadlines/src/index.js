@@ -1,20 +1,20 @@
 const { createDbConnection } = require("/opt/nodejs/dbConnection");
-const { validateDeadline } = require("/opt/nodejs/helper");
+const {
+  validateDeadline,
+  createCorsResponse,
+  handleOptionsRequest,
+} = require("/opt/nodejs/helper");
 
 exports.handler = async (event) => {
+  if (event.httpMethod === "OPTIONS") {
+    return handleOptionsRequest();
+  }
+
   let connection;
 
   try {
     if (!event.body) {
-      return {
-        statusCode: 400,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: "Richiesta senza body." }),
-      };
+      return createCorsResponse(400, { message: "Richiesta senza body." });
     }
 
     const body = JSON.parse(event.body);
@@ -38,15 +38,9 @@ exports.handler = async (event) => {
       !user_id ||
       !type
     ) {
-      return {
-        statusCode: 400,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: "Tutti i campi sono obbligatori." }),
-      };
+      return createCorsResponse(400, {
+        message: "Tutti i campi sono obbligatori.",
+      });
     }
 
     const { error } = validateDeadline({
@@ -58,15 +52,7 @@ exports.handler = async (event) => {
       type,
     });
     if (error) {
-      return {
-        statusCode: 400,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: error.details[0].message }),
-      };
+      return createCorsResponse(400, { message: error.details[0].message });
     }
 
     connection = await createDbConnection({
@@ -83,45 +69,18 @@ exports.handler = async (event) => {
     );
 
     if (result.affectedRows === 0) {
-      return {
-        statusCode: 404,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: "Scadenza non trovata" }),
-      };
+      return createCorsResponse(404, { message: "Scadenza non trovata" });
     }
 
-    return {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers":
-          "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
-        "Access-Control-Allow-Methods":
-          "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: "Scadenza aggiornata con successo",
-      }),
-    };
+    return createCorsResponse(200, {
+      message: "Scadenza aggiornata con successo",
+    });
   } catch (err) {
     console.error("❌ Errore in updateDeadlines:", err);
-    return {
-      statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: "Errore del server. Impossibile aggiornare la scadenza.",
-        error: err.message,
-      }),
-    };
+    return createCorsResponse(500, {
+      message: "Errore del server. Impossibile aggiornare la scadenza.",
+      error: err.message,
+    });
   } finally {
     if (connection) await connection.end();
   }

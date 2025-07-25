@@ -1,6 +1,14 @@
 const { createDbConnection } = require("/opt/nodejs/dbConnection");
+const {
+  createCorsResponse,
+  handleOptionsRequest,
+} = require("/opt/nodejs/helper");
 
 exports.handler = async (event) => {
+  if (event.httpMethod === "OPTIONS") {
+    return handleOptionsRequest();
+  }
+
   let connection;
 
   try {
@@ -19,34 +27,15 @@ exports.handler = async (event) => {
     // Elimina l'utente
     await connection.execute("DELETE FROM users WHERE id = ?", [id]);
 
-    return {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers":
-          "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
-        "Access-Control-Allow-Methods":
-          "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: `Utente con id ${id} eliminato con successo.`,
-      }),
-    };
+    return createCorsResponse(200, {
+      message: `Utente con id ${id} eliminato con successo.`,
+    });
   } catch (err) {
     console.error("❌ Errore in deleteUser:", err);
-    return {
-      statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: "Errore del server durante l'eliminazione dell'utente.",
-        error: err,
-      }),
-    };
+    return createCorsResponse(500, {
+      message: "Errore del server durante l'eliminazione dell'utente.",
+      error: err.message,
+    });
   } finally {
     if (connection) {
       await connection.end();
